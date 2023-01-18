@@ -1,0 +1,141 @@
+﻿@using BTProje.Models.EntityFramework
+@model List<AraçTablosu>
+@{
+    ViewBag.Title = "TalepIndex";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@{
+    KullaniciTablosu kullanici = (KullaniciTablosu)Session["kullanici"];
+    BölgelerTablosu bolge = (BölgelerTablosu)Session["bolge"];
+    List<RolYetkiAtama> yetki = (List<RolYetkiAtama>)Session["yetki"];
+}
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+@using (Html.BeginForm("TalepIndex", "Arac", FormMethod.Get))
+{
+    <div class="modal fade col-lg-12" id="modelView" tabindex="-1" role="dialog" aria-labelledby="">
+        <div class="modal-dialog  modal-xl" role="document">
+            <div class="modal-content">
+                <form method="post">
+                    <div class="modal-header">
+                        <h6 class="modal-title" id="myModalLabel">Görev Detayları</h6>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>@ViewData["diger"]</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Kapat</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    $(function () {
+        $("body").on("click", ".view", function () {
+            var url = $(this).data("target");
+            $.post(url, function (data) { })
+                .done(function (data) {
+                    $("#modelView .modal-body").html(data);
+                    $("#modelView").modal("show");
+                })
+                .fail(function () {
+                    $("#modelView .modal-body").text("Error!!");
+                    $("#modelView").modal("show");
+                })
+        });
+    })
+</script>
+@foreach (var item in yetki)
+{
+    if (item.Rol_Id == 1)
+    {
+        <p style="text-align: center; margin-top: 12px; font-size: 20pt"><b>ARAÇLAR LİSTESİ</b></p>
+        <div class="row" style="margin-top:10px">
+            <div class="col-3">
+                <a href="/Arac/TalepIndex/" class="btn btn-success form-control" style="font-size: 12pt">TÜM ARAÇLARIN LİSTESİ</a>
+            </div>
+            <div class="col-3">
+                <a href="/Arac/TalepIndex/1" class="btn btn-warning form-control" style="font-size: 12pt">ONAY BEKLEYEN ARAÇLARIN LİSTESİ</a>
+            </div>
+            <div class="col-3">
+                <a href="/Arac/TalepIndex/3" class="btn btn-primary form-control" style="font-size: 12pt">REZERVASYON YAPILAN ARAÇLARIN LİSTESİ</a>
+            </div>
+            <div class="col-3">
+                <a href="/Arac/TalepIndex/4" class="btn btn-danger form-control" style="font-size: 12pt">GÖREVDE OLAN ARAÇLARIN LİSTESİ</a>
+            </div>
+        </div>
+        <br />
+        <hr style="border-block:1px solid black">
+        <br />
+        using (Html.BeginForm("TalepIndex", "Arac", FormMethod.Post))
+        {
+            <table id="tbl" class="table table-striped table-bordered" style="width:100%">
+                <thead style="border-block:3px solid black ">
+                    <tr>
+                        <td><b>ARAÇ NO</b></td>
+                        <td><b>PLAKA</b></td>
+                        <td><b>YETKİLİ ADI SOYADI</b></td>
+                        <td><b>MODEL</b></td>
+                        <td><b>BÖLGE</b></td>
+                        <td><b>İŞLEM</b></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var dg in Model)
+                    {
+                        <tr style="border-block:2px solid gray">
+                            <td>@dg.Aracid</td>
+                            <td><b>@dg.Plaka</b></td>
+                            <td>@dg.KullaniciTablosu.Ad @dg.KullaniciTablosu.Soyad</td>
+                            <td>@dg.Model</td>
+                            <td>@dg.BölgelerTablosu.Bölge</td>
+
+                            <td>
+                                @if (dg.Durumu == 2)
+                                {
+                                    <a href="/Arac/Rezervasyon/@dg.Aracid" class="btn btn-success form-control">Rezervasyon Oluştur</a>
+                                }
+                                else if (dg.Durumu == 1)
+                                {
+                                    <a href="#" class="view btn btn-warning form-control" data-target="/Arac/OnayTest/@dg.Aracid">Detay</a>
+                                }
+                                else if (dg.Durumu == 3)
+                                {
+                                    <a href="#" class="view btn btn-primary form-control" data-target="/Arac/OnayTest/@dg.Aracid">Detay</a>
+                                }
+                                else
+                                {
+                                    <a href="#" class="btn btn-danger form-control">Araç Kullanımda</a>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <hr style="border-block:1px solid black">
+        }
+        break;
+    }
+}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link href="~/Content/DataTables/css/dataTables.bootstrap4.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
+<script>
+    $('#tbl').dataTable({
+        language: {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+        }
+    });
+</script>
+
+
+
+

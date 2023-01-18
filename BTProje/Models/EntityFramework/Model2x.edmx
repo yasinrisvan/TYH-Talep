@@ -1,0 +1,1920 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="TYHTALEPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AraçRezTablosu">
+          <Key>
+            <PropertyRef Name="Rezid" />
+          </Key>
+          <Property Name="Rezid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Talepid" Type="int" />
+          <Property Name="LokasyonC" Type="int" />
+          <Property Name="LokasyonG" Type="int" />
+          <Property Name="TarihC" Type="date" />
+          <Property Name="TarihG" Type="date" />
+          <Property Name="SaatG" Type="time" Precision="7" />
+          <Property Name="SaatC" Type="time" Precision="7" />
+          <Property Name="Arac_id" Type="int" />
+          <Property Name="GuvenlikO1" Type="bit" />
+          <Property Name="GuvenlikO2" Type="bit" />
+          <Property Name="İdariOnay" Type="bit" />
+          <Property Name="YoneticiO" Type="bit" />
+          <Property Name="Yolcuid1" Type="int" />
+          <Property Name="Yolcuid2" Type="int" />
+          <Property Name="Yolcuid3" Type="int" />
+          <Property Name="Yolcuid4" Type="int" />
+        </EntityType>
+        <EntityType Name="AraçTablosu">
+          <Key>
+            <PropertyRef Name="Aracid" />
+          </Key>
+          <Property Name="Aracid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Plaka" Type="nvarchar" MaxLength="15" />
+          <Property Name="AracCikisKM" Type="int" />
+          <Property Name="AracDönüsKM" Type="int" />
+          <Property Name="Durumu" Type="bit" />
+          <Property Name="TahsisEdilen" Type="int" />
+          <Property Name="Model" Type="nvarchar" MaxLength="25" />
+          <Property Name="KullanilanBolge" Type="int" />
+        </EntityType>
+        <EntityType Name="BölgelerTablosu">
+          <Key>
+            <PropertyRef Name="Bölge_id" />
+          </Key>
+          <Property Name="Bölge_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Sehir" Type="int" />
+          <Property Name="Adres" Type="nvarchar" MaxLength="70" />
+          <Property Name="Bölge" Type="nvarchar" MaxLength="25" />
+        </EntityType>
+        <EntityType Name="DepartmanlarTablosu">
+          <Key>
+            <PropertyRef Name="Departman_id" />
+          </Key>
+          <Property Name="Departman_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ad" Type="nvarchar" MaxLength="80" />
+        </EntityType>
+        <EntityType Name="GonderimTuru">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="tinyint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ad" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Ithalat_Ihracat_Arac">
+          <Key>
+            <PropertyRef Name="ihracataracid" />
+          </Key>
+          <Property Name="ihracataracid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nakliyetur" Type="nvarchar" MaxLength="10" />
+          <Property Name="tasiyicifirmaad" Type="nvarchar" MaxLength="50" />
+          <Property Name="tasiyiciplaka" Type="nvarchar" MaxLength="20" />
+          <Property Name="soforadsoyad" Type="nvarchar" MaxLength="50" />
+          <Property Name="sofortc" Type="nvarchar" MaxLength="20" />
+          <Property Name="sofortel" Type="nvarchar" MaxLength="20" />
+          <Property Name="sevkyeri" Type="nvarchar" MaxLength="50" />
+          <Property Name="irsaliyeno" Type="nvarchar" MaxLength="50" />
+          <Property Name="muhurno" Type="nvarchar" MaxLength="50" />
+          <Property Name="koliadet" Type="nvarchar" MaxLength="50" />
+          <Property Name="giristarih" Type="datetime" />
+          <Property Name="cikistarih" Type="datetime" />
+          <Property Name="irsaliyetarih" Type="nvarchar" MaxLength="10" />
+          <Property Name="kullaniciid" Type="int" />
+          <Property Name="bolgeid" Type="int" />
+          <Property Name="ikincikullanici" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Kargo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CikisBolgesi" Type="int" />
+          <Property Name="CikisDepartman" Type="int" />
+          <Property Name="GonderenPersonelId" Type="int" />
+          <Property Name="GonderenAdSoyad" Type="nvarchar" MaxLength="50" />
+          <Property Name="Tarih" Type="datetime" />
+          <Property Name="Aciklama" Type="nvarchar" MaxLength="350" />
+          <Property Name="Adet" Type="tinyint" />
+          <Property Name="AliciAdSoyad" Type="nvarchar" MaxLength="50" />
+          <Property Name="AliciPersonelId" Type="int" />
+          <Property Name="VarisDepartman" Type="int" />
+          <Property Name="VarisBolgesi" Type="int" />
+          <Property Name="Donus" Type="nvarchar" MaxLength="150" />
+          <Property Name="Durum" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="KargoHareketleri">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="KargoNo" Type="int" />
+          <Property Name="TeslimAlanBolgeId" Type="int" />
+          <Property Name="TeslimAlanDepartmanId" Type="int" />
+          <Property Name="TeslimAlanPersonelAdSoyad" Type="nvarchar" MaxLength="50" />
+          <Property Name="TeslimAlanPersonelId" Type="int" />
+          <Property Name="GonderimTuruId" Type="tinyint" />
+          <Property Name="AracPlakaNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="KargoTakipNo" Type="nvarchar" MaxLength="30" />
+          <Property Name="Tarih" Type="datetime" />
+          <Property Name="Durum" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'TYHTALEP.dbo.KullaniciEmre' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="KullaniciEmre">
+          <Key>
+            <PropertyRef Name="Kullanici_id" />
+          </Key>
+          <Property Name="Kullanici_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ad" Type="varchar" MaxLength="30" />
+          <Property Name="Soyad" Type="varchar" MaxLength="30" />
+          <Property Name="TC" Type="varchar" MaxLength="11" />
+          <Property Name="SicilNo" Type="varchar" MaxLength="12" />
+          <Property Name="BölgeID" Type="int" />
+          <Property Name="DepatmanID" Type="int" />
+          <Property Name="TelefonNo" Type="varchar" MaxLength="20" />
+          <Property Name="Sifre" Type="nvarchar" MaxLength="20" />
+          <Property Name="RolTipi" Type="int" />
+          <Property Name="YetkiTipi" Type="int" />
+          <Property Name="MaliyetMNo" Type="nvarchar" MaxLength="8" />
+        </EntityType>
+        <EntityType Name="KullaniciTablosu">
+          <Key>
+            <PropertyRef Name="Kullanici_id" />
+          </Key>
+          <Property Name="Kullanici_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ad" Type="varchar" MaxLength="30" />
+          <Property Name="Soyad" Type="varchar" MaxLength="30" />
+          <Property Name="TC" Type="varchar" MaxLength="11" />
+          <Property Name="SicilNo" Type="varchar" MaxLength="12" />
+          <Property Name="BölgeID" Type="int" />
+          <Property Name="DepatmanID" Type="int" />
+          <Property Name="TelefonNo" Type="varchar" MaxLength="20" />
+          <Property Name="Sifre" Type="nvarchar" MaxLength="20" />
+          <Property Name="RolTipi" Type="int" />
+          <Property Name="YetkiTipi" Type="int" />
+          <Property Name="MaliyetMNo" Type="nvarchar" MaxLength="8" />
+        </EntityType>
+        <EntityType Name="Roller">
+          <Key>
+            <PropertyRef Name="Rol_id" />
+          </Key>
+          <Property Name="Rol_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RolAdı" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Sehirler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ad" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="SeyahatRezTablosu">
+          <Key>
+            <PropertyRef Name="SeyahatRezid" />
+          </Key>
+          <Property Name="SeyahatRezid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SeyahatTid" Type="int" />
+          <Property Name="SeyahatBasT" Type="date" />
+          <Property Name="SeyahatBitisT" Type="date" />
+          <Property Name="BaslamaYeri" Type="int" />
+          <Property Name="VarısYeri" Type="int" />
+          <Property Name="Yolcuid" Type="int" />
+          <Property Name="Konaklama" Type="nvarchar" MaxLength="5" />
+          <Property Name="MasrafM" Type="nvarchar" MaxLength="40" />
+          <Property Name="MasrafMKodu" Type="nvarchar" MaxLength="7" />
+        </EntityType>
+        <EntityType Name="SeyahatTipleriTablosu">
+          <Key>
+            <PropertyRef Name="Seyahat_id" />
+          </Key>
+          <Property Name="Seyahat_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SeyahatT" Type="nvarchar" MaxLength="30" />
+        </EntityType>
+        <EntityType Name="Sirket_Arac">
+          <Key>
+            <PropertyRef Name="sirketaracid" />
+          </Key>
+          <Property Name="sirketaracid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="aracid" Type="int" />
+          <Property Name="gorev" Type="nvarchar" MaxLength="50" />
+          <Property Name="soforadsoyad" Type="nvarchar" MaxLength="50" />
+          <Property Name="yolcuad" Type="nvarchar(max)" />
+          <Property Name="yolcubirim" Type="nvarchar(max)" />
+          <Property Name="yolcusayisi" Type="int" />
+          <Property Name="gidiskm" Type="int" />
+          <Property Name="donuskm" Type="int" />
+          <Property Name="gorevgidistarih" Type="datetime" />
+          <Property Name="gorevdonustarih" Type="datetime" />
+          <Property Name="donussoforad" Type="nvarchar" MaxLength="50" />
+          <Property Name="kullaniciid" Type="int" />
+          <Property Name="bolgeid" Type="int" />
+          <Property Name="ikincikullanici" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Yetki">
+          <Key>
+            <PropertyRef Name="Yetki_id" />
+          </Key>
+          <Property Name="Yetki_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="YetkiTipi" Type="nvarchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Yolcu">
+          <Key>
+            <PropertyRef Name="yolcuid" />
+          </Key>
+          <Property Name="yolcuid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="yolcuadsoyad" Type="nvarchar" MaxLength="50" />
+          <Property Name="yolcubirim" Type="nvarchar" MaxLength="80" />
+          <Property Name="gorevid" Type="int" />
+        </EntityType>
+        <EntityType Name="Ziyaretci">
+          <Key>
+            <PropertyRef Name="ziyaretciid" />
+          </Key>
+          <Property Name="ziyaretciid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="z_adsoyad" Type="nvarchar" MaxLength="50" />
+          <Property Name="ziyaretsebebi" Type="nvarchar" MaxLength="50" />
+          <Property Name="z_edilenadsoyad" Type="nvarchar" MaxLength="50" />
+          <Property Name="z_tcno" Type="nvarchar" MaxLength="20" />
+          <Property Name="kartno" Type="nvarchar" MaxLength="10" />
+          <Property Name="z_plaka" Type="nvarchar" MaxLength="20" />
+          <Property Name="z_giristarih" Type="datetime" />
+          <Property Name="z_cikistarih" Type="datetime" />
+          <Property Name="kullaniciid" Type="int" />
+          <Property Name="birimid" Type="int" />
+          <Property Name="bolgeid" Type="int" />
+          <Property Name="ikincikullanici" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_AraçTablosu_BölgelerTablosu">
+          <End Role="BölgelerTablosu" Type="Self.BölgelerTablosu" Multiplicity="0..1" />
+          <End Role="AraçTablosu" Type="Self.AraçTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BölgelerTablosu">
+              <PropertyRef Name="Bölge_id" />
+            </Principal>
+            <Dependent Role="AraçTablosu">
+              <PropertyRef Name="KullanilanBolge" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AraçTablosu_KullaniciTablosu">
+          <End Role="KullaniciTablosu" Type="Self.KullaniciTablosu" Multiplicity="0..1" />
+          <End Role="AraçTablosu" Type="Self.AraçTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KullaniciTablosu">
+              <PropertyRef Name="Kullanici_id" />
+            </Principal>
+            <Dependent Role="AraçTablosu">
+              <PropertyRef Name="TahsisEdilen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BölgelerTablosu_Sehirler">
+          <End Role="Sehirler" Type="Self.Sehirler" Multiplicity="0..1" />
+          <End Role="BölgelerTablosu" Type="Self.BölgelerTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sehirler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BölgelerTablosu">
+              <PropertyRef Name="Sehir" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ithalat_Ihracat_Arac_BölgelerTablosu">
+          <End Role="BölgelerTablosu" Type="Self.BölgelerTablosu" Multiplicity="0..1" />
+          <End Role="Ithalat_Ihracat_Arac" Type="Self.Ithalat_Ihracat_Arac" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BölgelerTablosu">
+              <PropertyRef Name="Bölge_id" />
+            </Principal>
+            <Dependent Role="Ithalat_Ihracat_Arac">
+              <PropertyRef Name="bolgeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ithalat_Ihracat_Arac_KullaniciTablosu">
+          <End Role="KullaniciTablosu" Type="Self.KullaniciTablosu" Multiplicity="0..1" />
+          <End Role="Ithalat_Ihracat_Arac" Type="Self.Ithalat_Ihracat_Arac" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KullaniciTablosu">
+              <PropertyRef Name="Kullanici_id" />
+            </Principal>
+            <Dependent Role="Ithalat_Ihracat_Arac">
+              <PropertyRef Name="kullaniciid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kargo_BölgelerTablosuC">
+          <End Role="BölgelerTablosu" Type="Self.BölgelerTablosu" Multiplicity="0..1" />
+          <End Role="Kargo" Type="Self.Kargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BölgelerTablosu">
+              <PropertyRef Name="Bölge_id" />
+            </Principal>
+            <Dependent Role="Kargo">
+              <PropertyRef Name="CikisBolgesi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kargo_BölgelerTablosuV">
+          <End Role="BölgelerTablosu" Type="Self.BölgelerTablosu" Multiplicity="0..1" />
+          <End Role="Kargo" Type="Self.Kargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BölgelerTablosu">
+              <PropertyRef Name="Bölge_id" />
+            </Principal>
+            <Dependent Role="Kargo">
+              <PropertyRef Name="VarisBolgesi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kargo_DepartmanlarTablosuC">
+          <End Role="DepartmanlarTablosu" Type="Self.DepartmanlarTablosu" Multiplicity="0..1" />
+          <End Role="Kargo" Type="Self.Kargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmanlarTablosu">
+              <PropertyRef Name="Departman_id" />
+            </Principal>
+            <Dependent Role="Kargo">
+              <PropertyRef Name="CikisDepartman" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kargo_DepartmanlarTablosuV">
+          <End Role="DepartmanlarTablosu" Type="Self.DepartmanlarTablosu" Multiplicity="0..1" />
+          <End Role="Kargo" Type="Self.Kargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmanlarTablosu">
+              <PropertyRef Name="Departman_id" />
+            </Principal>
+            <Dependent Role="Kargo">
+              <PropertyRef Name="VarisDepartman" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kargo_KullaniciTablosuA">
+          <End Role="KullaniciTablosu" Type="Self.KullaniciTablosu" Multiplicity="0..1" />
+          <End Role="Kargo" Type="Self.Kargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KullaniciTablosu">
+              <PropertyRef Name="Kullanici_id" />
+            </Principal>
+            <Dependent Role="Kargo">
+              <PropertyRef Name="AliciPersonelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kargo_KullaniciTablosuG">
+          <End Role="KullaniciTablosu" Type="Self.KullaniciTablosu" Multiplicity="0..1" />
+          <End Role="Kargo" Type="Self.Kargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KullaniciTablosu">
+              <PropertyRef Name="Kullanici_id" />
+            </Principal>
+            <Dependent Role="Kargo">
+              <PropertyRef Name="GonderenPersonelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KargoHareketleri_BölgelerTablosu">
+          <End Role="BölgelerTablosu" Type="Self.BölgelerTablosu" Multiplicity="0..1" />
+          <End Role="KargoHareketleri" Type="Self.KargoHareketleri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BölgelerTablosu">
+              <PropertyRef Name="Bölge_id" />
+            </Principal>
+            <Dependent Role="KargoHareketleri">
+              <PropertyRef Name="TeslimAlanBolgeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KargoHareketleri_DepartmanlarTablosu">
+          <End Role="DepartmanlarTablosu" Type="Self.DepartmanlarTablosu" Multiplicity="0..1" />
+          <End Role="KargoHareketleri" Type="Self.KargoHareketleri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmanlarTablosu">
+              <PropertyRef Name="Departman_id" />
+            </Principal>
+            <Dependent Role="KargoHareketleri">
+              <PropertyRef Name="TeslimAlanDepartmanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KargoHareketleri_GonderimTuru">
+          <End Role="GonderimTuru" Type="Self.GonderimTuru" Multiplicity="0..1" />
+          <End Role="KargoHareketleri" Type="Self.KargoHareketleri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GonderimTuru">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="KargoHareketleri">
+              <PropertyRef Name="GonderimTuruId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KargoHareketleri_Kargo">
+          <End Role="Kargo" Type="Self.Kargo" Multiplicity="0..1" />
+          <End Role="KargoHareketleri" Type="Self.KargoHareketleri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kargo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="KargoHareketleri">
+              <PropertyRef Name="KargoNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KargoHareketleri_KullaniciTablosu">
+          <End Role="KullaniciTablosu" Type="Self.KullaniciTablosu" Multiplicity="0..1" />
+          <End Role="KargoHareketleri" Type="Self.KargoHareketleri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KullaniciTablosu">
+              <PropertyRef Name="Kullanici_id" />
+            </Principal>
+            <Dependent Role="KargoHareketleri">
+              <PropertyRef Name="TeslimAlanPersonelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KullaniciTablosu_BölgelerTablosu">
+          <End Role="BölgelerTablosu" Type="Self.BölgelerTablosu" Multiplicity="0..1" />
+          <End Role="KullaniciTablosu" Type="Self.KullaniciTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BölgelerTablosu">
+              <PropertyRef Name="Bölge_id" />
+            </Principal>
+            <Dependent Role="KullaniciTablosu">
+              <PropertyRef Name="BölgeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KullaniciTablosu_DepartmanlarTablosu">
+          <End Role="DepartmanlarTablosu" Type="Self.DepartmanlarTablosu" Multiplicity="0..1" />
+          <End Role="KullaniciTablosu" Type="Self.KullaniciTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmanlarTablosu">
+              <PropertyRef Name="Departman_id" />
+            </Principal>
+            <Dependent Role="KullaniciTablosu">
+              <PropertyRef Name="DepatmanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KullaniciTablosu_Roller">
+          <End Role="Roller" Type="Self.Roller" Multiplicity="0..1" />
+          <End Role="KullaniciTablosu" Type="Self.KullaniciTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roller">
+              <PropertyRef Name="Rol_id" />
+            </Principal>
+            <Dependent Role="KullaniciTablosu">
+              <PropertyRef Name="RolTipi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KullaniciTablosu_Yetki">
+          <End Role="Yetki" Type="Self.Yetki" Multiplicity="0..1" />
+          <End Role="KullaniciTablosu" Type="Self.KullaniciTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Yetki">
+              <PropertyRef Name="Yetki_id" />
+            </Principal>
+            <Dependent Role="KullaniciTablosu">
+              <PropertyRef Name="YetkiTipi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SeyahatRezTablosu_BölgelerTablosu">
+          <End Role="BölgelerTablosu" Type="Self.BölgelerTablosu" Multiplicity="0..1" />
+          <End Role="SeyahatRezTablosu" Type="Self.SeyahatRezTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BölgelerTablosu">
+              <PropertyRef Name="Bölge_id" />
+            </Principal>
+            <Dependent Role="SeyahatRezTablosu">
+              <PropertyRef Name="VarısYeri" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SeyahatRezTablosu_BölgelerTablosu1">
+          <End Role="BölgelerTablosu" Type="Self.BölgelerTablosu" Multiplicity="0..1" />
+          <End Role="SeyahatRezTablosu" Type="Self.SeyahatRezTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BölgelerTablosu">
+              <PropertyRef Name="Bölge_id" />
+            </Principal>
+            <Dependent Role="SeyahatRezTablosu">
+              <PropertyRef Name="BaslamaYeri" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SeyahatRezTablosu_KullaniciTablosu">
+          <End Role="KullaniciTablosu" Type="Self.KullaniciTablosu" Multiplicity="0..1" />
+          <End Role="SeyahatRezTablosu" Type="Self.SeyahatRezTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KullaniciTablosu">
+              <PropertyRef Name="Kullanici_id" />
+            </Principal>
+            <Dependent Role="SeyahatRezTablosu">
+              <PropertyRef Name="Yolcuid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SeyahatRezTablosu_SeyahatTipleriTablosu">
+          <End Role="SeyahatTipleriTablosu" Type="Self.SeyahatTipleriTablosu" Multiplicity="0..1" />
+          <End Role="SeyahatRezTablosu" Type="Self.SeyahatRezTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SeyahatTipleriTablosu">
+              <PropertyRef Name="Seyahat_id" />
+            </Principal>
+            <Dependent Role="SeyahatRezTablosu">
+              <PropertyRef Name="SeyahatTid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sirket_Arac_AraçTablosu">
+          <End Role="AraçTablosu" Type="Self.AraçTablosu" Multiplicity="0..1" />
+          <End Role="Sirket_Arac" Type="Self.Sirket_Arac" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AraçTablosu">
+              <PropertyRef Name="Aracid" />
+            </Principal>
+            <Dependent Role="Sirket_Arac">
+              <PropertyRef Name="aracid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sirket_Arac_BölgelerTablosu">
+          <End Role="BölgelerTablosu" Type="Self.BölgelerTablosu" Multiplicity="0..1" />
+          <End Role="Sirket_Arac" Type="Self.Sirket_Arac" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BölgelerTablosu">
+              <PropertyRef Name="Bölge_id" />
+            </Principal>
+            <Dependent Role="Sirket_Arac">
+              <PropertyRef Name="bolgeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sirket_Arac_KullaniciTablosu">
+          <End Role="KullaniciTablosu" Type="Self.KullaniciTablosu" Multiplicity="0..1" />
+          <End Role="Sirket_Arac" Type="Self.Sirket_Arac" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KullaniciTablosu">
+              <PropertyRef Name="Kullanici_id" />
+            </Principal>
+            <Dependent Role="Sirket_Arac">
+              <PropertyRef Name="kullaniciid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yolcu_Sirket_Arac">
+          <End Role="Sirket_Arac" Type="Self.Sirket_Arac" Multiplicity="0..1" />
+          <End Role="Yolcu" Type="Self.Yolcu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sirket_Arac">
+              <PropertyRef Name="sirketaracid" />
+            </Principal>
+            <Dependent Role="Yolcu">
+              <PropertyRef Name="gorevid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ziyaretci_BölgelerTablosu">
+          <End Role="BölgelerTablosu" Type="Self.BölgelerTablosu" Multiplicity="0..1" />
+          <End Role="Ziyaretci" Type="Self.Ziyaretci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BölgelerTablosu">
+              <PropertyRef Name="Bölge_id" />
+            </Principal>
+            <Dependent Role="Ziyaretci">
+              <PropertyRef Name="bolgeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ziyaretci_DepartmanlarTablosu">
+          <End Role="DepartmanlarTablosu" Type="Self.DepartmanlarTablosu" Multiplicity="0..1" />
+          <End Role="Ziyaretci" Type="Self.Ziyaretci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmanlarTablosu">
+              <PropertyRef Name="Departman_id" />
+            </Principal>
+            <Dependent Role="Ziyaretci">
+              <PropertyRef Name="birimid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ziyaretci_KullaniciTablosu">
+          <End Role="KullaniciTablosu" Type="Self.KullaniciTablosu" Multiplicity="0..1" />
+          <End Role="Ziyaretci" Type="Self.Ziyaretci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KullaniciTablosu">
+              <PropertyRef Name="Kullanici_id" />
+            </Principal>
+            <Dependent Role="Ziyaretci">
+              <PropertyRef Name="kullaniciid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TYHTALEPModelStoreContainer">
+          <EntitySet Name="AraçRezTablosu" EntityType="Self.AraçRezTablosu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="AraçTablosu" EntityType="Self.AraçTablosu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="BölgelerTablosu" EntityType="Self.BölgelerTablosu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DepartmanlarTablosu" EntityType="Self.DepartmanlarTablosu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="GonderimTuru" EntityType="Self.GonderimTuru" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ithalat_Ihracat_Arac" EntityType="Self.Ithalat_Ihracat_Arac" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kargo" EntityType="Self.Kargo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KargoHareketleri" EntityType="Self.KargoHareketleri" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KullaniciTablosu" EntityType="Self.KullaniciTablosu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Roller" EntityType="Self.Roller" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sehirler" EntityType="Self.Sehirler" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SeyahatRezTablosu" EntityType="Self.SeyahatRezTablosu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SeyahatTipleriTablosu" EntityType="Self.SeyahatTipleriTablosu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Sirket_Arac" EntityType="Self.Sirket_Arac" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Yetki" EntityType="Self.Yetki" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Yolcu" EntityType="Self.Yolcu" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ziyaretci" EntityType="Self.Ziyaretci" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="KullaniciEmre" EntityType="Self.KullaniciEmre" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [KullaniciEmre].[Kullanici_id] AS [Kullanici_id], 
+    [KullaniciEmre].[Ad] AS [Ad], 
+    [KullaniciEmre].[Soyad] AS [Soyad], 
+    [KullaniciEmre].[TC] AS [TC], 
+    [KullaniciEmre].[SicilNo] AS [SicilNo], 
+    [KullaniciEmre].[BölgeID] AS [BölgeID], 
+    [KullaniciEmre].[DepatmanID] AS [DepatmanID], 
+    [KullaniciEmre].[TelefonNo] AS [TelefonNo], 
+    [KullaniciEmre].[Sifre] AS [Sifre], 
+    [KullaniciEmre].[RolTipi] AS [RolTipi], 
+    [KullaniciEmre].[YetkiTipi] AS [YetkiTipi], 
+    [KullaniciEmre].[MaliyetMNo] AS [MaliyetMNo]
+    FROM [dbo].[KullaniciEmre] AS [KullaniciEmre]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_AraçTablosu_BölgelerTablosu" Association="Self.FK_AraçTablosu_BölgelerTablosu">
+            <End Role="BölgelerTablosu" EntitySet="BölgelerTablosu" />
+            <End Role="AraçTablosu" EntitySet="AraçTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AraçTablosu_KullaniciTablosu" Association="Self.FK_AraçTablosu_KullaniciTablosu">
+            <End Role="KullaniciTablosu" EntitySet="KullaniciTablosu" />
+            <End Role="AraçTablosu" EntitySet="AraçTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BölgelerTablosu_Sehirler" Association="Self.FK_BölgelerTablosu_Sehirler">
+            <End Role="Sehirler" EntitySet="Sehirler" />
+            <End Role="BölgelerTablosu" EntitySet="BölgelerTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ithalat_Ihracat_Arac_BölgelerTablosu" Association="Self.FK_Ithalat_Ihracat_Arac_BölgelerTablosu">
+            <End Role="BölgelerTablosu" EntitySet="BölgelerTablosu" />
+            <End Role="Ithalat_Ihracat_Arac" EntitySet="Ithalat_Ihracat_Arac" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ithalat_Ihracat_Arac_KullaniciTablosu" Association="Self.FK_Ithalat_Ihracat_Arac_KullaniciTablosu">
+            <End Role="KullaniciTablosu" EntitySet="KullaniciTablosu" />
+            <End Role="Ithalat_Ihracat_Arac" EntitySet="Ithalat_Ihracat_Arac" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kargo_BölgelerTablosuC" Association="Self.FK_Kargo_BölgelerTablosuC">
+            <End Role="BölgelerTablosu" EntitySet="BölgelerTablosu" />
+            <End Role="Kargo" EntitySet="Kargo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kargo_BölgelerTablosuV" Association="Self.FK_Kargo_BölgelerTablosuV">
+            <End Role="BölgelerTablosu" EntitySet="BölgelerTablosu" />
+            <End Role="Kargo" EntitySet="Kargo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kargo_DepartmanlarTablosuC" Association="Self.FK_Kargo_DepartmanlarTablosuC">
+            <End Role="DepartmanlarTablosu" EntitySet="DepartmanlarTablosu" />
+            <End Role="Kargo" EntitySet="Kargo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kargo_DepartmanlarTablosuV" Association="Self.FK_Kargo_DepartmanlarTablosuV">
+            <End Role="DepartmanlarTablosu" EntitySet="DepartmanlarTablosu" />
+            <End Role="Kargo" EntitySet="Kargo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kargo_KullaniciTablosuA" Association="Self.FK_Kargo_KullaniciTablosuA">
+            <End Role="KullaniciTablosu" EntitySet="KullaniciTablosu" />
+            <End Role="Kargo" EntitySet="Kargo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kargo_KullaniciTablosuG" Association="Self.FK_Kargo_KullaniciTablosuG">
+            <End Role="KullaniciTablosu" EntitySet="KullaniciTablosu" />
+            <End Role="Kargo" EntitySet="Kargo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KargoHareketleri_BölgelerTablosu" Association="Self.FK_KargoHareketleri_BölgelerTablosu">
+            <End Role="BölgelerTablosu" EntitySet="BölgelerTablosu" />
+            <End Role="KargoHareketleri" EntitySet="KargoHareketleri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KargoHareketleri_DepartmanlarTablosu" Association="Self.FK_KargoHareketleri_DepartmanlarTablosu">
+            <End Role="DepartmanlarTablosu" EntitySet="DepartmanlarTablosu" />
+            <End Role="KargoHareketleri" EntitySet="KargoHareketleri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KargoHareketleri_GonderimTuru" Association="Self.FK_KargoHareketleri_GonderimTuru">
+            <End Role="GonderimTuru" EntitySet="GonderimTuru" />
+            <End Role="KargoHareketleri" EntitySet="KargoHareketleri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KargoHareketleri_Kargo" Association="Self.FK_KargoHareketleri_Kargo">
+            <End Role="Kargo" EntitySet="Kargo" />
+            <End Role="KargoHareketleri" EntitySet="KargoHareketleri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KargoHareketleri_KullaniciTablosu" Association="Self.FK_KargoHareketleri_KullaniciTablosu">
+            <End Role="KullaniciTablosu" EntitySet="KullaniciTablosu" />
+            <End Role="KargoHareketleri" EntitySet="KargoHareketleri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KullaniciTablosu_BölgelerTablosu" Association="Self.FK_KullaniciTablosu_BölgelerTablosu">
+            <End Role="BölgelerTablosu" EntitySet="BölgelerTablosu" />
+            <End Role="KullaniciTablosu" EntitySet="KullaniciTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KullaniciTablosu_DepartmanlarTablosu" Association="Self.FK_KullaniciTablosu_DepartmanlarTablosu">
+            <End Role="DepartmanlarTablosu" EntitySet="DepartmanlarTablosu" />
+            <End Role="KullaniciTablosu" EntitySet="KullaniciTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KullaniciTablosu_Roller" Association="Self.FK_KullaniciTablosu_Roller">
+            <End Role="Roller" EntitySet="Roller" />
+            <End Role="KullaniciTablosu" EntitySet="KullaniciTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KullaniciTablosu_Yetki" Association="Self.FK_KullaniciTablosu_Yetki">
+            <End Role="Yetki" EntitySet="Yetki" />
+            <End Role="KullaniciTablosu" EntitySet="KullaniciTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SeyahatRezTablosu_BölgelerTablosu" Association="Self.FK_SeyahatRezTablosu_BölgelerTablosu">
+            <End Role="BölgelerTablosu" EntitySet="BölgelerTablosu" />
+            <End Role="SeyahatRezTablosu" EntitySet="SeyahatRezTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SeyahatRezTablosu_BölgelerTablosu1" Association="Self.FK_SeyahatRezTablosu_BölgelerTablosu1">
+            <End Role="BölgelerTablosu" EntitySet="BölgelerTablosu" />
+            <End Role="SeyahatRezTablosu" EntitySet="SeyahatRezTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SeyahatRezTablosu_KullaniciTablosu" Association="Self.FK_SeyahatRezTablosu_KullaniciTablosu">
+            <End Role="KullaniciTablosu" EntitySet="KullaniciTablosu" />
+            <End Role="SeyahatRezTablosu" EntitySet="SeyahatRezTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SeyahatRezTablosu_SeyahatTipleriTablosu" Association="Self.FK_SeyahatRezTablosu_SeyahatTipleriTablosu">
+            <End Role="SeyahatTipleriTablosu" EntitySet="SeyahatTipleriTablosu" />
+            <End Role="SeyahatRezTablosu" EntitySet="SeyahatRezTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sirket_Arac_AraçTablosu" Association="Self.FK_Sirket_Arac_AraçTablosu">
+            <End Role="AraçTablosu" EntitySet="AraçTablosu" />
+            <End Role="Sirket_Arac" EntitySet="Sirket_Arac" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sirket_Arac_BölgelerTablosu" Association="Self.FK_Sirket_Arac_BölgelerTablosu">
+            <End Role="BölgelerTablosu" EntitySet="BölgelerTablosu" />
+            <End Role="Sirket_Arac" EntitySet="Sirket_Arac" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sirket_Arac_KullaniciTablosu" Association="Self.FK_Sirket_Arac_KullaniciTablosu">
+            <End Role="KullaniciTablosu" EntitySet="KullaniciTablosu" />
+            <End Role="Sirket_Arac" EntitySet="Sirket_Arac" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yolcu_Sirket_Arac" Association="Self.FK_Yolcu_Sirket_Arac">
+            <End Role="Sirket_Arac" EntitySet="Sirket_Arac" />
+            <End Role="Yolcu" EntitySet="Yolcu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ziyaretci_BölgelerTablosu" Association="Self.FK_Ziyaretci_BölgelerTablosu">
+            <End Role="BölgelerTablosu" EntitySet="BölgelerTablosu" />
+            <End Role="Ziyaretci" EntitySet="Ziyaretci" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ziyaretci_DepartmanlarTablosu" Association="Self.FK_Ziyaretci_DepartmanlarTablosu">
+            <End Role="DepartmanlarTablosu" EntitySet="DepartmanlarTablosu" />
+            <End Role="Ziyaretci" EntitySet="Ziyaretci" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ziyaretci_KullaniciTablosu" Association="Self.FK_Ziyaretci_KullaniciTablosu">
+            <End Role="KullaniciTablosu" EntitySet="KullaniciTablosu" />
+            <End Role="Ziyaretci" EntitySet="Ziyaretci" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TYHTALEPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="GonderimTuru">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Byte" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="KargoHareketleri" Relationship="Self.FK_KargoHareketleri_GonderimTuru" FromRole="GonderimTuru" ToRole="KargoHareketleri" />
+        </EntityType>
+        <EntityType Name="Kargo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CikisBolgesi" Type="Int32" />
+          <Property Name="CikisDepartman" Type="Int32" />
+          <Property Name="GonderenPersonelId" Type="Int32" />
+          <Property Name="Tarih" Type="DateTime" Precision="3" />
+          <Property Name="Aciklama" Type="String" MaxLength="350" FixedLength="false" Unicode="true" />
+          <Property Name="Adet" Type="Byte" />
+          <Property Name="AliciPersonelId" Type="Int32" />
+          <Property Name="VarisDepartman" Type="Int32" />
+          <Property Name="VarisBolgesi" Type="Int32" />
+          <Property Name="Durum" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="KargoHareketleri" Relationship="Self.FK_KargoHareketleri_Kargo" FromRole="Kargo" ToRole="KargoHareketleri" />
+          <Property Name="Donus" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BölgelerTablosu" Relationship="TYHTALEPModel.FK_Kargo_BölgelerTablosuC" FromRole="Kargo" ToRole="BölgelerTablosu" />
+          <NavigationProperty Name="BölgelerTablosu1" Relationship="TYHTALEPModel.FK_Kargo_BölgelerTablosuV" FromRole="Kargo" ToRole="BölgelerTablosu" />
+          <NavigationProperty Name="DepartmanlarTablosu" Relationship="TYHTALEPModel.FK_Kargo_DepartmanlarTablosuC" FromRole="Kargo" ToRole="DepartmanlarTablosu" />
+          <NavigationProperty Name="DepartmanlarTablosu1" Relationship="TYHTALEPModel.FK_Kargo_DepartmanlarTablosuV" FromRole="Kargo" ToRole="DepartmanlarTablosu" />
+          <Property Name="AliciAdSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="GonderenAdSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="KullaniciTablosu" Relationship="TYHTALEPModel.FK_Kargo_KullaniciTablosuA" FromRole="Kargo" ToRole="KullaniciTablosu" />
+          <NavigationProperty Name="KullaniciTablosu1" Relationship="TYHTALEPModel.FK_Kargo_KullaniciTablosuG" FromRole="Kargo" ToRole="KullaniciTablosu" />
+        </EntityType>
+        <EntityType Name="KargoHareketleri">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="KargoNo" Type="Int32" />
+          <Property Name="TeslimAlanBolgeId" Type="Int32" />
+          <Property Name="TeslimAlanDepartmanId" Type="Int32" />
+          <Property Name="TeslimAlanPersonelId" Type="Int32" />
+          <Property Name="GonderimTuruId" Type="Byte" />
+          <Property Name="AracPlakaNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="KargoTakipNo" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Tarih" Type="DateTime" Precision="3" />
+          <Property Name="Durum" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="GonderimTuru" Relationship="Self.FK_KargoHareketleri_GonderimTuru" FromRole="KargoHareketleri" ToRole="GonderimTuru" />
+          <NavigationProperty Name="Kargo" Relationship="Self.FK_KargoHareketleri_Kargo" FromRole="KargoHareketleri" ToRole="Kargo" />
+          <NavigationProperty Name="BölgelerTablosu" Relationship="TYHTALEPModel.FK_KargoHareketleri_BölgelerTablosu" FromRole="KargoHareketleri" ToRole="BölgelerTablosu" />
+          <NavigationProperty Name="DepartmanlarTablosu" Relationship="TYHTALEPModel.FK_KargoHareketleri_DepartmanlarTablosu" FromRole="KargoHareketleri" ToRole="DepartmanlarTablosu" />
+          <Property Name="TeslimAlanPersonelAdSoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="KullaniciTablosu" Relationship="TYHTALEPModel.FK_KargoHareketleri_KullaniciTablosu" FromRole="KargoHareketleri" ToRole="KullaniciTablosu" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <Association Name="FK_KargoHareketleri_GonderimTuru">
+          <End Role="GonderimTuru" Type="Self.GonderimTuru" Multiplicity="0..1" />
+          <End Role="KargoHareketleri" Type="Self.KargoHareketleri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GonderimTuru">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="KargoHareketleri">
+              <PropertyRef Name="GonderimTuruId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KargoHareketleri_Kargo">
+          <End Role="Kargo" Type="Self.Kargo" Multiplicity="0..1" />
+          <End Role="KargoHareketleri" Type="Self.KargoHareketleri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Kargo">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="KargoHareketleri">
+              <PropertyRef Name="KargoNo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TYHTALEPEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="GonderimTuru" EntityType="Self.GonderimTuru" />
+          <EntitySet Name="Kargo" EntityType="Self.Kargo" />
+          <EntitySet Name="KargoHareketleri" EntityType="Self.KargoHareketleri" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+          <AssociationSet Name="FK_KargoHareketleri_GonderimTuru" Association="Self.FK_KargoHareketleri_GonderimTuru">
+            <End Role="GonderimTuru" EntitySet="GonderimTuru" />
+            <End Role="KargoHareketleri" EntitySet="KargoHareketleri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KargoHareketleri_Kargo" Association="Self.FK_KargoHareketleri_Kargo">
+            <End Role="Kargo" EntitySet="Kargo" />
+            <End Role="KargoHareketleri" EntitySet="KargoHareketleri" />
+          </AssociationSet>
+          <EntitySet Name="BölgelerTablosu" EntityType="TYHTALEPModel.BölgelerTablosu" />
+          <EntitySet Name="DepartmanlarTablosu" EntityType="TYHTALEPModel.DepartmanlarTablosu" />
+          <EntitySet Name="Roller" EntityType="TYHTALEPModel.Roller" />
+          <EntitySet Name="Sehirler" EntityType="TYHTALEPModel.Sehirler" />
+          <EntitySet Name="Yetki" EntityType="TYHTALEPModel.Yetki" />
+          <AssociationSet Name="FK_BölgelerTablosu_Sehirler" Association="TYHTALEPModel.FK_BölgelerTablosu_Sehirler">
+            <End Role="Sehirler" EntitySet="Sehirler" />
+            <End Role="BölgelerTablosu" EntitySet="BölgelerTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kargo_BölgelerTablosuC" Association="TYHTALEPModel.FK_Kargo_BölgelerTablosuC">
+            <End Role="BölgelerTablosu" EntitySet="BölgelerTablosu" />
+            <End Role="Kargo" EntitySet="Kargo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kargo_BölgelerTablosuV" Association="TYHTALEPModel.FK_Kargo_BölgelerTablosuV">
+            <End Role="BölgelerTablosu" EntitySet="BölgelerTablosu" />
+            <End Role="Kargo" EntitySet="Kargo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KargoHareketleri_BölgelerTablosu" Association="TYHTALEPModel.FK_KargoHareketleri_BölgelerTablosu">
+            <End Role="BölgelerTablosu" EntitySet="BölgelerTablosu" />
+            <End Role="KargoHareketleri" EntitySet="KargoHareketleri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kargo_DepartmanlarTablosuC" Association="TYHTALEPModel.FK_Kargo_DepartmanlarTablosuC">
+            <End Role="DepartmanlarTablosu" EntitySet="DepartmanlarTablosu" />
+            <End Role="Kargo" EntitySet="Kargo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kargo_DepartmanlarTablosuV" Association="TYHTALEPModel.FK_Kargo_DepartmanlarTablosuV">
+            <End Role="DepartmanlarTablosu" EntitySet="DepartmanlarTablosu" />
+            <End Role="Kargo" EntitySet="Kargo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KargoHareketleri_DepartmanlarTablosu" Association="TYHTALEPModel.FK_KargoHareketleri_DepartmanlarTablosu">
+            <End Role="DepartmanlarTablosu" EntitySet="DepartmanlarTablosu" />
+            <End Role="KargoHareketleri" EntitySet="KargoHareketleri" />
+          </AssociationSet>
+          <EntitySet Name="Ziyaretci" EntityType="TYHTALEPModel.Ziyaretci" />
+          <AssociationSet Name="FK_Ziyaretci_BölgelerTablosu" Association="TYHTALEPModel.FK_Ziyaretci_BölgelerTablosu">
+            <End Role="BölgelerTablosu" EntitySet="BölgelerTablosu" />
+            <End Role="Ziyaretci" EntitySet="Ziyaretci" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ziyaretci_DepartmanlarTablosu" Association="TYHTALEPModel.FK_Ziyaretci_DepartmanlarTablosu">
+            <End Role="DepartmanlarTablosu" EntitySet="DepartmanlarTablosu" />
+            <End Role="Ziyaretci" EntitySet="Ziyaretci" />
+          </AssociationSet>
+          <EntitySet Name="Sirket_Arac" EntityType="TYHTALEPModel.Sirket_Arac" />
+          <EntitySet Name="Yolcu" EntityType="TYHTALEPModel.Yolcu" />
+          <AssociationSet Name="FK_Sirket_Arac_BölgelerTablosu" Association="TYHTALEPModel.FK_Sirket_Arac_BölgelerTablosu">
+            <End Role="BölgelerTablosu" EntitySet="BölgelerTablosu" />
+            <End Role="Sirket_Arac" EntitySet="Sirket_Arac" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yolcu_Sirket_Arac" Association="TYHTALEPModel.FK_Yolcu_Sirket_Arac">
+            <End Role="Sirket_Arac" EntitySet="Sirket_Arac" />
+            <End Role="Yolcu" EntitySet="Yolcu" />
+          </AssociationSet>
+          <EntitySet Name="AraçRezTablosu" EntityType="TYHTALEPModel.AraçRezTablosu" />
+          <EntitySet Name="SeyahatRezTablosu" EntityType="TYHTALEPModel.SeyahatRezTablosu" />
+          <EntitySet Name="SeyahatTipleriTablosu" EntityType="TYHTALEPModel.SeyahatTipleriTablosu" />
+          <AssociationSet Name="FK_SeyahatRezTablosu_BölgelerTablosu" Association="TYHTALEPModel.FK_SeyahatRezTablosu_BölgelerTablosu">
+            <End Role="BölgelerTablosu" EntitySet="BölgelerTablosu" />
+            <End Role="SeyahatRezTablosu" EntitySet="SeyahatRezTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SeyahatRezTablosu_BölgelerTablosu1" Association="TYHTALEPModel.FK_SeyahatRezTablosu_BölgelerTablosu1">
+            <End Role="BölgelerTablosu" EntitySet="BölgelerTablosu" />
+            <End Role="SeyahatRezTablosu" EntitySet="SeyahatRezTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SeyahatRezTablosu_SeyahatTipleriTablosu" Association="TYHTALEPModel.FK_SeyahatRezTablosu_SeyahatTipleriTablosu">
+            <End Role="SeyahatTipleriTablosu" EntitySet="SeyahatTipleriTablosu" />
+            <End Role="SeyahatRezTablosu" EntitySet="SeyahatRezTablosu" />
+          </AssociationSet>
+          <EntitySet Name="KullaniciTablosu" EntityType="TYHTALEPModel.KullaniciTablosu" />
+          <AssociationSet Name="FK_KullaniciTablosu_BölgelerTablosu" Association="TYHTALEPModel.FK_KullaniciTablosu_BölgelerTablosu">
+            <End Role="BölgelerTablosu" EntitySet="BölgelerTablosu" />
+            <End Role="KullaniciTablosu" EntitySet="KullaniciTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KullaniciTablosu_DepartmanlarTablosu" Association="TYHTALEPModel.FK_KullaniciTablosu_DepartmanlarTablosu">
+            <End Role="DepartmanlarTablosu" EntitySet="DepartmanlarTablosu" />
+            <End Role="KullaniciTablosu" EntitySet="KullaniciTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kargo_KullaniciTablosuA" Association="TYHTALEPModel.FK_Kargo_KullaniciTablosuA">
+            <End Role="KullaniciTablosu" EntitySet="KullaniciTablosu" />
+            <End Role="Kargo" EntitySet="Kargo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kargo_KullaniciTablosuG" Association="TYHTALEPModel.FK_Kargo_KullaniciTablosuG">
+            <End Role="KullaniciTablosu" EntitySet="KullaniciTablosu" />
+            <End Role="Kargo" EntitySet="Kargo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KargoHareketleri_KullaniciTablosu" Association="TYHTALEPModel.FK_KargoHareketleri_KullaniciTablosu">
+            <End Role="KullaniciTablosu" EntitySet="KullaniciTablosu" />
+            <End Role="KargoHareketleri" EntitySet="KargoHareketleri" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KullaniciTablosu_Roller" Association="TYHTALEPModel.FK_KullaniciTablosu_Roller">
+            <End Role="Roller" EntitySet="Roller" />
+            <End Role="KullaniciTablosu" EntitySet="KullaniciTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_KullaniciTablosu_Yetki" Association="TYHTALEPModel.FK_KullaniciTablosu_Yetki">
+            <End Role="Yetki" EntitySet="Yetki" />
+            <End Role="KullaniciTablosu" EntitySet="KullaniciTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SeyahatRezTablosu_KullaniciTablosu" Association="TYHTALEPModel.FK_SeyahatRezTablosu_KullaniciTablosu">
+            <End Role="KullaniciTablosu" EntitySet="KullaniciTablosu" />
+            <End Role="SeyahatRezTablosu" EntitySet="SeyahatRezTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sirket_Arac_KullaniciTablosu" Association="TYHTALEPModel.FK_Sirket_Arac_KullaniciTablosu">
+            <End Role="KullaniciTablosu" EntitySet="KullaniciTablosu" />
+            <End Role="Sirket_Arac" EntitySet="Sirket_Arac" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ziyaretci_KullaniciTablosu" Association="TYHTALEPModel.FK_Ziyaretci_KullaniciTablosu">
+            <End Role="KullaniciTablosu" EntitySet="KullaniciTablosu" />
+            <End Role="Ziyaretci" EntitySet="Ziyaretci" />
+          </AssociationSet>
+          <EntitySet Name="AraçTablosu" EntityType="TYHTALEPModel.AraçTablosu" />
+          <EntitySet Name="Ithalat_Ihracat_Arac" EntityType="TYHTALEPModel.Ithalat_Ihracat_Arac" />
+          <AssociationSet Name="FK_AraçTablosu_BölgelerTablosu" Association="TYHTALEPModel.FK_AraçTablosu_BölgelerTablosu">
+            <End Role="BölgelerTablosu" EntitySet="BölgelerTablosu" />
+            <End Role="AraçTablosu" EntitySet="AraçTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AraçTablosu_KullaniciTablosu" Association="TYHTALEPModel.FK_AraçTablosu_KullaniciTablosu">
+            <End Role="KullaniciTablosu" EntitySet="KullaniciTablosu" />
+            <End Role="AraçTablosu" EntitySet="AraçTablosu" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sirket_Arac_AraçTablosu" Association="TYHTALEPModel.FK_Sirket_Arac_AraçTablosu">
+            <End Role="AraçTablosu" EntitySet="AraçTablosu" />
+            <End Role="Sirket_Arac" EntitySet="Sirket_Arac" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ithalat_Ihracat_Arac_BölgelerTablosu" Association="TYHTALEPModel.FK_Ithalat_Ihracat_Arac_BölgelerTablosu">
+            <End Role="BölgelerTablosu" EntitySet="BölgelerTablosu" />
+            <End Role="Ithalat_Ihracat_Arac" EntitySet="Ithalat_Ihracat_Arac" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Ithalat_Ihracat_Arac_KullaniciTablosu" Association="TYHTALEPModel.FK_Ithalat_Ihracat_Arac_KullaniciTablosu">
+            <End Role="KullaniciTablosu" EntitySet="KullaniciTablosu" />
+            <End Role="Ithalat_Ihracat_Arac" EntitySet="Ithalat_Ihracat_Arac" />
+          </AssociationSet>
+          <EntitySet Name="KullaniciEmre" EntityType="TYHTALEPModel.KullaniciEmre" />
+          </EntityContainer>
+        <EntityType Name="BölgelerTablosu">
+          <Key>
+            <PropertyRef Name="Bölge_id" />
+          </Key>
+          <Property Name="Bölge_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Sehir" Type="Int32" />
+          <Property Name="Adres" Type="String" MaxLength="70" FixedLength="false" Unicode="true" />
+          <Property Name="Bölge" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Sehirler" Relationship="TYHTALEPModel.FK_BölgelerTablosu_Sehirler" FromRole="BölgelerTablosu" ToRole="Sehirler" />
+          <NavigationProperty Name="Kargo" Relationship="TYHTALEPModel.FK_Kargo_BölgelerTablosuC" FromRole="BölgelerTablosu" ToRole="Kargo" />
+          <NavigationProperty Name="Kargo1" Relationship="TYHTALEPModel.FK_Kargo_BölgelerTablosuV" FromRole="BölgelerTablosu" ToRole="Kargo" />
+          <NavigationProperty Name="KargoHareketleri" Relationship="TYHTALEPModel.FK_KargoHareketleri_BölgelerTablosu" FromRole="BölgelerTablosu" ToRole="KargoHareketleri" />
+          <NavigationProperty Name="Ziyaretci" Relationship="TYHTALEPModel.FK_Ziyaretci_BölgelerTablosu" FromRole="BölgelerTablosu" ToRole="Ziyaretci" />
+          <NavigationProperty Name="Sirket_Arac" Relationship="TYHTALEPModel.FK_Sirket_Arac_BölgelerTablosu" FromRole="BölgelerTablosu" ToRole="Sirket_Arac" />
+          <NavigationProperty Name="SeyahatRezTablosu" Relationship="TYHTALEPModel.FK_SeyahatRezTablosu_BölgelerTablosu" FromRole="BölgelerTablosu" ToRole="SeyahatRezTablosu" />
+          <NavigationProperty Name="SeyahatRezTablosu1" Relationship="TYHTALEPModel.FK_SeyahatRezTablosu_BölgelerTablosu1" FromRole="BölgelerTablosu" ToRole="SeyahatRezTablosu" />
+          <NavigationProperty Name="KullaniciTablosu" Relationship="TYHTALEPModel.FK_KullaniciTablosu_BölgelerTablosu" FromRole="BölgelerTablosu" ToRole="KullaniciTablosu" />
+          <NavigationProperty Name="AraçTablosu" Relationship="TYHTALEPModel.FK_AraçTablosu_BölgelerTablosu" FromRole="BölgelerTablosu" ToRole="AraçTablosu" />
+          <NavigationProperty Name="Ithalat_Ihracat_Arac" Relationship="TYHTALEPModel.FK_Ithalat_Ihracat_Arac_BölgelerTablosu" FromRole="BölgelerTablosu" ToRole="Ithalat_Ihracat_Arac" />
+        </EntityType>
+        <EntityType Name="DepartmanlarTablosu">
+          <Key>
+            <PropertyRef Name="Departman_id" />
+          </Key>
+          <Property Name="Departman_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ad" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Kargo" Relationship="TYHTALEPModel.FK_Kargo_DepartmanlarTablosuC" FromRole="DepartmanlarTablosu" ToRole="Kargo" />
+          <NavigationProperty Name="Kargo1" Relationship="TYHTALEPModel.FK_Kargo_DepartmanlarTablosuV" FromRole="DepartmanlarTablosu" ToRole="Kargo" />
+          <NavigationProperty Name="KargoHareketleri" Relationship="TYHTALEPModel.FK_KargoHareketleri_DepartmanlarTablosu" FromRole="DepartmanlarTablosu" ToRole="KargoHareketleri" />
+          <NavigationProperty Name="Ziyaretci" Relationship="TYHTALEPModel.FK_Ziyaretci_DepartmanlarTablosu" FromRole="DepartmanlarTablosu" ToRole="Ziyaretci" />
+          <NavigationProperty Name="KullaniciTablosu" Relationship="TYHTALEPModel.FK_KullaniciTablosu_DepartmanlarTablosu" FromRole="DepartmanlarTablosu" ToRole="KullaniciTablosu" />
+        </EntityType>
+        <EntityType Name="Roller">
+          <Key>
+            <PropertyRef Name="Rol_id" />
+          </Key>
+          <Property Name="Rol_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RolAdı" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="KullaniciTablosu" Relationship="TYHTALEPModel.FK_KullaniciTablosu_Roller" FromRole="Roller" ToRole="KullaniciTablosu" />
+        </EntityType>
+        <EntityType Name="Sehirler">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BölgelerTablosu" Relationship="TYHTALEPModel.FK_BölgelerTablosu_Sehirler" FromRole="Sehirler" ToRole="BölgelerTablosu" />
+        </EntityType>
+        <EntityType Name="Yetki">
+          <Key>
+            <PropertyRef Name="Yetki_id" />
+          </Key>
+          <Property Name="Yetki_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="YetkiTipi" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="KullaniciTablosu" Relationship="TYHTALEPModel.FK_KullaniciTablosu_Yetki" FromRole="Yetki" ToRole="KullaniciTablosu" />
+        </EntityType>
+        <Association Name="FK_BölgelerTablosu_Sehirler">
+          <End Type="TYHTALEPModel.Sehirler" Role="Sehirler" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.BölgelerTablosu" Role="BölgelerTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sehirler">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BölgelerTablosu">
+              <PropertyRef Name="Sehir" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kargo_BölgelerTablosuC">
+          <End Type="TYHTALEPModel.BölgelerTablosu" Role="BölgelerTablosu" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.Kargo" Role="Kargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BölgelerTablosu">
+              <PropertyRef Name="Bölge_id" />
+            </Principal>
+            <Dependent Role="Kargo">
+              <PropertyRef Name="CikisBolgesi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kargo_BölgelerTablosuV">
+          <End Type="TYHTALEPModel.BölgelerTablosu" Role="BölgelerTablosu" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.Kargo" Role="Kargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BölgelerTablosu">
+              <PropertyRef Name="Bölge_id" />
+            </Principal>
+            <Dependent Role="Kargo">
+              <PropertyRef Name="VarisBolgesi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KargoHareketleri_BölgelerTablosu">
+          <End Type="TYHTALEPModel.BölgelerTablosu" Role="BölgelerTablosu" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.KargoHareketleri" Role="KargoHareketleri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BölgelerTablosu">
+              <PropertyRef Name="Bölge_id" />
+            </Principal>
+            <Dependent Role="KargoHareketleri">
+              <PropertyRef Name="TeslimAlanBolgeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kargo_DepartmanlarTablosuC">
+          <End Type="TYHTALEPModel.DepartmanlarTablosu" Role="DepartmanlarTablosu" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.Kargo" Role="Kargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmanlarTablosu">
+              <PropertyRef Name="Departman_id" />
+            </Principal>
+            <Dependent Role="Kargo">
+              <PropertyRef Name="CikisDepartman" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kargo_DepartmanlarTablosuV">
+          <End Type="TYHTALEPModel.DepartmanlarTablosu" Role="DepartmanlarTablosu" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.Kargo" Role="Kargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmanlarTablosu">
+              <PropertyRef Name="Departman_id" />
+            </Principal>
+            <Dependent Role="Kargo">
+              <PropertyRef Name="VarisDepartman" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KargoHareketleri_DepartmanlarTablosu">
+          <End Type="TYHTALEPModel.DepartmanlarTablosu" Role="DepartmanlarTablosu" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.KargoHareketleri" Role="KargoHareketleri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmanlarTablosu">
+              <PropertyRef Name="Departman_id" />
+            </Principal>
+            <Dependent Role="KargoHareketleri">
+              <PropertyRef Name="TeslimAlanDepartmanId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Ziyaretci">
+          <Key>
+            <PropertyRef Name="ziyaretciid" />
+          </Key>
+          <Property Name="ziyaretciid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="z_adsoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ziyaretsebebi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="z_edilenadsoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="z_tcno" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="kartno" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="z_plaka" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="z_giristarih" Type="DateTime" Precision="3" />
+          <Property Name="z_cikistarih" Type="DateTime" Precision="3" />
+          <Property Name="kullaniciid" Type="Int32" />
+          <Property Name="birimid" Type="Int32" />
+          <Property Name="bolgeid" Type="Int32" />
+          <Property Name="ikincikullanici" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BölgelerTablosu" Relationship="TYHTALEPModel.FK_Ziyaretci_BölgelerTablosu" FromRole="Ziyaretci" ToRole="BölgelerTablosu" />
+          <NavigationProperty Name="DepartmanlarTablosu" Relationship="TYHTALEPModel.FK_Ziyaretci_DepartmanlarTablosu" FromRole="Ziyaretci" ToRole="DepartmanlarTablosu" />
+          <NavigationProperty Name="KullaniciTablosu" Relationship="TYHTALEPModel.FK_Ziyaretci_KullaniciTablosu" FromRole="Ziyaretci" ToRole="KullaniciTablosu" />
+        </EntityType>
+        <Association Name="FK_Ziyaretci_BölgelerTablosu">
+          <End Type="TYHTALEPModel.BölgelerTablosu" Role="BölgelerTablosu" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.Ziyaretci" Role="Ziyaretci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BölgelerTablosu">
+              <PropertyRef Name="Bölge_id" />
+            </Principal>
+            <Dependent Role="Ziyaretci">
+              <PropertyRef Name="bolgeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ziyaretci_DepartmanlarTablosu">
+          <End Type="TYHTALEPModel.DepartmanlarTablosu" Role="DepartmanlarTablosu" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.Ziyaretci" Role="Ziyaretci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmanlarTablosu">
+              <PropertyRef Name="Departman_id" />
+            </Principal>
+            <Dependent Role="Ziyaretci">
+              <PropertyRef Name="birimid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Sirket_Arac">
+          <Key>
+            <PropertyRef Name="sirketaracid" />
+          </Key>
+          <Property Name="sirketaracid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="aracid" Type="Int32" />
+          <Property Name="gorev" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="soforadsoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="yolcuad" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="yolcubirim" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="yolcusayisi" Type="Int32" />
+          <Property Name="gidiskm" Type="Int32" />
+          <Property Name="donuskm" Type="Int32" />
+          <Property Name="gorevgidistarih" Type="DateTime" Precision="3" />
+          <Property Name="gorevdonustarih" Type="DateTime" Precision="3" />
+          <Property Name="donussoforad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="kullaniciid" Type="Int32" />
+          <Property Name="bolgeid" Type="Int32" />
+          <Property Name="ikincikullanici" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BölgelerTablosu" Relationship="TYHTALEPModel.FK_Sirket_Arac_BölgelerTablosu" FromRole="Sirket_Arac" ToRole="BölgelerTablosu" />
+          <NavigationProperty Name="Yolcu" Relationship="TYHTALEPModel.FK_Yolcu_Sirket_Arac" FromRole="Sirket_Arac" ToRole="Yolcu" />
+          <NavigationProperty Name="KullaniciTablosu" Relationship="TYHTALEPModel.FK_Sirket_Arac_KullaniciTablosu" FromRole="Sirket_Arac" ToRole="KullaniciTablosu" />
+          <NavigationProperty Name="AraçTablosu" Relationship="TYHTALEPModel.FK_Sirket_Arac_AraçTablosu" FromRole="Sirket_Arac" ToRole="AraçTablosu" />
+        </EntityType>
+        <EntityType Name="Yolcu">
+          <Key>
+            <PropertyRef Name="yolcuid" />
+          </Key>
+          <Property Name="yolcuid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="yolcuadsoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="yolcubirim" Type="String" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="gorevid" Type="Int32" />
+          <NavigationProperty Name="Sirket_Arac" Relationship="TYHTALEPModel.FK_Yolcu_Sirket_Arac" FromRole="Yolcu" ToRole="Sirket_Arac" />
+        </EntityType>
+        <Association Name="FK_Sirket_Arac_BölgelerTablosu">
+          <End Type="TYHTALEPModel.BölgelerTablosu" Role="BölgelerTablosu" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.Sirket_Arac" Role="Sirket_Arac" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BölgelerTablosu">
+              <PropertyRef Name="Bölge_id" />
+            </Principal>
+            <Dependent Role="Sirket_Arac">
+              <PropertyRef Name="bolgeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yolcu_Sirket_Arac">
+          <End Type="TYHTALEPModel.Sirket_Arac" Role="Sirket_Arac" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.Yolcu" Role="Yolcu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Sirket_Arac">
+              <PropertyRef Name="sirketaracid" />
+            </Principal>
+            <Dependent Role="Yolcu">
+              <PropertyRef Name="gorevid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AraçRezTablosu">
+          <Key>
+            <PropertyRef Name="Rezid" />
+          </Key>
+          <Property Name="Rezid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Talepid" Type="Int32" />
+          <Property Name="LokasyonC" Type="Int32" />
+          <Property Name="LokasyonG" Type="Int32" />
+          <Property Name="TarihC" Type="DateTime" Precision="0" />
+          <Property Name="TarihG" Type="DateTime" Precision="0" />
+          <Property Name="SaatG" Type="Time" Precision="7" />
+          <Property Name="SaatC" Type="Time" Precision="7" />
+          <Property Name="Arac_id" Type="Int32" />
+          <Property Name="GuvenlikO1" Type="Boolean" />
+          <Property Name="GuvenlikO2" Type="Boolean" />
+          <Property Name="İdariOnay" Type="Boolean" />
+          <Property Name="YoneticiO" Type="Boolean" />
+          <Property Name="Yolcuid1" Type="Int32" />
+          <Property Name="Yolcuid2" Type="Int32" />
+          <Property Name="Yolcuid3" Type="Int32" />
+          <Property Name="Yolcuid4" Type="Int32" />
+        </EntityType>
+        <EntityType Name="SeyahatRezTablosu">
+          <Key>
+            <PropertyRef Name="SeyahatRezid" />
+          </Key>
+          <Property Name="SeyahatRezid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SeyahatTid" Type="Int32" />
+          <Property Name="SeyahatBasT" Type="DateTime" Precision="0" />
+          <Property Name="SeyahatBitisT" Type="DateTime" Precision="0" />
+          <Property Name="BaslamaYeri" Type="Int32" />
+          <Property Name="VarısYeri" Type="Int32" />
+          <Property Name="Yolcuid" Type="Int32" />
+          <Property Name="Konaklama" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="MasrafM" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="MasrafMKodu" Type="String" MaxLength="7" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BölgelerTablosu" Relationship="TYHTALEPModel.FK_SeyahatRezTablosu_BölgelerTablosu" FromRole="SeyahatRezTablosu" ToRole="BölgelerTablosu" />
+          <NavigationProperty Name="BölgelerTablosu1" Relationship="TYHTALEPModel.FK_SeyahatRezTablosu_BölgelerTablosu1" FromRole="SeyahatRezTablosu" ToRole="BölgelerTablosu" />
+          <NavigationProperty Name="SeyahatTipleriTablosu" Relationship="TYHTALEPModel.FK_SeyahatRezTablosu_SeyahatTipleriTablosu" FromRole="SeyahatRezTablosu" ToRole="SeyahatTipleriTablosu" />
+          <NavigationProperty Name="KullaniciTablosu" Relationship="TYHTALEPModel.FK_SeyahatRezTablosu_KullaniciTablosu" FromRole="SeyahatRezTablosu" ToRole="KullaniciTablosu" />
+        </EntityType>
+        <EntityType Name="SeyahatTipleriTablosu">
+          <Key>
+            <PropertyRef Name="Seyahat_id" />
+          </Key>
+          <Property Name="Seyahat_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SeyahatT" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="SeyahatRezTablosu" Relationship="TYHTALEPModel.FK_SeyahatRezTablosu_SeyahatTipleriTablosu" FromRole="SeyahatTipleriTablosu" ToRole="SeyahatRezTablosu" />
+        </EntityType>
+        <Association Name="FK_SeyahatRezTablosu_BölgelerTablosu">
+          <End Type="TYHTALEPModel.BölgelerTablosu" Role="BölgelerTablosu" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.SeyahatRezTablosu" Role="SeyahatRezTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BölgelerTablosu">
+              <PropertyRef Name="Bölge_id" />
+            </Principal>
+            <Dependent Role="SeyahatRezTablosu">
+              <PropertyRef Name="VarısYeri" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SeyahatRezTablosu_BölgelerTablosu1">
+          <End Type="TYHTALEPModel.BölgelerTablosu" Role="BölgelerTablosu" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.SeyahatRezTablosu" Role="SeyahatRezTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BölgelerTablosu">
+              <PropertyRef Name="Bölge_id" />
+            </Principal>
+            <Dependent Role="SeyahatRezTablosu">
+              <PropertyRef Name="BaslamaYeri" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SeyahatRezTablosu_SeyahatTipleriTablosu">
+          <End Type="TYHTALEPModel.SeyahatTipleriTablosu" Role="SeyahatTipleriTablosu" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.SeyahatRezTablosu" Role="SeyahatRezTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SeyahatTipleriTablosu">
+              <PropertyRef Name="Seyahat_id" />
+            </Principal>
+            <Dependent Role="SeyahatRezTablosu">
+              <PropertyRef Name="SeyahatTid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="KullaniciTablosu">
+          <Key>
+            <PropertyRef Name="Kullanici_id" />
+          </Key>
+          <Property Name="Kullanici_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ad" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Soyad" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="TC" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="SicilNo" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="BölgeID" Type="Int32" />
+          <Property Name="DepatmanID" Type="Int32" />
+          <Property Name="TelefonNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Sifre" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RolTipi" Type="Int32" />
+          <Property Name="YetkiTipi" Type="Int32" />
+          <Property Name="MaliyetMNo" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BölgelerTablosu" Relationship="TYHTALEPModel.FK_KullaniciTablosu_BölgelerTablosu" FromRole="KullaniciTablosu" ToRole="BölgelerTablosu" />
+          <NavigationProperty Name="DepartmanlarTablosu" Relationship="TYHTALEPModel.FK_KullaniciTablosu_DepartmanlarTablosu" FromRole="KullaniciTablosu" ToRole="DepartmanlarTablosu" />
+          <NavigationProperty Name="Kargo" Relationship="TYHTALEPModel.FK_Kargo_KullaniciTablosuA" FromRole="KullaniciTablosu" ToRole="Kargo" />
+          <NavigationProperty Name="Kargo1" Relationship="TYHTALEPModel.FK_Kargo_KullaniciTablosuG" FromRole="KullaniciTablosu" ToRole="Kargo" />
+          <NavigationProperty Name="KargoHareketleri" Relationship="TYHTALEPModel.FK_KargoHareketleri_KullaniciTablosu" FromRole="KullaniciTablosu" ToRole="KargoHareketleri" />
+          <NavigationProperty Name="Roller" Relationship="TYHTALEPModel.FK_KullaniciTablosu_Roller" FromRole="KullaniciTablosu" ToRole="Roller" />
+          <NavigationProperty Name="Yetki" Relationship="TYHTALEPModel.FK_KullaniciTablosu_Yetki" FromRole="KullaniciTablosu" ToRole="Yetki" />
+          <NavigationProperty Name="SeyahatRezTablosu" Relationship="TYHTALEPModel.FK_SeyahatRezTablosu_KullaniciTablosu" FromRole="KullaniciTablosu" ToRole="SeyahatRezTablosu" />
+          <NavigationProperty Name="Sirket_Arac" Relationship="TYHTALEPModel.FK_Sirket_Arac_KullaniciTablosu" FromRole="KullaniciTablosu" ToRole="Sirket_Arac" />
+          <NavigationProperty Name="Ziyaretci" Relationship="TYHTALEPModel.FK_Ziyaretci_KullaniciTablosu" FromRole="KullaniciTablosu" ToRole="Ziyaretci" />
+          <NavigationProperty Name="AraçTablosu" Relationship="TYHTALEPModel.FK_AraçTablosu_KullaniciTablosu" FromRole="KullaniciTablosu" ToRole="AraçTablosu" />
+          <NavigationProperty Name="Ithalat_Ihracat_Arac" Relationship="TYHTALEPModel.FK_Ithalat_Ihracat_Arac_KullaniciTablosu" FromRole="KullaniciTablosu" ToRole="Ithalat_Ihracat_Arac" />
+        </EntityType>
+        <Association Name="FK_KullaniciTablosu_BölgelerTablosu">
+          <End Type="TYHTALEPModel.BölgelerTablosu" Role="BölgelerTablosu" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.KullaniciTablosu" Role="KullaniciTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BölgelerTablosu">
+              <PropertyRef Name="Bölge_id" />
+            </Principal>
+            <Dependent Role="KullaniciTablosu">
+              <PropertyRef Name="BölgeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KullaniciTablosu_DepartmanlarTablosu">
+          <End Type="TYHTALEPModel.DepartmanlarTablosu" Role="DepartmanlarTablosu" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.KullaniciTablosu" Role="KullaniciTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DepartmanlarTablosu">
+              <PropertyRef Name="Departman_id" />
+            </Principal>
+            <Dependent Role="KullaniciTablosu">
+              <PropertyRef Name="DepatmanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kargo_KullaniciTablosuA">
+          <End Type="TYHTALEPModel.KullaniciTablosu" Role="KullaniciTablosu" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.Kargo" Role="Kargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KullaniciTablosu">
+              <PropertyRef Name="Kullanici_id" />
+            </Principal>
+            <Dependent Role="Kargo">
+              <PropertyRef Name="AliciPersonelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kargo_KullaniciTablosuG">
+          <End Type="TYHTALEPModel.KullaniciTablosu" Role="KullaniciTablosu" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.Kargo" Role="Kargo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KullaniciTablosu">
+              <PropertyRef Name="Kullanici_id" />
+            </Principal>
+            <Dependent Role="Kargo">
+              <PropertyRef Name="GonderenPersonelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KargoHareketleri_KullaniciTablosu">
+          <End Type="TYHTALEPModel.KullaniciTablosu" Role="KullaniciTablosu" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.KargoHareketleri" Role="KargoHareketleri" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KullaniciTablosu">
+              <PropertyRef Name="Kullanici_id" />
+            </Principal>
+            <Dependent Role="KargoHareketleri">
+              <PropertyRef Name="TeslimAlanPersonelId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KullaniciTablosu_Roller">
+          <End Type="TYHTALEPModel.Roller" Role="Roller" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.KullaniciTablosu" Role="KullaniciTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Roller">
+              <PropertyRef Name="Rol_id" />
+            </Principal>
+            <Dependent Role="KullaniciTablosu">
+              <PropertyRef Name="RolTipi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_KullaniciTablosu_Yetki">
+          <End Type="TYHTALEPModel.Yetki" Role="Yetki" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.KullaniciTablosu" Role="KullaniciTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Yetki">
+              <PropertyRef Name="Yetki_id" />
+            </Principal>
+            <Dependent Role="KullaniciTablosu">
+              <PropertyRef Name="YetkiTipi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SeyahatRezTablosu_KullaniciTablosu">
+          <End Type="TYHTALEPModel.KullaniciTablosu" Role="KullaniciTablosu" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.SeyahatRezTablosu" Role="SeyahatRezTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KullaniciTablosu">
+              <PropertyRef Name="Kullanici_id" />
+            </Principal>
+            <Dependent Role="SeyahatRezTablosu">
+              <PropertyRef Name="Yolcuid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sirket_Arac_KullaniciTablosu">
+          <End Type="TYHTALEPModel.KullaniciTablosu" Role="KullaniciTablosu" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.Sirket_Arac" Role="Sirket_Arac" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KullaniciTablosu">
+              <PropertyRef Name="Kullanici_id" />
+            </Principal>
+            <Dependent Role="Sirket_Arac">
+              <PropertyRef Name="kullaniciid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ziyaretci_KullaniciTablosu">
+          <End Type="TYHTALEPModel.KullaniciTablosu" Role="KullaniciTablosu" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.Ziyaretci" Role="Ziyaretci" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KullaniciTablosu">
+              <PropertyRef Name="Kullanici_id" />
+            </Principal>
+            <Dependent Role="Ziyaretci">
+              <PropertyRef Name="kullaniciid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="AraçTablosu">
+          <Key>
+            <PropertyRef Name="Aracid" />
+          </Key>
+          <Property Name="Aracid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Plaka" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="AracCikisKM" Type="Int32" />
+          <Property Name="AracDönüsKM" Type="Int32" />
+          <Property Name="Durumu" Type="Boolean" />
+          <Property Name="TahsisEdilen" Type="Int32" />
+          <Property Name="Model" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="KullanilanBolge" Type="Int32" />
+          <NavigationProperty Name="BölgelerTablosu" Relationship="TYHTALEPModel.FK_AraçTablosu_BölgelerTablosu" FromRole="AraçTablosu" ToRole="BölgelerTablosu" />
+          <NavigationProperty Name="KullaniciTablosu" Relationship="TYHTALEPModel.FK_AraçTablosu_KullaniciTablosu" FromRole="AraçTablosu" ToRole="KullaniciTablosu" />
+          <NavigationProperty Name="Sirket_Arac" Relationship="TYHTALEPModel.FK_Sirket_Arac_AraçTablosu" FromRole="AraçTablosu" ToRole="Sirket_Arac" />
+        </EntityType>
+        <EntityType Name="Ithalat_Ihracat_Arac">
+          <Key>
+            <PropertyRef Name="ihracataracid" />
+          </Key>
+          <Property Name="ihracataracid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nakliyetur" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="tasiyicifirmaad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="tasiyiciplaka" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="soforadsoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="sofortc" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="sofortel" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="sevkyeri" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="irsaliyeno" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="muhurno" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="koliadet" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="giristarih" Type="DateTime" Precision="3" />
+          <Property Name="cikistarih" Type="DateTime" Precision="3" />
+          <Property Name="irsaliyetarih" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="kullaniciid" Type="Int32" />
+          <Property Name="bolgeid" Type="Int32" />
+          <Property Name="ikincikullanici" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="BölgelerTablosu" Relationship="TYHTALEPModel.FK_Ithalat_Ihracat_Arac_BölgelerTablosu" FromRole="Ithalat_Ihracat_Arac" ToRole="BölgelerTablosu" />
+          <NavigationProperty Name="KullaniciTablosu" Relationship="TYHTALEPModel.FK_Ithalat_Ihracat_Arac_KullaniciTablosu" FromRole="Ithalat_Ihracat_Arac" ToRole="KullaniciTablosu" />
+        </EntityType>
+        <Association Name="FK_AraçTablosu_BölgelerTablosu">
+          <End Type="TYHTALEPModel.BölgelerTablosu" Role="BölgelerTablosu" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.AraçTablosu" Role="AraçTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BölgelerTablosu">
+              <PropertyRef Name="Bölge_id" />
+            </Principal>
+            <Dependent Role="AraçTablosu">
+              <PropertyRef Name="KullanilanBolge" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AraçTablosu_KullaniciTablosu">
+          <End Type="TYHTALEPModel.KullaniciTablosu" Role="KullaniciTablosu" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.AraçTablosu" Role="AraçTablosu" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KullaniciTablosu">
+              <PropertyRef Name="Kullanici_id" />
+            </Principal>
+            <Dependent Role="AraçTablosu">
+              <PropertyRef Name="TahsisEdilen" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sirket_Arac_AraçTablosu">
+          <End Type="TYHTALEPModel.AraçTablosu" Role="AraçTablosu" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.Sirket_Arac" Role="Sirket_Arac" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AraçTablosu">
+              <PropertyRef Name="Aracid" />
+            </Principal>
+            <Dependent Role="Sirket_Arac">
+              <PropertyRef Name="aracid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ithalat_Ihracat_Arac_BölgelerTablosu">
+          <End Type="TYHTALEPModel.BölgelerTablosu" Role="BölgelerTablosu" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.Ithalat_Ihracat_Arac" Role="Ithalat_Ihracat_Arac" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BölgelerTablosu">
+              <PropertyRef Name="Bölge_id" />
+            </Principal>
+            <Dependent Role="Ithalat_Ihracat_Arac">
+              <PropertyRef Name="bolgeid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Ithalat_Ihracat_Arac_KullaniciTablosu">
+          <End Type="TYHTALEPModel.KullaniciTablosu" Role="KullaniciTablosu" Multiplicity="0..1" />
+          <End Type="TYHTALEPModel.Ithalat_Ihracat_Arac" Role="Ithalat_Ihracat_Arac" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="KullaniciTablosu">
+              <PropertyRef Name="Kullanici_id" />
+            </Principal>
+            <Dependent Role="Ithalat_Ihracat_Arac">
+              <PropertyRef Name="kullaniciid" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="KullaniciEmre">
+          <Key>
+            <PropertyRef Name="Kullanici_id" />
+          </Key>
+          <Property Name="Kullanici_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ad" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="Soyad" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="TC" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="SicilNo" Type="String" MaxLength="12" FixedLength="false" Unicode="false" />
+          <Property Name="BölgeID" Type="Int32" />
+          <Property Name="DepatmanID" Type="Int32" />
+          <Property Name="TelefonNo" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Sifre" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="RolTipi" Type="Int32" />
+          <Property Name="YetkiTipi" Type="Int32" />
+          <Property Name="MaliyetMNo" Type="String" MaxLength="8" FixedLength="false" Unicode="true" />
+        </EntityType>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TYHTALEPModelStoreContainer" CdmEntityContainer="TYHTALEPEntities">
+          <EntitySetMapping Name="GonderimTuru">
+            <EntityTypeMapping TypeName="TYHTALEPModel.GonderimTuru">
+              <MappingFragment StoreEntitySet="GonderimTuru">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kargo">
+            <EntityTypeMapping TypeName="TYHTALEPModel.Kargo">
+              <MappingFragment StoreEntitySet="Kargo">
+                <ScalarProperty Name="GonderenAdSoyad" ColumnName="GonderenAdSoyad" />
+                <ScalarProperty Name="AliciAdSoyad" ColumnName="AliciAdSoyad" />
+                <ScalarProperty Name="Donus" ColumnName="Donus" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="CikisBolgesi" ColumnName="CikisBolgesi" />
+                <ScalarProperty Name="CikisDepartman" ColumnName="CikisDepartman" />
+                <ScalarProperty Name="GonderenPersonelId" ColumnName="GonderenPersonelId" />
+                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+                <ScalarProperty Name="Aciklama" ColumnName="Aciklama" />
+                <ScalarProperty Name="Adet" ColumnName="Adet" />
+                <ScalarProperty Name="AliciPersonelId" ColumnName="AliciPersonelId" />
+                <ScalarProperty Name="VarisDepartman" ColumnName="VarisDepartman" />
+                <ScalarProperty Name="VarisBolgesi" ColumnName="VarisBolgesi" />
+                <ScalarProperty Name="Durum" ColumnName="Durum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KargoHareketleri">
+            <EntityTypeMapping TypeName="TYHTALEPModel.KargoHareketleri">
+              <MappingFragment StoreEntitySet="KargoHareketleri">
+                <ScalarProperty Name="TeslimAlanPersonelAdSoyad" ColumnName="TeslimAlanPersonelAdSoyad" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="KargoNo" ColumnName="KargoNo" />
+                <ScalarProperty Name="TeslimAlanBolgeId" ColumnName="TeslimAlanBolgeId" />
+                <ScalarProperty Name="TeslimAlanDepartmanId" ColumnName="TeslimAlanDepartmanId" />
+                <ScalarProperty Name="TeslimAlanPersonelId" ColumnName="TeslimAlanPersonelId" />
+                <ScalarProperty Name="GonderimTuruId" ColumnName="GonderimTuruId" />
+                <ScalarProperty Name="AracPlakaNo" ColumnName="AracPlakaNo" />
+                <ScalarProperty Name="KargoTakipNo" ColumnName="KargoTakipNo" />
+                <ScalarProperty Name="Tarih" ColumnName="Tarih" />
+                <ScalarProperty Name="Durum" ColumnName="Durum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="TYHTALEPModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="BölgelerTablosu">
+            <EntityTypeMapping TypeName="TYHTALEPModel.BölgelerTablosu">
+              <MappingFragment StoreEntitySet="BölgelerTablosu">
+                <ScalarProperty Name="Bölge" ColumnName="Bölge" />
+                <ScalarProperty Name="Adres" ColumnName="Adres" />
+                <ScalarProperty Name="Sehir" ColumnName="Sehir" />
+                <ScalarProperty Name="Bölge_id" ColumnName="Bölge_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DepartmanlarTablosu">
+            <EntityTypeMapping TypeName="TYHTALEPModel.DepartmanlarTablosu">
+              <MappingFragment StoreEntitySet="DepartmanlarTablosu">
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Departman_id" ColumnName="Departman_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roller">
+            <EntityTypeMapping TypeName="TYHTALEPModel.Roller">
+              <MappingFragment StoreEntitySet="Roller">
+                <ScalarProperty Name="RolAdı" ColumnName="RolAdı" />
+                <ScalarProperty Name="Rol_id" ColumnName="Rol_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sehirler">
+            <EntityTypeMapping TypeName="TYHTALEPModel.Sehirler">
+              <MappingFragment StoreEntitySet="Sehirler">
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Yetki">
+            <EntityTypeMapping TypeName="TYHTALEPModel.Yetki">
+              <MappingFragment StoreEntitySet="Yetki">
+                <ScalarProperty Name="YetkiTipi" ColumnName="YetkiTipi" />
+                <ScalarProperty Name="Yetki_id" ColumnName="Yetki_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ziyaretci">
+            <EntityTypeMapping TypeName="TYHTALEPModel.Ziyaretci">
+              <MappingFragment StoreEntitySet="Ziyaretci">
+                <ScalarProperty Name="ikincikullanici" ColumnName="ikincikullanici" />
+                <ScalarProperty Name="bolgeid" ColumnName="bolgeid" />
+                <ScalarProperty Name="birimid" ColumnName="birimid" />
+                <ScalarProperty Name="kullaniciid" ColumnName="kullaniciid" />
+                <ScalarProperty Name="z_cikistarih" ColumnName="z_cikistarih" />
+                <ScalarProperty Name="z_giristarih" ColumnName="z_giristarih" />
+                <ScalarProperty Name="z_plaka" ColumnName="z_plaka" />
+                <ScalarProperty Name="kartno" ColumnName="kartno" />
+                <ScalarProperty Name="z_tcno" ColumnName="z_tcno" />
+                <ScalarProperty Name="z_edilenadsoyad" ColumnName="z_edilenadsoyad" />
+                <ScalarProperty Name="ziyaretsebebi" ColumnName="ziyaretsebebi" />
+                <ScalarProperty Name="z_adsoyad" ColumnName="z_adsoyad" />
+                <ScalarProperty Name="ziyaretciid" ColumnName="ziyaretciid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Sirket_Arac">
+            <EntityTypeMapping TypeName="TYHTALEPModel.Sirket_Arac">
+              <MappingFragment StoreEntitySet="Sirket_Arac">
+                <ScalarProperty Name="ikincikullanici" ColumnName="ikincikullanici" />
+                <ScalarProperty Name="bolgeid" ColumnName="bolgeid" />
+                <ScalarProperty Name="kullaniciid" ColumnName="kullaniciid" />
+                <ScalarProperty Name="donussoforad" ColumnName="donussoforad" />
+                <ScalarProperty Name="gorevdonustarih" ColumnName="gorevdonustarih" />
+                <ScalarProperty Name="gorevgidistarih" ColumnName="gorevgidistarih" />
+                <ScalarProperty Name="donuskm" ColumnName="donuskm" />
+                <ScalarProperty Name="gidiskm" ColumnName="gidiskm" />
+                <ScalarProperty Name="yolcusayisi" ColumnName="yolcusayisi" />
+                <ScalarProperty Name="yolcubirim" ColumnName="yolcubirim" />
+                <ScalarProperty Name="yolcuad" ColumnName="yolcuad" />
+                <ScalarProperty Name="soforadsoyad" ColumnName="soforadsoyad" />
+                <ScalarProperty Name="gorev" ColumnName="gorev" />
+                <ScalarProperty Name="aracid" ColumnName="aracid" />
+                <ScalarProperty Name="sirketaracid" ColumnName="sirketaracid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Yolcu">
+            <EntityTypeMapping TypeName="TYHTALEPModel.Yolcu">
+              <MappingFragment StoreEntitySet="Yolcu">
+                <ScalarProperty Name="gorevid" ColumnName="gorevid" />
+                <ScalarProperty Name="yolcubirim" ColumnName="yolcubirim" />
+                <ScalarProperty Name="yolcuadsoyad" ColumnName="yolcuadsoyad" />
+                <ScalarProperty Name="yolcuid" ColumnName="yolcuid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AraçRezTablosu">
+            <EntityTypeMapping TypeName="TYHTALEPModel.AraçRezTablosu">
+              <MappingFragment StoreEntitySet="AraçRezTablosu">
+                <ScalarProperty Name="Yolcuid4" ColumnName="Yolcuid4" />
+                <ScalarProperty Name="Yolcuid3" ColumnName="Yolcuid3" />
+                <ScalarProperty Name="Yolcuid2" ColumnName="Yolcuid2" />
+                <ScalarProperty Name="Yolcuid1" ColumnName="Yolcuid1" />
+                <ScalarProperty Name="YoneticiO" ColumnName="YoneticiO" />
+                <ScalarProperty Name="İdariOnay" ColumnName="İdariOnay" />
+                <ScalarProperty Name="GuvenlikO2" ColumnName="GuvenlikO2" />
+                <ScalarProperty Name="GuvenlikO1" ColumnName="GuvenlikO1" />
+                <ScalarProperty Name="Arac_id" ColumnName="Arac_id" />
+                <ScalarProperty Name="SaatC" ColumnName="SaatC" />
+                <ScalarProperty Name="SaatG" ColumnName="SaatG" />
+                <ScalarProperty Name="TarihG" ColumnName="TarihG" />
+                <ScalarProperty Name="TarihC" ColumnName="TarihC" />
+                <ScalarProperty Name="LokasyonG" ColumnName="LokasyonG" />
+                <ScalarProperty Name="LokasyonC" ColumnName="LokasyonC" />
+                <ScalarProperty Name="Talepid" ColumnName="Talepid" />
+                <ScalarProperty Name="Rezid" ColumnName="Rezid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SeyahatRezTablosu">
+            <EntityTypeMapping TypeName="TYHTALEPModel.SeyahatRezTablosu">
+              <MappingFragment StoreEntitySet="SeyahatRezTablosu">
+                <ScalarProperty Name="MasrafMKodu" ColumnName="MasrafMKodu" />
+                <ScalarProperty Name="MasrafM" ColumnName="MasrafM" />
+                <ScalarProperty Name="Konaklama" ColumnName="Konaklama" />
+                <ScalarProperty Name="Yolcuid" ColumnName="Yolcuid" />
+                <ScalarProperty Name="VarısYeri" ColumnName="VarısYeri" />
+                <ScalarProperty Name="BaslamaYeri" ColumnName="BaslamaYeri" />
+                <ScalarProperty Name="SeyahatBitisT" ColumnName="SeyahatBitisT" />
+                <ScalarProperty Name="SeyahatBasT" ColumnName="SeyahatBasT" />
+                <ScalarProperty Name="SeyahatTid" ColumnName="SeyahatTid" />
+                <ScalarProperty Name="SeyahatRezid" ColumnName="SeyahatRezid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SeyahatTipleriTablosu">
+            <EntityTypeMapping TypeName="TYHTALEPModel.SeyahatTipleriTablosu">
+              <MappingFragment StoreEntitySet="SeyahatTipleriTablosu">
+                <ScalarProperty Name="SeyahatT" ColumnName="SeyahatT" />
+                <ScalarProperty Name="Seyahat_id" ColumnName="Seyahat_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KullaniciTablosu">
+            <EntityTypeMapping TypeName="TYHTALEPModel.KullaniciTablosu">
+              <MappingFragment StoreEntitySet="KullaniciTablosu">
+                <ScalarProperty Name="MaliyetMNo" ColumnName="MaliyetMNo" />
+                <ScalarProperty Name="YetkiTipi" ColumnName="YetkiTipi" />
+                <ScalarProperty Name="RolTipi" ColumnName="RolTipi" />
+                <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+                <ScalarProperty Name="TelefonNo" ColumnName="TelefonNo" />
+                <ScalarProperty Name="DepatmanID" ColumnName="DepatmanID" />
+                <ScalarProperty Name="BölgeID" ColumnName="BölgeID" />
+                <ScalarProperty Name="SicilNo" ColumnName="SicilNo" />
+                <ScalarProperty Name="TC" ColumnName="TC" />
+                <ScalarProperty Name="Soyad" ColumnName="Soyad" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Kullanici_id" ColumnName="Kullanici_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AraçTablosu">
+            <EntityTypeMapping TypeName="TYHTALEPModel.AraçTablosu">
+              <MappingFragment StoreEntitySet="AraçTablosu">
+                <ScalarProperty Name="KullanilanBolge" ColumnName="KullanilanBolge" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="TahsisEdilen" ColumnName="TahsisEdilen" />
+                <ScalarProperty Name="Durumu" ColumnName="Durumu" />
+                <ScalarProperty Name="AracDönüsKM" ColumnName="AracDönüsKM" />
+                <ScalarProperty Name="AracCikisKM" ColumnName="AracCikisKM" />
+                <ScalarProperty Name="Plaka" ColumnName="Plaka" />
+                <ScalarProperty Name="Aracid" ColumnName="Aracid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ithalat_Ihracat_Arac">
+            <EntityTypeMapping TypeName="TYHTALEPModel.Ithalat_Ihracat_Arac">
+              <MappingFragment StoreEntitySet="Ithalat_Ihracat_Arac">
+                <ScalarProperty Name="ikincikullanici" ColumnName="ikincikullanici" />
+                <ScalarProperty Name="bolgeid" ColumnName="bolgeid" />
+                <ScalarProperty Name="kullaniciid" ColumnName="kullaniciid" />
+                <ScalarProperty Name="irsaliyetarih" ColumnName="irsaliyetarih" />
+                <ScalarProperty Name="cikistarih" ColumnName="cikistarih" />
+                <ScalarProperty Name="giristarih" ColumnName="giristarih" />
+                <ScalarProperty Name="koliadet" ColumnName="koliadet" />
+                <ScalarProperty Name="muhurno" ColumnName="muhurno" />
+                <ScalarProperty Name="irsaliyeno" ColumnName="irsaliyeno" />
+                <ScalarProperty Name="sevkyeri" ColumnName="sevkyeri" />
+                <ScalarProperty Name="sofortel" ColumnName="sofortel" />
+                <ScalarProperty Name="sofortc" ColumnName="sofortc" />
+                <ScalarProperty Name="soforadsoyad" ColumnName="soforadsoyad" />
+                <ScalarProperty Name="tasiyiciplaka" ColumnName="tasiyiciplaka" />
+                <ScalarProperty Name="tasiyicifirmaad" ColumnName="tasiyicifirmaad" />
+                <ScalarProperty Name="nakliyetur" ColumnName="nakliyetur" />
+                <ScalarProperty Name="ihracataracid" ColumnName="ihracataracid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="KullaniciEmre">
+            <EntityTypeMapping TypeName="TYHTALEPModel.KullaniciEmre">
+              <MappingFragment StoreEntitySet="KullaniciEmre">
+                <ScalarProperty Name="MaliyetMNo" ColumnName="MaliyetMNo" />
+                <ScalarProperty Name="YetkiTipi" ColumnName="YetkiTipi" />
+                <ScalarProperty Name="RolTipi" ColumnName="RolTipi" />
+                <ScalarProperty Name="Sifre" ColumnName="Sifre" />
+                <ScalarProperty Name="TelefonNo" ColumnName="TelefonNo" />
+                <ScalarProperty Name="DepatmanID" ColumnName="DepatmanID" />
+                <ScalarProperty Name="BölgeID" ColumnName="BölgeID" />
+                <ScalarProperty Name="SicilNo" ColumnName="SicilNo" />
+                <ScalarProperty Name="TC" ColumnName="TC" />
+                <ScalarProperty Name="Soyad" ColumnName="Soyad" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="Kullanici_id" ColumnName="Kullanici_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

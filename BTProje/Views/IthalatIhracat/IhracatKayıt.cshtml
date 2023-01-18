@@ -1,0 +1,125 @@
+﻿@using BTProje.Models.EntityFramework
+@model BTProje.Models.EntityFramework.Ithalat_Ihracat_Arac
+@{
+    ViewBag.Title = "IhracatKayıt";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@{
+    KullaniciTablosu kullanici = (KullaniciTablosu)Session["kullanici"];
+    BölgelerTablosu bolge = (BölgelerTablosu)Session["bolge"];
+    List<RolYetkiAtama> yetki = (List<RolYetkiAtama>)Session["yetki"];
+}
+@*@if (kullanici != null && (kullanici.RolTipi == 3 || kullanici.RolTipi == 5 || kullanici.RolTipi == 6 || kullanici.RolTipi == 7))*@
+@foreach (var item in yetki)
+{
+    if (item.Rol_Id == 3)
+    {
+        using (Html.BeginForm("IhracatKayıt", "IthalatIhracat", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <p style="text-align: center; margin-top: 12px; font-size: 20pt"><b>@ViewBag.bsl</b></p>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-6">
+                        <label><b>TAŞIYICI FİRMA ADI</b></label>
+                        @Html.TextBoxFor(m => m.tasiyicifirmaad, new { @class = "form-control", @placeholder = "Taşıyıcı Firma Adı", @maxlength = "50", @required = "" })
+                        @Html.ValidationMessageFor(m => m.tasiyicifirmaad, "", new { @style = "color:red" })
+                    </div>
+                    <div class="col-6">
+                        <label><b>TAŞIYICI ARAÇ PLAKASI</b></label>
+                        @Html.TextBoxFor(m => m.tasiyiciplaka, new { @class = "form-control", @placeholder = "Araç Plakası", @maxlength = "20", @required = "" })
+                        @Html.ValidationMessageFor(m => m.tasiyiciplaka, "", new { @style = "color:red" })
+                    </div>
+                </div>
+                <hr style="border-block:1px solid black">
+                <div class="row">
+                    <div class="col-6">
+                        <label><b>ŞOFÖR ADI SOYADI</b></label>
+                        @Html.TextBoxFor(m => m.soforadsoyad, new { @class = "form-control", @placeholder = "Şoför Adı Soyadı", @maxlength = "50", @required = "" })
+                        @Html.ValidationMessageFor(m => m.soforadsoyad, "", new { @style = "color:red" })
+                    </div>
+                    <div class="col-6">
+                        <label><b>ŞOFÖR TC KİMLİK / PASAPORT NO</b></label>
+                        @Html.TextBoxFor(m => m.sofortc, new { @class = "form-control", @placeholder = "Şoför Tc Kimlik / Pasaport No", @maxlength = "20", @required = "" })
+                        @Html.ValidationMessageFor(m => m.sofortc, "", new { @style = "color:red" })
+                    </div>
+                </div>
+                <hr style="border-block:1px solid black">
+                <div class="row">
+                    <div class="col-6">
+                        <label><b>ŞOFÖR TELEFON NUMARASI</b></label>
+                        @Html.TextBoxFor(m => m.sofortel, new { @class = "form-control", @placeholder = "Şoför Telefon Numarası", @maxlength = "20", @required = "" })
+                        @Html.ValidationMessageFor(m => m.sofortel, "", new { @style = "color:red" })
+                    </div>
+                    <div class="col-6">
+                        <label><b>SEVKİYATIN GİTTİĞİ YER</b></label>
+                        @Html.TextBoxFor(m => m.sevkyeri, new { @class = "form-control", @placeholder = "Sevkiyatın Gittiği Yer", @maxlength = "50" })
+                        @Html.ValidationMessageFor(m => m.sevkyeri, "", new { @style = "color:red" })
+                    </div>
+                </div>
+                <hr style="border-block:1px solid black">
+                <div class="row">
+                    <div class="col-6">
+                        <label><b>İRSALİYE NUMARASI</b></label>
+                        @Html.TextBoxFor(m => m.irsaliyeno, new { @class = "form-control", @placeholder = "İrsaliye Numarası", @maxlength = "16" })
+                        @Html.ValidationMessageFor(m => m.irsaliyeno, "", new { @style = "color:red" })
+                    </div>
+                    <div class="col-6">
+                        <label><b>MÜHÜR NUMARASI</b></label>
+                        @Html.TextBoxFor(m => m.muhurno, new { @class = "form-control", @placeholder = "Mühür Numarası", @maxlength = "20" })
+                        @Html.ValidationMessageFor(m => m.muhurno, "", new { @style = "color:red" })
+                    </div>
+                </div>
+                <hr style="border-block:1px solid black">
+                <div class="row">
+                    <div class="col-6">
+                        <label><b>İRSALİYE TARİHİ</b></label>
+                        @Html.TextBoxFor(m => m.irsaliyetarih, "{0:yyyy-MM-dd}", new { @class = "form-control", @type = "date" })
+                        @Html.ValidationMessageFor(m => m.irsaliyetarih, "", new { @style = "color:red" })
+                    </div>
+                    <div class="col-6">
+                        <label><b>KOLİ ADET/MİKTAR</b></label>
+                        @Html.TextBoxFor(m => m.koliadet, new { @class = "form-control", @placeholder = "Koli Adet/Miktar", @maxlength = "50" })
+                        @Html.ValidationMessageFor(m => m.koliadet, "", new { @style = "color:red" })
+                    </div>
+                </div>
+                <hr style="border-block:1px solid black">
+                @*@if ((Model.ihracataracid != 0) && (kullanici.YetkiTipi == 1 || kullanici.YetkiTipi == 3))*@
+                @if ((Model.ihracataracid != 0) && (item.Yetki_Id == 1 || item.Yetki_Id == 3))
+                {
+                    <div class="row">
+                        <div class="col-6">
+                            <label><b>GİRİŞ TARİHİ</b></label>
+                            @Html.TextBoxFor(m => m.giristarih, "{0:yyyy-MM-dd HH:mm}", new { @class = "form-control", @type = "datetime-local" })
+                            @Html.ValidationMessageFor(m => m.giristarih, "", new { @style = "color:red" })
+                        </div>
+                        <div class="col-6">
+                            <label><b>ÇIKIŞ TARİHİ</b></label>
+                            @Html.TextBoxFor(m => m.cikistarih, "{0:yyyy-MM-dd HH:mm}", new { @class = "form-control", @type = "datetime-local" })
+                            @Html.ValidationMessageFor(m => m.cikistarih, "", new { @style = "color:red" })
+                        </div>
+                    </div>
+                    <hr style="border-block:1px solid black">
+                }
+            </div>
+            @Html.HiddenFor(m => m.ihracataracid)
+            if (Model.ihracataracid == 0)
+            {
+                <button type="submit" id="bt1" class="btn btn-success">Kaydet</button>
+            }
+            else
+            {
+                <button type="submit" id="bt1" class="btn btn-success">Güncelle</button>
+            }
+        }
+        break;
+    }
+}
+@*else
+    {
+        <div style="text-align:center"> <img src="~/Web/icon/hata.png" /></div>
+        <div style="text-align:center ;margin-top:50px;font-size:24pt">
+            <b>BU SAYFADA YETKİLİ DEĞİLSİNİZ.</b>
+        </div>
+    }*@

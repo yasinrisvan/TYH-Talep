@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="e2ec83674113497783fb294e07cb1add" Name="Diagram1" ZoomLevel="66">
+        <EntityTypeShape EntityType="TYHTALEPModel.GonderimTuru" Width="1.5" PointX="9" PointY="2.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TYHTALEPModel.Kargo" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TYHTALEPModel.KargoHareketleri" Width="1.5" PointX="11.25" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="TYHTALEPModel.sysdiagrams" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="TYHTALEPModel.FK_KargoHareketleri_GonderimTuru" ManuallyRouted="false" />
+        <AssociationConnector Association="TYHTALEPModel.FK_KargoHareketleri_Kargo" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="TYHTALEPModel.BölgelerTablosu" Width="1.5" PointX="0.75" PointY="8.125" />
+        <EntityTypeShape EntityType="TYHTALEPModel.DepartmanlarTablosu" Width="1.5" PointX="0.75" PointY="4.5" />
+        <EntityTypeShape EntityType="TYHTALEPModel.Roller" Width="1.5" PointX="4.375" PointY="12.125" />
+        <EntityTypeShape EntityType="TYHTALEPModel.Sehirler" Width="1.5" PointX="1.5" PointY="2" />
+        <EntityTypeShape EntityType="TYHTALEPModel.Yetki" Width="1.5" PointX="3" PointY="15.375" />
+        <AssociationConnector Association="TYHTALEPModel.FK_BölgelerTablosu_Sehirler" />
+        <AssociationConnector Association="TYHTALEPModel.FK_Kargo_BölgelerTablosuC" />
+        <AssociationConnector Association="TYHTALEPModel.FK_Kargo_BölgelerTablosuV" />
+        <AssociationConnector Association="TYHTALEPModel.FK_KargoHareketleri_BölgelerTablosu" />
+        <AssociationConnector Association="TYHTALEPModel.FK_Kargo_DepartmanlarTablosuC" />
+        <AssociationConnector Association="TYHTALEPModel.FK_Kargo_DepartmanlarTablosuV" />
+        <AssociationConnector Association="TYHTALEPModel.FK_KargoHareketleri_DepartmanlarTablosu" />
+        <EntityTypeShape EntityType="TYHTALEPModel.Ziyaretci" Width="1.5" PointX="8.25" PointY="8.875" />
+        <AssociationConnector Association="TYHTALEPModel.FK_Ziyaretci_BölgelerTablosu" />
+        <AssociationConnector Association="TYHTALEPModel.FK_Ziyaretci_DepartmanlarTablosu" />
+        <EntityTypeShape EntityType="TYHTALEPModel.Sirket_Arac" Width="1.5" PointX="10.5" PointY="8.75" />
+        <EntityTypeShape EntityType="TYHTALEPModel.Yolcu" Width="1.5" PointX="12.75" PointY="10" />
+        <AssociationConnector Association="TYHTALEPModel.FK_Sirket_Arac_BölgelerTablosu" />
+        <AssociationConnector Association="TYHTALEPModel.FK_Yolcu_Sirket_Arac" />
+        <EntityTypeShape EntityType="TYHTALEPModel.AraçRezTablosu" Width="1.5" PointX="13.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TYHTALEPModel.SeyahatRezTablosu" Width="1.5" PointX="5.25" PointY="14.625" />
+        <EntityTypeShape EntityType="TYHTALEPModel.SeyahatTipleriTablosu" Width="1.5" PointX="3" PointY="18.625" />
+        <AssociationConnector Association="TYHTALEPModel.FK_SeyahatRezTablosu_BölgelerTablosu" />
+        <AssociationConnector Association="TYHTALEPModel.FK_SeyahatRezTablosu_BölgelerTablosu1" />
+        <AssociationConnector Association="TYHTALEPModel.FK_SeyahatRezTablosu_SeyahatTipleriTablosu" />
+        <EntityTypeShape EntityType="TYHTALEPModel.KullaniciTablosu" Width="1.5" PointX="3" PointY="6.125" />
+        <AssociationConnector Association="TYHTALEPModel.FK_KullaniciTablosu_BölgelerTablosu" />
+        <AssociationConnector Association="TYHTALEPModel.FK_KullaniciTablosu_DepartmanlarTablosu" />
+        <AssociationConnector Association="TYHTALEPModel.FK_Kargo_KullaniciTablosuA" />
+        <AssociationConnector Association="TYHTALEPModel.FK_Kargo_KullaniciTablosuG" />
+        <AssociationConnector Association="TYHTALEPModel.FK_KargoHareketleri_KullaniciTablosu" />
+        <AssociationConnector Association="TYHTALEPModel.FK_KullaniciTablosu_Roller" />
+        <AssociationConnector Association="TYHTALEPModel.FK_KullaniciTablosu_Yetki" />
+        <AssociationConnector Association="TYHTALEPModel.FK_SeyahatRezTablosu_KullaniciTablosu" />
+        <AssociationConnector Association="TYHTALEPModel.FK_Sirket_Arac_KullaniciTablosu" />
+        <AssociationConnector Association="TYHTALEPModel.FK_Ziyaretci_KullaniciTablosu" />
+        <EntityTypeShape EntityType="TYHTALEPModel.AraçTablosu" Width="1.5" PointX="5.25" PointY="7.5" />
+        <EntityTypeShape EntityType="TYHTALEPModel.Ithalat_Ihracat_Arac" Width="1.5" PointX="8.25" PointY="13.75" />
+        <AssociationConnector Association="TYHTALEPModel.FK_AraçTablosu_BölgelerTablosu" />
+        <AssociationConnector Association="TYHTALEPModel.FK_AraçTablosu_KullaniciTablosu" />
+        <AssociationConnector Association="TYHTALEPModel.FK_Sirket_Arac_AraçTablosu" />
+        <AssociationConnector Association="TYHTALEPModel.FK_Ithalat_Ihracat_Arac_BölgelerTablosu" />
+        <AssociationConnector Association="TYHTALEPModel.FK_Ithalat_Ihracat_Arac_KullaniciTablosu" />
+        <EntityTypeShape EntityType="TYHTALEPModel.KullaniciEmre" Width="1.5" PointX="13.375" PointY="12.75" />
+        </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

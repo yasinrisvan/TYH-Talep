@@ -1,0 +1,109 @@
+﻿@using BTProje.Models.EntityFramework
+@model BTProje.Models.EntityFramework.Ziyaretci
+@{
+    ViewBag.Title = "ZKayıt";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@{
+    KullaniciTablosu kullanici = (KullaniciTablosu)Session["kullanici"];
+    BölgelerTablosu bolge = (BölgelerTablosu)Session["bolge"];
+    List<RolYetkiAtama> yetki = (List<RolYetkiAtama>)Session["yetki"];
+}
+
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script src="~/select2-4.1.0-rc.0/dist/js/select2.min.js"></script>
+<link href="~/select2-4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@*@if (kullanici != null && (kullanici.RolTipi == 3 || kullanici.RolTipi == 5 || kullanici.RolTipi == 6 || kullanici.RolTipi == 7))
+    {*@
+@foreach (var item in yetki)
+{
+    if (item.Rol_Id == 3)
+    {
+        using (Html.BeginForm("ZKayıt", "Ziyaretci", FormMethod.Post)) //Post işlemiyle Department controllerındaki Save action resultına git (formu oluşturduk)
+        {
+            @Html.AntiForgeryToken() @* AntiForgeryToken kullanıcıların Domain/Department/Save/?Name=ExampleDepartment şeklinde direk linke yapılan saldırıları engellememizi sağlar *@
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <p style="text-align: center; margin-top: 12px; font-size: 20pt"><b>ZİYARETÇİ KAYIT EKLEME SAYFASI</b></p>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-12">
+                        <label><b>AD SOYAD</b></label>
+                        @Html.TextBoxFor(m => m.z_adsoyad, new { @class = "form-control", @placeholder = "Adı Soyadı", @maxlength = "50", @required = "" })
+                        @Html.ValidationMessageFor(m => m.z_adsoyad, "", new { @style = "color:red" })
+                    </div>
+                </div>
+                <hr style="border-block:1px solid black">
+                <div class="row">
+                    <div class="col-6">
+                        <label><b>TC KİMLİK / PASAPORT NO</b></label>
+                        @Html.TextBoxFor(m => m.z_tcno, new { @class = "form-control", @placeholder = "Tc Kimlik / Pasaport No", @maxlength = "20", @required = "" })
+                    </div>
+                    <div class="col-6">
+                        <label><b>ZİYARET SEBEBİ</b></label>
+                        @Html.TextBoxFor(m => m.ziyaretsebebi, new { @class = "form-control", @placeholder = "Ziyaret Sebebi", @maxlength = "50", @required = "" })
+                    </div>
+                </div>
+                <hr style="border-block:1px solid black">
+                <div class="row">
+                    <div class="col-6">
+                        <label><b>ZİYARET EDİLEN BİRİM</b></label>
+                        @Html.DropDownListFor(m => m.birimid, (List<SelectListItem>)ViewBag.dept, new { @class = "form-control", @required = "" })
+                    </div>
+                    <div class="col-6">
+                        <label><b>ZİYARET EDİLEN KİŞİ</b></label>
+                        @Html.TextBoxFor(m => m.z_edilenadsoyad, new { @class = "form-control", @placeholder = "Ziyaret Edilen Adı Soyadı", @maxlength = "50", @required = "" })
+                    </div>
+                </div>
+                <hr style="border-block:1px solid black">
+                <div class="row">
+                    <div class="col-6">
+                        <label><b>PLAKA</b></label>
+                        @Html.TextBoxFor(m => m.z_plaka, new { @class = "form-control", @placeholder = "Araç Plakası", @maxlength = "20" })
+                    </div>
+                    <div class="col-6">
+                        <label><b>KART NUMARASI</b></label>
+                        @Html.TextBoxFor(m => m.kartno, new { @class = "form-control", @type = "number", @placeholder = "Kart Numarası", @maxlength = "10" })
+                    </div>
+                </div>
+                <hr style="border-block:1px solid black">
+                @*@if ((Model.ziyaretciid != 0) && (kullanici.YetkiTipi == 1 || kullanici.YetkiTipi == 3))*@
+                @if ((Model.ziyaretciid != 0) && (item.Yetki_Id == 1 || item.Yetki_Id == 3))
+                {
+                    <div class="row">
+                        <div class="col-6">
+                            <label><b>GİRİŞ TARİHİ</b></label>
+                            @*@Html.TextBoxFor(m => m.z_giristarih, new { @class = "form-control", @placeholder = "Giriş Tarihi" })*@
+                            @Html.TextBoxFor(m => m.z_giristarih, "{0:yyyy-MM-dd HH:mm}", new { @class = "form-control", @type = "datetime-local" })
+                        </div>
+                        <div class="col-6">
+                            <label><b>ÇIKIŞ TARİHİ</b></label>
+                            @* @Html.TextBoxFor(m => m.z_cikistarih, new { @class = "form-control", @placeholder = "Çıkış Tarihi" })*@
+                            @Html.TextBoxFor(m => m.z_cikistarih, "{0:yyyy-MM-dd HH:mm}", new { @class = "form-control", @type = "datetime-local" })
+                        </div>
+                    </div>
+                    <hr style="border-block:1px solid black">
+                }
+            </div>
+            @Html.HiddenFor(m => m.ziyaretciid)
+            if (Model.ziyaretciid == 0)
+            {
+                <button type="submit" id="bt1" class="btn btn-success">Kaydet</button>
+            }
+            else
+            {
+                <button type="submit" id="bt1" class="btn btn-success">Güncelle</button>
+            }
+        }
+        break;
+    }
+}
+@*else
+    {
+        <div style="text-align:center"> <img src="~/Web/icon/hata.png" /></div>
+        <div style="text-align:center ;margin-top:50px;font-size:24pt">
+            <b>BU SAYFADA YETKİLİ DEĞİLSİNİZ.</b>
+        </div>
+    }*@
+@*<script>
+        $('.select2').select2();
+    </script>*@

@@ -1,0 +1,123 @@
+﻿@using BTProje.Models.EntityFramework
+
+@model BTProje.Models.EntityFramework.Kargo
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    KullaniciTablosu kullanici = (KullaniciTablosu)Session["kullanici"];
+    List<RolYetkiAtama> yetki = (List<RolYetkiAtama>)Session["yetki"];
+
+}
+@foreach (var item in yetki)
+{
+    if (item.Rol_Id == 2)
+    {
+        <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+        <script>
+            $(function () {
+                $('#VarisDepartman').change(function () {
+                    var id = $('#VarisDepartman').val();
+                    $.ajax({
+                        url: '/KargoGonder/Cascad',
+                        data: { p: id },
+                        type: "POST",
+                        dataType: "Json",
+                        success: function (data) {
+                            console.log(data);
+                            $('#AliciAdSoyad').empty();
+                            /*$('#ytkl').empty();*/
+                            $('#AliciPersonelId').empty();
+                            for (var i = 0; i < data.length; i++) {
+                                //$('#AliciAdSoyad').val(data[i].Text);
+                                $('#AliciPersonelId').append("<option value='" + data[i].Value + "'>" + data[i].Text + "</Option>");
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+
+        <form method="post" class="form-group">
+            <fieldset>
+                <div id="gonderen" class="gonderen" style="margin-top:15px;">
+                    <h4 style="text-align:center"> KARGO GÖNDER </h4>
+                    <h5 style="margin-left: 35px; margin-bottom: 20px">Gönderen</h5>
+
+                    @*@Html.ValidationMessageFor(model => model.CikisBolgesi, "", new { @class = "text-danger" })*@
+
+                    @*@Html.TextBoxFor(m => m.CikisBolgesi, (string)ViewBag.region, new { @class = "form-control" })<br />*@
+                    @*@Html.TextBoxFor(model => (string)ViewBag.region)*@
+                    @Html.TextBox("CikisBolgesi", (string)ViewBag.region, new { @class = "form-control", @disabled = "disabled", required = "Boş Bırakılamaz" })<br />
+
+                    @*@Html.ValidationMessageFor(model => model.CikisDepartman, "", new { @class = "text-danger" })*@
+
+                    @*@Html.TextBoxFor(m => m.CikisDepartman, (string)ViewBag.department, new { @class = "form-control" })<br />*@
+                    @Html.TextBox("CikisDepartman", (string)ViewBag.department, new { @class = "form-control", @disabled = "disabled", required = "Boş Bırakılamaz" })<br />
+
+                    @*@Html.ValidationMessageFor(model => model.GonderenPersonelId, "", new { @class = "text-danger" })*@
+                    @*@Html.TextBoxFor(m => m.GonderenPersonelId, (string)ViewBag.user, new { @class = "form-control" })<br />*@
+                    @Html.TextBox("GonderenPersonelId", (string)ViewBag.user, new { @class = "form-control", @disabled = "disabled", required = "Boş Bırakılamaz" })<br />
+
+                    @Html.ValidationMessageFor(model => model.GonderenAdSoyad, "", new { @class = "text-danger" })
+                    @*<input type="text class="form-control text-body" name="AliciAdSoyad" placeholder="Alıcı Ad Soyad" /><br />*@
+                    @Html.TextBox("GonderenAdSoyad", "", new { @class = "form-control", placeholder = "Gönderen Ad Soyad", required = "Boş Bırakılamaz" })<br />
+
+
+
+                    @*<label>Tarih</label>*@
+                    <input type="text" class="form-control" disabled name="Tarih" value="@DateTime.Now" /><br />
+
+                    @* <label>Aciklama</label>*@
+                    @Html.ValidationMessageFor(model => model.Aciklama, "", new { @class = "text-danger" })
+                    <input type="text" class="form-control" name="Aciklama" placeholder="Açıklama Ekleyiniz" /><br />
+
+                    @Html.ValidationMessageFor(model => model.Adet, "", new { @class = "text-danger" })
+                    <input type="number" class="form-control" name="Adet" placeholder="Adet Ekleyiniz" /><br />
+
+
+                </div>
+
+                <div id="alici" class="alici">
+                    <h5 style="margin-left: 35px; margin-bottom: 20px">Alıcı</h5>
+                    @*   <label>Alıcı  Bölge</label>*@
+                    @*@Html.ValidationMessageFor(m => m.VarisBolgesi)*@
+                    @Html.ValidationMessageFor(model => model.VarisBolgesi, "", new { @class = "text-danger" })
+                    @Html.DropDownListFor(m => m.VarisBolgesi, (List<SelectListItem>)ViewBag.bolge, "Varış Bölgesi Seçiniz", new { @class = "form-control", required = "Boş Bırakılamaz" })<br />
+
+
+                    @Html.ValidationMessageFor(model => model.VarisDepartman, "", new { @class = "text-danger" })
+                    @Html.DropDownListFor(m => m.VarisDepartman, (List<SelectListItem>)ViewBag.departman, "Varış Departmanı Seçiniz", new { @class = "form-control", required = "Boş Bırakılamaz" })<br />
+
+                    @Html.ValidationMessageFor(model => model.AliciPersonelId, "", new { @class = "text-danger" })
+                    @Html.DropDownListFor(m => m.AliciPersonelId, (List<SelectListItem>)ViewBag.dgr, "Alıcı Personeli Seçiniz", new { @class = "form-control", required = "Boş Bırakılamaz" })<br />
+
+                    @Html.ValidationMessageFor(model => model.AliciAdSoyad, "", new { @class = "text-danger" })
+                    @*<input type="text class="form-control text-body" name="AliciAdSoyad" placeholder="Alıcı Ad Soyad" /><br />*@
+                    @Html.TextBox("AliciAdSoyad", "", new { @class = "form-control", placeholder = "Alıcı Ad Soyad", required = "Boş Bırakılamaz" })<br />
+
+                </div>
+                <div style="margin-top:10px">
+                    <button class="btn btn-info" id="added">Kargo Gönder</button>
+                </div>
+            </fieldset>
+        </form>
+
+        @*<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+            if (TempData["Message"] != null)
+            {
+                <script>
+                swal("UYARI !", "@TempData["Message"]", "warning");
+                </script>
+            }
+            if (TempData["MessageSuccess"] != null)
+            {
+                <script>
+                swal("BAŞARILI !", "@TempData["MessageSuccess"]", "success");
+                </script>
+            }*@
+
+        break;
+    }
+}

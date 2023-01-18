@@ -1,0 +1,106 @@
+﻿@using BTProje.Models.EntityFramework
+@model BTProje.Models.EntityFramework.KargoHareketleri
+@{
+    ViewBag.Title = "TransferEkle";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    KullaniciTablosu kullanici = (KullaniciTablosu)Session["kullanici"];
+    List<RolYetkiAtama> yetki = (List<RolYetkiAtama>)Session["yetki"];
+}
+@foreach (var item in yetki)
+{
+    if (item.Rol_Id == 2)
+    {
+        <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+        <script>
+            $(function () {
+                $('#TeslimAlanDepartmanId').change(function () {
+                    var id = $('#TeslimAlanDepartmanId').val();
+                    $.ajax({
+                        url: '/KargoTransfer/Cascad',
+                        data: { p: id },
+                        type: "POST",
+                        dataType: "Json",
+                        success: function (data) {
+                            console.log(data);
+                            $('#TeslimAlanPersonelAdSoyad').empty();
+                            /*$('#ytkl').empty();*/
+                            $('#TeslimAlanPersonelId').empty();
+                            for (var i = 0; i < data.length; i++) {
+                                //$('#TeslimAlanPersonelAdSoyad').val(data[i].Text);
+                                $('#TeslimAlanPersonelId').append("<option value='" + data[i].Value + "'>" + data[i].Text + "</Option>");
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+        @*<script>
+                $(function () {
+                    $('#TeslimAlanPersonelId').change(function () {
+                        var id = $('#TeslimAlanPersonelId').val();
+                        $.ajax({
+                            url: '/KargoTransfer/CascadName',
+                            data: { p: id },
+                            type: "POST",
+                            dataType: "Json",
+                            success: function (data) {
+                                console.log(data);
+                                $('#TeslimAlanPersonelAdSoyad').empty();
+
+                                $('#TeslimAlanPersonelAdSoyad').val();
+                                /*$('#ytkl').empty();*/
+                                //$('#TeslimAlanPersonelId').empty();
+                                for (var i = 0; i < data.length; i++) {
+                                    //$('#TeslimAlanPersonelAdSoyad').val(data[i].Text);
+                                    //$('#TeslimAlanPersonelId').append("<option value='" + data[i].Value + "'>" + data[i].Text + "</Option>");
+                                }
+                            }
+                        });
+                    });
+                });
+            </script>*@
+
+
+        <h4 style="text-align: center; margin-top: 20px; margin-bottom: 20px">TRANSFER EKLE</h4>
+
+        <form method="post" class="form-group">
+
+
+            <div>
+                @*<label>Kargo Numarası</label>*@
+                @* <input type="text" class="form-control" name="KargoNo" placeholder="Kargo Numarası Ekleyiniz" /><br />*@
+
+                @Html.ValidationMessageFor(model => model.KargoNo, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(m => m.KargoNo, (List<SelectListItem>)ViewBag.kargoNo, "Transfer Edilecek Kargo Numarasını Seçiniz", new { @class = "form-control", required = "Boş Bırakılamaz" })<br />
+
+                @*<label>Teslim Alan Bölge</label>*@
+                @Html.ValidationMessageFor(model => model.TeslimAlanBolgeId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(m => m.TeslimAlanBolgeId, (List<SelectListItem>)ViewBag.bolge, "Transfer Alan Bölge Seçiniz", new { @class = "form-control", required = "Boş Bırakılamaz" })<br />
+                @*<label>Teslim Alan Departman</label>*@
+                @Html.ValidationMessageFor(model => model.TeslimAlanDepartmanId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(m => m.TeslimAlanDepartmanId, (List<SelectListItem>)ViewBag.departman, "Transfer Alan Departman Seçiniz", new { @class = "form-control", required = "Boş Bırakılamaz" })<br />
+                @*<label>Teslim Alan </label>*@
+                @Html.ValidationMessageFor(model => model.TeslimAlanPersonelId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(m => m.TeslimAlanPersonelId, (List<SelectListItem>)ViewBag.dgr, "Transfer Alan Personel Seçiniz", new { @class = "form-control", required = "Boş Bırakılamaz" })<br />
+
+                @Html.ValidationMessageFor(model => model.TeslimAlanPersonelAdSoyad, "", new { @class = "text-danger" })
+                @*<input type="text class="form-control text-body" name="AliciAdSoyad" placeholder="Alıcı Ad Soyad" /><br />*@
+                @Html.TextBox("TeslimAlanPersonelAdSoyad", "", new { @class = "form-control", placeholder = "Teslim Alan Ad Soyad", required = "Boş Bırakılamaz" })<br />
+
+                @*<label>Gonderim Turu </label>*@
+                @Html.ValidationMessageFor(model => model.GonderimTuruId, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(m => m.GonderimTuruId, (List<SelectListItem>)ViewBag.gonderimTuru, "Gönderim Türünü Seçiniz", new { @class = "form-control", required = "Boş Bırakılamaz" })<br />
+                @*<label>Arac Plaka</label>*@
+
+                @Html.ValidationMessageFor(model => model.AracPlakaNo, "", new { @class = "text-danger" })
+                <input type="text" class="form-control" name="AracPlakaNo" placeholder="Araç Plaka Ekleyiniz" required="Boş Bırakılamaz" /><br />
+
+                @*<label>Tarih</label>*@
+                <input type="text" class="form-control" disabled name="Tarih" value="@DateTime.Now" required="Boş Bırakılamaz" /><br />
+
+                <button class="btn btn-success">Transfer Et</button><br />
+            </div>
+        </form>
+        break;
+    }
+}

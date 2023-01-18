@@ -1,0 +1,14 @@
+﻿@using BTProje.Models.EntityFramework;
+@model List<KullaniciTablosu>
+
+@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    //List<KullaniciTablosu> kullaniciList = (List<KullaniciTablosu>)Session["kullanici"];
+}
+<h2>@Session["kullanici"]</h2>
+
+@foreach (var item in Model)
+{
+    <h2>@item.Ad</h2>
+}

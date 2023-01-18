@@ -1,0 +1,84 @@
+﻿@using BTProje.Models.EntityFramework
+
+@model BTProje.Models.EntityFramework.KargoHareketleri
+@{
+    ViewBag.Title = "Getir";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    KullaniciTablosu kullanici = (KullaniciTablosu)Session["kullanici"];
+    List<RolYetkiAtama> yetki = (List<RolYetkiAtama>)Session["yetki"];
+}
+
+<h4 style="text-align:center;  margin-top:15px "> TRANSFER GÜNCELLE </h4>
+@foreach (var item in yetki)
+{
+    if (item.Rol_Id == 2)
+    {
+        using (Html.BeginForm("Guncelle", "KargoTransfer", FormMethod.Post))
+        {
+            <div style="margin-top:15px;" id="gonderen" class="form-group">
+
+
+
+                @Html.LabelFor(m => m.KargoNo, "Kargo Numarası")
+                @Html.DropDownListFor(m => m.Kargo.Id, (List<SelectListItem>)ViewBag.kargoNo, new { @class = "form-control", required = "Boş Bırakılamaz" })
+                @*@Html.DropDownList("kargoNo", null, new { @class = "form-control" })*@
+
+                @Html.LabelFor(m => m.TeslimAlanBolgeId, "Teslim Alan Bölge")
+                @Html.DropDownListFor(m => m.TeslimAlanBolgeId, (List<SelectListItem>)ViewBag.bolge, new { @class = "form-control", required = "Boş Bırakılamaz" })
+
+                @Html.LabelFor(m => m.TeslimAlanDepartmanId, "Teslim Alan Departman")
+                @Html.DropDownListFor(m => m.TeslimAlanDepartmanId, (List<SelectListItem>)ViewBag.departman, new { @class = "form-control", required = "Boş Bırakılamaz" })
+
+                @Html.LabelFor(m => m.TeslimAlanPersonelId, "Teslim Alan Personel")
+                @Html.DropDownListFor(m => m.TeslimAlanPersonelId, (List<SelectListItem>)ViewBag.dgr, new { @class = "form-control", required = "Boş Bırakılamaz" })
+
+                @Html.LabelFor(m => m.TeslimAlanPersonelAdSoyad, "Teslim Alan Personel")
+                @Html.ValidationMessageFor(model => model.TeslimAlanPersonelAdSoyad, "", new { @class = "text-danger" })
+                @*<input type="text class="form-control text-body" name="AliciAdSoyad" placeholder="Alıcı Ad Soyad" /><br />*@
+
+                @Html.TextBoxFor(m => m.TeslimAlanPersonelAdSoyad, new { @class = "form-control", @placeholder = "Teslim Alan Ad Soyad", required = "Boş Bırakılamaz" })<br />
+                @*@Html.TextBox("TeslimAlanPersonelAdSoyad", new { @class = "form-control", placeholder = "Teslim Alan Ad Soyad", required = "Boş Bırakılamaz" })<br />*@
+
+
+
+                @Html.LabelFor(m => m.Tarih, "Teslim Alınan Tarih")
+                @Html.TextBoxFor(m => m.Tarih, new { @class = "form-control", @value = "@DateTime.Now", @disabled = "disabled", required = "Boş Bırakılamaz" })
+
+
+                @Html.LabelFor(m => m.GonderimTuruId, "Gönderim Türü")
+                @Html.DropDownListFor(m => m.GonderimTuruId, (List<SelectListItem>)ViewBag.gonderimTuru, new { @class = "form-control", required = "Boş Bırakılamaz" })
+
+
+                @Html.LabelFor(m => m.AracPlakaNo, "Araç Plakası")
+                @Html.TextBoxFor(m => m.AracPlakaNo, new { @class = "form-control", @placeholder = "Araç plakası", required = "Boş Bırakılamaz" })
+
+                @Html.ValidationMessageFor(model => model.AracPlakaNo, "", new { @class = "text-danger", required = "Boş Bırakılamaz" })<br />
+
+
+                @*@Html.LabelFor(m => m.KargoTakipNo)
+                    @Html.TextBoxFor(m => m.KargoTakipNo, new { @class = "form-control" })*@
+
+
+            </div>
+            @Html.HiddenFor(m => m.Id)
+            <div style="margin-top:10px">
+                <button class="btn btn-warning">Güncelle</button>
+                @* <a href="~/Kargolar/Guncelle" class="btn btn-primary">Guncelle</a>*@
+            </div>
+        }
+
+        if (TempData["Message"] != null)
+        {
+            <script>
+        swal("UYARI !", "@TempData["Message"]", "warning");
+            </script>
+        }
+        if (TempData["MessageSuccess"] != null)
+        {
+            <script>
+        swal("BAŞARILI !", "@TempData["MessageSuccess"]", "success");
+            </script>
+        }
+        break;
+    }
+}

@@ -1,0 +1,64 @@
+﻿@using BTProje.Models.EntityFramework
+@model BTProje.Models.EntityFramework.Kargo
+@{
+    ViewBag.Title = "Getir";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    KullaniciTablosu kullanici = (KullaniciTablosu)Session["kullanici"];
+    List<RolYetkiAtama> yetki = (List<RolYetkiAtama>)Session["yetki"];
+}
+@foreach (var item in yetki)
+{
+    if (item.Rol_Id == 2)
+    {
+        using (Html.BeginForm("Guncelle", "Kargolar", FormMethod.Post))
+        {<div id="gonderen" class="gonderen" style="margin-top:15px;">
+
+                <h4 style="text-align:center;  margin-top:10px "> KARGO GÜNCELLE </h4>
+
+                <h4>Gönderen</h4>
+
+                @Html.DropDownListFor(m => m.Id, (List<SelectListItem>)ViewBag.kargoNo, new { @class = "form-control" })<br />
+
+
+                @*<label>Gönderen Bölge</label>*@
+                @Html.DropDownListFor(m => m.CikisBolgesi, (List<SelectListItem>)ViewBag.bolge, new { @class = "form-control" })<br />
+
+                @* <label>Gönderen Departman</label>*@
+                @Html.DropDownListFor(m => m.CikisDepartman, (List<SelectListItem>)ViewBag.departman, new { @class = "form-control" })<br />
+
+
+                @* <label>Gönderen Ad Soyad</label>*@
+                @*@Html.DropDownListFor(m => m.GonderenPersonelId, (List<SelectListItem>)ViewBag.dgr, new { @class = "form-control" })<br />*@
+                @Html.TextBox("GonderenAdSoyad", Model.GonderenAdSoyad, new { @class = "form-control", placeholder = "Gönderen Ad Soyad", required = "Boş Bırakılamaz" })<br />
+
+                @*<label>Tarih</label>*@
+                <input type="text" class="form-control" disabled name="Tarih" value="@DateTime.Now" /><br />
+
+                @* <label>Aciklama</label>*@
+                <input type="text" class="form-control" name="Aciklama" placeholder="Açıklama Ekleyiniz" value="@Model.Aciklama" /><br />
+
+                <input type="text" class="form-control" name="Adet" placeholder="Adet Ekleyiniz" value="@Model.Adet" /><br />
+            </div>
+
+            <div id="alici" class="alici">
+                <h4>Alıcı</h4>
+                @*   <label>Alıcı  Bölge</label>*@
+                @Html.DropDownListFor(m => m.VarisBolgesi, (List<SelectListItem>)ViewBag.bolge, "Varış Bölgesi Seçiniz", new { @class = "form-control" })<br />
+                @*    <label>Alıcı Departman</label>*@
+                @Html.DropDownListFor(m => m.VarisDepartman, (List<SelectListItem>)ViewBag.departman, "Varış Departmanı Seçiniz", new { @class = "form-control" })<br />
+                @*  <label>Alıcı Ad Soyad</label>*@
+                @*@Html.DropDownListFor(m => m.AliciPersonelId, (List<SelectListItem>)ViewBag.dgr, "Alıcı Personeli Seçiniz", new { @class = "form-control" })<br />*@
+                @Html.TextBox("AliciAdSoyad", Model.AliciAdSoyad, new { @class = "form-control", placeholder = "Alıcı Ad Soyad", required = "Boş Bırakılamaz" })<br />
+
+            </div>
+            @Html.HiddenFor(m => m.Id)
+            <div style="margin-top:10px">
+
+                <button class="btn btn-warning">Güncelle</button>
+                @* <a href="~/Kargolar/Guncelle" class="btn btn-primary">Guncelle</a>*@
+            </div>
+        }
+        break;
+    }
+}

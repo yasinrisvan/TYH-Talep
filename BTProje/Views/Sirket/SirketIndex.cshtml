@@ -1,0 +1,394 @@
+﻿@using BTProje.Models.EntityFramework
+@*@model BTProje.Models.liste.Class1*@
+@model List<Sirket_Arac>
+@{
+    ViewBag.Title = "SirketIndex";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@{
+    KullaniciTablosu kullanici = (KullaniciTablosu)Session["kullanici"];
+    BölgelerTablosu bolge = (BölgelerTablosu)Session["bolge"];
+    List<RolYetkiAtama> yetki = (List<RolYetkiAtama>)Session["yetki"];
+}
+<link href="~/template/assets/vendors/mdi/css/materialdesignicons.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#export").click(function () {
+            ExportToExcel();
+        });
+    });
+    function ExportToExcel()
+    {
+        var url = '@Url.Action("GridExportToExcel", "Sirket")';
+        /*window.open(url);*/
+        window.location.href = url;
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $("#plk").change(function () {
+            var dt = $('#plk').val();
+            var url = "/Sirket/PlakaFiltre/" + dt;
+            window.location.href = url;
+        });
+    });
+</script>
+<script>
+    $(function () {
+        // a tagimizde bulunan .view classımıza click olduğunda
+        $("body").on("click", ".view", function () {
+            //data-target dan url mizi al
+            var url = $(this).data("target");
+            //bu urlimizi post et
+            $.post(url, function (data) { })
+                //eğer işlemimiz başarılı bir şekilde gerçekleşirse
+                .done(function (data) {
+                    //gelen datayı .modal-body mizin içerise html olarak ekle
+                    $("#modelView .modal-body").html(data[1]);
+                    $("#modelView .modal-title").html(data[0]);
+                    //sonra da modalimizi göster
+                    $("#modelView").modal("show");
+                })
+                //eğer işlem başarısız olursa
+                .fail(function () {
+                    //modalımızın bodysine Error! yaz
+                    $("#modelView .modal-body").text("Error!!");
+                    //sonra da modalimizi göster
+                    $("#modelView").modal("show");
+                })
+
+        });
+    })
+</script>
+@foreach (var item in yetki)
+{
+    if (item.Rol_Id == 3)
+    {
+        using (Html.BeginForm("SirketIndex", "Sirket", FormMethod.Get))
+        {
+            <div class="modal fade col-lg-12" id="modelView" tabindex="-1" role="dialog" aria-labelledby="">
+                <div class="modal-dialog  modal-lg" role="document">
+                    <div class="modal-content">
+                        <form method="post">
+                            <div class="modal-header">
+                                <h6 class="modal-title" id="myModalLabel">@ViewData.Values</h6>
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">x</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <h5>@ViewData.Values</h5>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Kapat</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+        @*<a href="/Sirket/Test" class="btn btn-dark" style="background-color:deeppink">Rol Yetki Tablosu Doldurma Butonu</a>*@
+
+        <p style="text-align: center; margin-top: 12px; font-size: 20pt"><b>@ViewBag.bslk</b></p>
+        <div class="row" style="margin-top:10px">
+            <div class="col-6">
+                <a href="/Sirket/SirketIndex/" style="font-size: 16pt" class="btn btn-info form-control">TÜMÜNÜ GÖSTER</a>
+            </div>
+            <div class="col-6">
+                <a href="/Sirket/Filtre/" style="font-size: 16pt" class="btn btn-info form-control">GÖREVİ TAMAMLANMAYAN ARAÇLAR</a>
+            </div>
+        </div>
+        <div class="row" style="margin-top:10px;margin-bottom:20px">
+            <div class="col-4">
+                <a href="/Sirket/SirketKayıt" class="btn btn-warning">Yeni Kayıt Oluştur</a>
+            </div>
+            <div class="col-8">
+                @using (Html.BeginForm("GridExportToExcel", "Sirket", FormMethod.Post))
+                {
+                    <div class="row" style="margin-right:0px">
+                        <div class="col-6"></div>
+                        <div class="col-2">
+                            @Html.TextBox("ilktrh", null, new { @class = "form-control", @type = "date" })
+                        </div>
+                        <div class="col-2">
+                            @Html.TextBox("sontrh", null, new { @class = "form-control", @type = "date" })
+                        </div>
+                        <div class="col-2">
+                            @*<a href="#" id="export" class="btn btn-primary">Excele Aktar</a>*@
+                            <button type="submit" id="export" class="btn btn-primary">Excel'e Kaydet</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <hr style="border-block:1px solid black">
+        using (Html.BeginForm("SirketKayıt", "Sirket", FormMethod.Post))
+        {
+            <table id="tbl" class="table table-striped table-bordered table-responsive" style="width:100%">
+                <thead style="border-block:3px solid black ">
+                    <tr>
+                        <td><b>#</b></td>
+                        <td><b>NO</b></td>
+                        <td><b>GÖREV GİDİŞ TARİHİ</b></td>
+                        <td>
+                            <b>
+                                ARAÇ PLAKA
+                                @Html.DropDownList("plk", (List<SelectListItem>)ViewBag.plk, "Plaka Seçin", new { @class = "form-control" })
+                            </b>
+                        </td>
+                        <td><b>YETKİLİ AD SOYAD</b></td>
+                        <td><b>ŞOFÖR AD SOYAD</b></td>
+                        <td><b>GİDECEĞİ YER</b></td>
+                        <td><b>YOLCU SAYISI</b></td>
+                        <td><b>GİDİŞ KM</b></td>
+                        <td><b>DÖNÜŞ KM</b></td>
+                        <td><b>DÖNÜŞ YAPAN ŞOFÖR</b></td>
+                        <td><b>GÖREV DÖNÜŞ TARİHİ</b></td>
+                        <td><b>BÖLGE</b></td>
+                        <td><b>KULLANICI</b></td>
+                        @if (item.Yetki_Id == 1 || item.Yetki_Id == 3)
+                        {
+                            <td><b>İŞLEM</b></td>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var dg in Model)
+                    {
+                        string ad = dg.KullaniciTablosu.Ad + " " + dg.KullaniciTablosu.Soyad;
+                        if (dg.durum == 4)
+                        {
+                            <tr style="border-block:2px solid gray ">
+
+                                <td><a href="/Sirket/Update/@dg.sirketaracid" class="mdi mdi-format-list-bulleted" style="color:red; font-size: 30px"></a></td>
+                                <td>@dg.sirketaracid</td>
+                                <td>@dg.gorevgidistarih</td>
+                                <td>@dg.AraçTablosu.Plaka</td>
+                                <td>@dg.AraçTablosu.KullaniciTablosu.Ad @dg.AraçTablosu.KullaniciTablosu.Soyad</td>
+                                <td>@dg.soforadsoyad</td>
+                                <td>@dg.gorev</td>
+                                <td>
+                                    @if (@dg.yolcusayisi == 0)
+                                    {
+                                        <p>-</p>
+                                    }
+                                    else
+                                    {
+                                        @*<b><a href="/Sirket/getir/@dg.sirketaracid">@syc2</a></b>*@
+                                        <b><a href="#" class="view" style="color: #d82323; " data-target="/Sirket/YolcuListele/@dg.sirketaracid">@dg.yolcusayisi</a></b>
+                                    }
+                                </td>
+                                <td>@dg.gidiskm</td>
+                                <td>@dg.donuskm</td>
+                                <td>@dg.donussoforad</td>
+                                <td>@dg.gorevdonustarih</td>
+                                <td>@dg.BölgelerTablosu.Bölge</td>
+                                <td>
+                                    @if ((dg.ikincikullanici == null) || (dg.ikincikullanici == ad))
+                                    {
+                                        <p>1.@dg.KullaniciTablosu.Ad @dg.KullaniciTablosu.Soyad</p>
+                                    }
+                                    else
+                                    {
+                                        <p>1.@dg.KullaniciTablosu.Ad @dg.KullaniciTablosu.Soyad </p>
+                                        <p>2.@dg.ikincikullanici </p>
+                                    }
+                                </td>
+                                @if (item.Yetki_Id == 1 || item.Yetki_Id == 3)
+                                {
+                                    <td>
+                                        <a href="/Sirket/Sil/@dg.sirketaracid" class="mdi mdi-delete" style="color:red; font-size: 30px"></a>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        }
+        <br />
+        <div class="row">
+            <div class="col-10"></div>
+            <div class="col-2">
+                <a href="/Sirket/EskiKayitlar" class="btn btn-danger">ESKİ KAYITLARI LİSTELE</a>
+            </div>
+        </div>
+        <br />
+        break;
+    }
+}
+
+
+@*if (kullanici != null && (kullanici.RolTipi == 3 || kullanici.RolTipi == 5 || kullanici.RolTipi == 6 || kullanici.RolTipi == 7))
+    {
+        using (Html.BeginForm("SirketIndex", "Sirket", FormMethod.Get))
+        {
+            <div class="modal fade col-lg-12" id="modelView" tabindex="-1" role="dialog" aria-labelledby="">
+                <div class="modal-dialog  modal-lg" role="document">
+                    <div class="modal-content">
+                        <form method="post">
+                            <div class="modal-header">
+                                <h6 class="modal-title" id="myModalLabel">@ViewData.Values</h6>
+                                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">x</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <h5>@ViewData.Values</h5>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-bs-dismiss="modal">Kapat</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+
+        <p style="text-align: center; margin-top: 12px; font-size: 20pt"><b>@ViewBag.bslk</b></p>
+        <div class="row" style="margin-top:10px">
+            <div class="col-6">
+                <a href="/Sirket/SirketIndex/" style="font-size: 16pt" class="btn btn-info form-control">TÜMÜNÜ GÖSTER</a>
+            </div>
+            <div class="col-6">
+                <a href="/Sirket/Filtre/" style="font-size: 16pt" class="btn btn-info form-control">GÖREVİ TAMAMLANMAYAN ARAÇLAR</a>
+            </div>
+        </div>
+        <div class="row" style="margin-top:10px;margin-bottom:20px">
+            <div class="col-4">
+                <a href="/Sirket/SirketKayıt" class="btn btn-warning">Yeni Kayıt Oluştur</a>
+            </div>
+            <div class="col-8">
+                @using (Html.BeginForm("GridExportToExcel", "Sirket", FormMethod.Post))
+                {
+                    <div class="row" style="margin-right:0px">
+                        <div class="col-6"></div>
+                        <div class="col-2">
+                            @Html.TextBox("ilktrh", null, new { @class = "form-control", @type = "date" })
+                        </div>
+                        <div class="col-2">
+                            @Html.TextBox("sontrh", null, new { @class = "form-control", @type = "date" })
+                        </div>
+                        <div class="col-2">
+                            <button type="submit" id="export" class="btn btn-primary">Excel'e Kaydet</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <hr style="border-block:1px solid black">
+        using (Html.BeginForm("SirketKayıt", "Sirket", FormMethod.Post))
+        {
+            <table id="tbl" class="table table-striped table-bordered table-responsive" style="width:100%">
+                <thead style="border-block:3px solid black ">
+                    <tr>
+                        <td><b>#</b></td>
+                        <td><b>NO</b></td>
+                        <td><b>GÖREV GİDİŞ TARİHİ</b></td>
+                        <td>
+                            <b>
+                                ARAÇ PLAKA
+                                @Html.DropDownList("plk", (List<SelectListItem>)ViewBag.plk, "Plaka Seçin", new { @class = "form-control" })
+                            </b>
+                        </td>
+                        <td><b>YETKİLİ AD SOYAD</b></td>
+                        <td><b>ŞOFÖR AD SOYAD</b></td>
+                        <td><b>GİDECEĞİ YER</b></td>
+                        <td><b>YOLCU SAYISI</b></td>
+                        <td><b>GİDİŞ KM</b></td>
+                        <td><b>DÖNÜŞ KM</b></td>
+                        <td><b>DÖNÜŞ YAPAN ŞOFÖR</b></td>
+                        <td><b>GÖREV DÖNÜŞ TARİHİ</b></td>
+                        <td><b>BÖLGE</b></td>
+                        <td><b>KULLANICI</b></td>
+                        @if (kullanici.YetkiTipi == 1 || kullanici.YetkiTipi == 3)
+                        {
+                            <td><b>İŞLEM</b></td>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var dg in Model)
+                    {
+                        string ad = dg.KullaniciTablosu.Ad + " " + dg.KullaniciTablosu.Soyad;
+                        if (dg.durum == 4)
+                        {
+                            <tr style="border-block:2px solid gray ">
+
+                                <td><a href="/Sirket/Update/@dg.sirketaracid" class="mdi mdi-format-list-bulleted" style="color:red; font-size: 30px"></a></td>
+                                <td>@dg.sirketaracid</td>
+                                <td>@dg.gorevgidistarih</td>
+                                <td>@dg.AraçTablosu.Plaka</td>
+                                <td>@dg.AraçTablosu.KullaniciTablosu.Ad @dg.AraçTablosu.KullaniciTablosu.Soyad</td>
+                                <td>@dg.soforadsoyad</td>
+                                <td>@dg.gorev</td>
+                                <td>
+                                    @if (@dg.yolcusayisi == 0)
+                                    {
+                                        <p>-</p>
+                                    }
+                                    else
+                                    {
+                                        <b><a href="#" class="view" style="color: #d82323; " data-target="/Sirket/YolcuListele/@dg.sirketaracid">@dg.yolcusayisi</a></b>
+                                    }
+                                </td>
+                                <td>@dg.gidiskm</td>
+                                <td>@dg.donuskm</td>
+                                <td>@dg.donussoforad</td>
+                                <td>@dg.gorevdonustarih</td>
+                                <td>@dg.BölgelerTablosu.Bölge</td>
+                                <td>
+                                    @if ((dg.ikincikullanici == null) || (dg.ikincikullanici == ad))
+                                    {
+                                        <p>1.@dg.KullaniciTablosu.Ad @dg.KullaniciTablosu.Soyad</p>
+                                    }
+                                    else
+                                    {
+                                        <p>1.@dg.KullaniciTablosu.Ad @dg.KullaniciTablosu.Soyad </p>
+                                        <p>2.@dg.ikincikullanici </p>
+                                    }
+                                </td>
+                                @if (kullanici.YetkiTipi == 1 || kullanici.YetkiTipi == 3)
+                                {
+                                    <td>
+                                        <a href="/Sirket/Sil/@dg.sirketaracid" class="mdi mdi-delete" style="color:red; font-size: 30px"></a>
+                                    </td>
+                                }
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        }
+        <br />
+        <div class="row">
+            <div class="col-10"></div>
+            <div class="col-2">
+                <a href="/Sirket/EskiKayitlar" class="btn btn-danger">ESKİ KAYITLARI LİSTELE</a>
+            </div>
+        </div>
+        <br />
+    }
+    else
+    {
+        <div style="text-align:center"> <img src="~/Web/icon/hata.png" /></div>
+        <div style="text-align:center ;margin-top:50px;font-size:24pt">
+            <b>BU SAYFADA YETKİLİ DEĞİLSİNİZ.</b>
+        </div>
+    }*@
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link href="~/Content/DataTables/css/dataTables.bootstrap4.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+<script>
+    $('#tbl').dataTable({
+        language: {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+        }
+    });
+</script>

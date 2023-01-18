@@ -1,0 +1,174 @@
+﻿@using BTProje.Models.EntityFramework
+@*@model BTProje.Models.liste.Class1*@
+@model List<Sirket_Arac>
+@{
+    KullaniciTablosu kullanici = (KullaniciTablosu)Session["kullanici"];
+    BölgelerTablosu bolge = (BölgelerTablosu)Session["bolge"];
+    List<RolYetkiAtama> yetki = (List<RolYetkiAtama>)Session["yetki"];
+}
+@{
+    ViewBag.Title = "OnayIndex";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+<link href="~/template/assets/vendors/mdi/css/materialdesignicons.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script src="~/Scripts/bootstrap.min.js"></script>
+
+@using (Html.BeginForm("OnayIndex", "Arac", FormMethod.Get))
+{
+    <div class="modal fade col-lg-12" id="modelView" tabindex="-1" role="dialog" aria-labelledby="">
+        <div class="modal-dialog  modal-lg" role="document">
+            <div class="modal-content">
+                <form method="post">
+                    <div class="modal-header">
+                        <h6 class="modal-title" id="myModalLabel">@ViewData.Values</h6>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">x</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <h5>@ViewData.Values</h5>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-bs-dismiss="modal">Kapat</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+<script>
+    $(function () {
+        // a tagimizde bulunan .view classımıza click olduğunda
+        $("body").on("click", ".view", function () {
+            //data-target dan url mizi al
+            var url = $(this).data("target");
+            //bu urlimizi post et
+            $.post(url, function (data) { })
+                //eğer işlemimiz başarılı bir şekilde gerçekleşirse
+                .done(function (data) {
+                    //gelen datayı .modal-body mizin içerise html olarak ekle
+                    $("#modelView .modal-body").html(data[1]);
+                    $("#modelView .modal-title").html(data[0]);
+                    //sonra da modalimizi göster
+                    $("#modelView").modal("show");
+                })
+                //eğer işlem başarısız olursa
+                .fail(function () {
+                    //modalımızın bodysine Error! yaz
+                    $("#modelView .modal-body").text("Error!!");
+                    //sonra da modalimizi göster
+                    $("#modelView").modal("show");
+                })
+
+        });
+    })
+</script>
+@foreach (var item in yetki)
+{
+    if (item.Rol_Id == 1)
+    {
+        <p style="text-align: center; margin-top: 12px; font-size: 20pt"><b>ARAÇ TALEP ONAY SAYFASI</b></p>
+        <br />
+        <hr style="border-block:1px solid black">
+        <br />
+        using (Html.BeginForm("OnayIndex", "Arac", FormMethod.Post))
+        {
+            <div style="overflow:auto;">
+                <table id="tbl" class="table table-striped table-bordered table-responsive" style="width:100%">
+                    <thead style="border-block:3px solid black ">
+                        <tr>
+                            @*<td><b><a href="/Sirket/gizle2" style="float:right" class="btn btn-outline-dark">GİZLE</a></b></td>*@
+                            <td><b>#</b></td>
+                            <td><b>NO</b></td>
+                            <td><b>GÖREV GİDİŞ TARİHİ</b></td>
+                            <td><b>ARAÇ PLAKA</b></td>
+                            <td><b>YETKİLİ AD SOYAD</b></td>
+                            <td><b>ŞOFÖR AD SOYAD</b></td>
+                            <td><b>GİDECEĞİ YER</b></td>
+                            <td><b>YOLCU SAYISI</b></td>
+                            <td><b>GÖREV DÖNÜŞ TARİHİ</b></td>
+                            <td><b>BÖLGE</b></td>
+                            <td><b>TALEP EDEN KİŞİ</b></td>
+                            <td><b>DURUM</b></td>
+                            <td><b>İŞLEM</b></td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var dg in Model)
+                        {
+                            <tr style="border-block: 2px solid gray">
+
+                                <td><a href="/Arac/Update/@dg.sirketaracid" id="upt" class="mdi mdi-format-list-bulleted" style="color:red; font-size: 30px"></a></td>
+                                <td>@dg.sirketaracid</td>
+                                <td>@dg.gorevgidistarih</td>
+                                <td>@dg.AraçTablosu.Plaka</td>
+                                <td>@dg.AraçTablosu.KullaniciTablosu.Ad @dg.AraçTablosu.KullaniciTablosu.Soyad</td>
+                                <td>@dg.soforadsoyad</td>
+                                <td>@dg.gorev</td>
+                                <td>
+                                    @if (@dg.yolcusayisi == 0)
+                                    {
+                                        <p>-</p>
+                                    }
+                                    else
+                                    {
+                                        <b><a href="#" class="view" style="color: #d82323; " data-target="/Arac/Yolcu/@dg.sirketaracid">@dg.yolcusayisi</a></b>//burayı kontrol et çalışmazsa popup ı burda da tanımla
+                                    }
+                                </td>
+                                <td>@dg.gorevdonustarih</td>
+                                <td>@dg.BölgelerTablosu.Bölge</td>
+                                <td>@dg.KullaniciTablosu.Ad @dg.KullaniciTablosu.Soyad</td>
+                                <td>
+                                    @if (dg.durum == 1)
+                                    {
+                                        <p>İK da Onay Bekliyor.</p>
+                                    }
+                                    else if (dg.durum == 2)
+                                    {
+                                        <p>Fabrika Müdüründe Onay Bekliyor.</p>
+                                    }
+                                    else if (dg.durum == 3)
+                                    {
+                                        <p>Güvenlikte Onay Bekliyor.</p>
+                                    }
+                                </td>
+                                <td>
+                                    <a href="/Arac/Onay/@dg.sirketaracid" id="ony" class="mdi mdi-check-circle" style="color: green; font-size: 30px"></a>
+                                    <a href="/Arac/Reddet/@dg.sirketaracid" id="red" class="mdi mdi-close-circle" style="color: red; font-size: 30px"></a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        break;
+    }
+}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link href="~/Content/DataTables/css/dataTables.bootstrap4.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
+<script>
+    $('#tbl').dataTable({
+        language: {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+        }
+    });
+</script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+    $("#ony").click(function () {
+        swal("BİLGİLENDİRME !", "Onay Verildi", "success");
+    });
+</script>
+<script>
+    $("#red").click(function () {
+        swal("BİLGİLENDİRME !", "Rezervasyon Silindi", "error");
+    });
+</script>
+

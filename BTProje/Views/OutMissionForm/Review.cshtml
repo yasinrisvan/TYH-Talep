@@ -1,0 +1,110 @@
+﻿@using BTProje.Models.EntityFramework
+@model DgsForm
+@{
+    ViewBag.Title = "Review";
+    Layout = "~/Views/Shared/_AdminLayout2.cshtml";
+    KullaniciTablosu kullanici = (KullaniciTablosu)Session["kullanici"];
+    //Layout = null;
+}
+
+<style>
+    #tbl1 th {
+        padding: 1.50rem;
+    }
+
+    #tbl1 td {
+        padding: 1.50rem;
+    }
+</style>
+
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script>
+    $("#print").click(function () {
+        this.hidden()
+    });
+</script>
+<div style="overflow:auto; margin-top:60px;">
+    <div id="ide">
+        @* <input type="button" class="btn btn-secondary" onclick="window.print()" id="print" value="Yazdır" style="image-orientation:url('/Web/printer.jpg')" />*@
+        <button onclick="window.print()" id="print">
+            <img src="~/Web/print.png" />
+            @*<img style="width:35px; height:35px;" src="~/Web/printer.jpg" />*@
+        </button>
+    </div>
+    <div class="row-cols-sm-6" style="">
+
+        <img style="display: block; margin:auto;" src="~/Web/arge-logo-digital1.png" />
+    </div>
+    <h4 style="text-align:center; margin-top:15px">@Model.KullaniciTablosu.BölgelerTablosu.Bölge AR-GE MERKEZİ GÖREVLİ PERSONEL FORMU </h4>
+    <br />
+
+    <table id="tbl1" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" style="padding-top:100px;">
+        <thead>
+
+            <tr>
+                <th>ADI SOYADI</th>
+                <td>
+                    @Model.KullaniciTablosu.Ad
+                    @Model.KullaniciTablosu.Soyad
+                </td>
+
+            </tr>
+            <tr>
+                <th>T.C. KİMLİK NO</th>
+                <td>@Model.KullaniciTablosu.TC</td>
+
+            </tr>
+            <tr>
+                <th>AR-GE MERKEZİNDE ÇALIŞTIĞI BİRİM</th>
+                <td>@Model.Unit1.NameOfUnit</td>
+
+            </tr>
+            <tr>
+                <th>İLİŞKİLİ PROJE KODU</th>
+                <td>@Model.CodeOfProject</td>
+
+            </tr>
+            <tr>
+                <th>DIŞARIDA GEÇİRİLEN SÜRE BAŞLANGIÇ TARİHİ</th>
+                <td>@Model.StartDate</td>
+
+            </tr>
+            <tr>
+                <th>DIŞARIDA GEÇİRİLEN SÜRE BİTİŞ TARİHİ</th>
+                <td>@Model.EndDate</td>
+
+            </tr>
+            <tr>
+                <th>GÖREVLİ OLMA NEDENİ</th>
+                <td>@Model.Mission.MissionName</td>
+
+            </tr>
+            <tr>
+                <th>GÖREV YERİ</th>
+                <td>@Model.Description</td>
+
+            </tr>
+        </thead>
+
+    </table>
+
+    <table id="tbl1" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" style="margin-top:125px;">
+        <thead>
+
+            <tr>
+                <th>AR-GE PERSONELİ ONAYI</th>
+                <th>AR-GE MERKEZİ MÜDÜRÜ ONAYI</th>
+                <th>İNSAN KAYNAKLARI ONAYI</th>
+
+            </tr>
+            <tr>
+                <td style="height:150px;"></td>
+                <td style="height:150px;"></td>
+                <td style="height:150px;"></td>
+            </tr>
+
+        </thead>
+
+    </table>
+</div>
+

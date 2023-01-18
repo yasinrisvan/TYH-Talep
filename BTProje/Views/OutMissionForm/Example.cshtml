@@ -1,0 +1,108 @@
+﻿
+@using BTProje.Models.EntityFramework;
+
+@model BTProje.Models.EntityFramework.DgsForm
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    KullaniciTablosu kullanici = (KullaniciTablosu)Session["kullanici"];
+    List<RolYetkiAtama> yetki = (List<RolYetkiAtama>)Session["yetki"];
+}
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script>
+    $(function () {
+        $('#UserId').change(function () {
+            var id = $('#UserId').val();
+            $.ajax({
+                url: '/OutMissionForm/Cascad',
+                data: { p: id },
+                type: "POST",
+                dataType: "Json",
+                success: function (data) {
+                    console.log(data);
+                    //$('#Unit').empty();
+                    ///*$('#ytkl').empty();*/
+                    $('#Unit').empty();
+                    //for (var i = 0; i < data.length; i++) {
+                    //    //$('#Unit1').val(data[i].Text);
+                    //    $('#Unit').val(data[i].Text)
+                    //    //$('#Unit').append("<option value='" + data[i].Value + "'>" + data[i].Text + "</Option>");
+                    //}
+                    $('#Unit').val(data);
+                }
+            });
+        });
+    });
+</script>
+
+@using (Html.BeginForm("Index", "OutMissionForm", FormMethod.Post))
+{
+    <fieldset>
+        <div id="gonderen" class="gonderen" style="margin-top:15px;">
+            <h4 style="text-align:center; margin-top:50px;"> AR-GE MERKEZİ GÖREVLİ PERSONEL FORMU </h4>
+
+            @Html.DropDownListFor(m => m.UserId, (List<SelectListItem>)ViewBag.User, "GÖREVLİ PERSONELİ SEÇİNİZ", new { @class = "form-control", required = "Boş Bırakılamaz" })<br />
+
+            @if (kullanici.RolTipi == 9 || (kullanici.RolTipi == 7))
+            {
+                @Html.DropDownListFor(m => m.UnitOfDepartment, (List<SelectListItem>)ViewBag.Unit, "AR-GE MERKEZİNDE ÇALIŞTIĞI BİRİMİ SEÇİNİZ", new { @class = "form-control" })<br />
+
+                @Html.TextBox("CodeOfProject", "", new { @class = "form-control", placeholder = "İLİŞKİLİ PROJE KODU / ADI" })<br />
+                @Html.TextBox("Unit", "", new { @class = "form-control", placeholder = "Unit2" })<br />
+                @*@Html.TextBoxFor(m => m.Unit1, new { @class = "form control" })*@
+
+            }
+
+            <label>DIŞARIDA GEÇİRİLEN SÜRE BAŞLANGIÇ TARİHİ</label>
+            <input type="datetime-local" class="form-control" name="StartDate" value="@DateTime.Now" /><br />
+
+            @*<label>DIŞARIDA GEÇİRİLEN SÜRE BİTİŞ TARİHİ</label>
+                <input type="datetime" class="form-control"  name="Tarih" value="@DateTime.Now" /><br />*@
+
+            @if (kullanici.RolTipi == 9 || (kullanici.RolTipi == 7))
+            {
+                @Html.DropDownListFor(m => m.MissionId, (List<SelectListItem>)ViewBag.Mission, "GÖREVLİ OLMA NEDENİ", new { @class = "form-control" })<br />
+            }
+
+            @Html.TextBox("Description", (string)ViewBag.Description, new { @class = "form-control", required = "Boş Bırakılamaz", placeholder = "GÖREV YERİ" })<br />
+
+
+            <div style="margin-top:10px">
+                <button class="btn btn-info" id="added">KAYDET</button>
+            </div>
+        </div>
+    </fieldset>
+
+
+}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<link href="~/Content/DataTables/css/dataTables.bootstrap4.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
+<script>
+    $('#tbl1').dataTable({
+        language: {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+        }
+    });
+</script>
+
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+@if (TempData["MessageError"] != null)
+{
+    <script>
+        swal("UYARI !", "@TempData["MessageError"]", "warning");
+    </script>
+}
+@if (TempData["MessageSuccess"] != null)
+{
+    <script>
+        swal("BAŞARILI !", "@TempData["MessageSuccess"]", "success");
+    </script>
+}
+

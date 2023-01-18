@@ -1,0 +1,26 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "jquery@3.6.0",
+      "destination": "Content/jquery/"
+    },
+    {
+      "library": "modernizr@2.8.3",
+      "destination": "Content/modernizr/"
+    },
+    {
+      "library": "jquery-dropdown@2.0.3",
+      "destination": "Content/jquery-dropdown/"
+    },
+    {
+      "library": "chosen@1.8.7",
+      "destination": "Content/chosen/"
+    },
+    {
+      "library": "bootstrap-select@1.13.18",
+      "destination": "Content/bootstrap-select/"
+    }
+  ]
+}

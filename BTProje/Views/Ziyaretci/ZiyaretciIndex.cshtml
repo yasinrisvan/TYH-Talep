@@ -1,0 +1,201 @@
+﻿@using BTProje.Models.EntityFramework
+@model List<Ziyaretci>
+@{
+    ViewBag.Title = "ZiyaretciIndex";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@{
+    KullaniciTablosu kullanici = (KullaniciTablosu)Session["kullanici"];
+    BölgelerTablosu bolge = (BölgelerTablosu)Session["bolge"];
+    List<RolYetkiAtama> yetki = (List<RolYetkiAtama>)Session["yetki"];
+}
+<link href="~/template/assets/vendors/mdi/css/materialdesignicons.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#export").click(function () {
+            ExportToExcel();
+        });
+    });
+    function ExportToExcel()
+    {
+        @*var url = '@Url.Action("GridExportToExcel", "Ziyaretci")';
+        window.open(url);*@
+        var url = '@Url.Action("GridExportToExcel", "Ziyaretci")';
+        window.location.href=url;
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $("#drp").change(function () {
+            var dt = $('#drp').val();
+            var url = "/Ziyaretci/BirimFiltre/" + dt;
+            window.location.href = url;
+        });
+    });
+</script>
+@*@if (kullanici != null && (kullanici.RolTipi == 3 || kullanici.RolTipi == 5 || kullanici.RolTipi == 6 || kullanici.RolTipi == 7))*@
+@foreach (var item in yetki)
+{
+    if (item.Rol_Id == 3)
+    {
+        <p style="text-align: center; margin-top: 12px; font-size: 20pt"><b>@ViewBag.bslk</b></p>
+        <div class="row" style="margin-top:10px">
+            <div class="col-6">
+                <a href="/Ziyaretci/ZiyaretciIndex/" style="font-size: 16pt" id="tg" class="btn btn-info form-control">TÜMÜNÜ GÖSTER</a>
+            </div>
+            <div class="col-6">
+                <a href="/Ziyaretci/Filtre/" style="font-size: 16pt" id="cyk" class="btn btn-info form-control">ÇIKIŞ YAPMAYAN ZİYARETÇİLER</a>
+            </div>
+        </div>
+        <div class="row" style="margin-top:10px;margin-bottom:20px">
+            <div class="col-4">
+                <a href="/Ziyaretci/ZKayıt" class="btn btn-warning">Yeni Kayıt Oluştur</a>
+            </div>
+            <div class="col-8">
+                @using (Html.BeginForm("GridExportToExcel", "Ziyaretci", FormMethod.Post))
+                {
+                    <div class="row">
+                        <div class="col-6"></div>
+                        <div class="col-2">
+                            @Html.TextBox("ilktrh", null, new { @class = "form-control", @type = "date" })
+                        </div>
+                        <div class="col-2">
+                            @Html.TextBox("sontrh", null, new { @class = "form-control", @type = "date" })
+                        </div>
+                        <div class="col-2">
+                            @*<a href="#" id="export" class="btn btn-primary">Excele Aktar</a>*@
+                            <button type="submit" id="export" class="btn btn-primary">Excel'e Kaydet</button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        <hr style="border-block:1px solid black">
+
+        using (Html.BeginForm("ZKayıt", "Ziyaretci", FormMethod.Post))
+        {
+            <table id="tbl" class="table table-striped table-bordered table-responsive" style="width:100%">
+                <thead style="border-block:3px solid black ">
+                    <tr>
+                        <td><b>#</b></td>
+                        <td><b>NO</b></td>
+                        <td><b>GİRİŞ TARİHİ</b></td>
+                        <td><b>ADSOYAD</b></td>
+                        <td><b>TC KİMLİK / PASAPORT NO</b></td>
+                        <td><b>ZİYARET ETME SEBEBİ</b></td>
+                        <td><b>ZİYARET EDİLEN KİŞİ</b></td>
+                        <td style="text-align:center">
+                            <b>
+                                ZİYARET EDİLEN BİRİM
+                                @Html.DropDownList("drp", (List<SelectListItem>)ViewBag.dept, new { @class = "form-control" })
+                            </b>
+                        </td>
+                        <td><b>PLAKA</b></td>
+                        <td><b>KART NO</b></td>
+                        <td><b>ÇIKIŞ TARİHİ</b></td>
+                        <td><b>BÖLGE</b></td>
+                        <td><b>KULLANICI</b></td>
+                        <td><b>ÇIKIŞ</b></td>
+                        @if (item.Yetki_Id == 1 || item.Yetki_Id == 3)
+                        {
+                            <td><b>SİL</b></td>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var dg in Model)
+                    {
+                        string ad = dg.KullaniciTablosu.Ad + " " + dg.KullaniciTablosu.Soyad;
+                        <tr style="border-block:2px solid gray ">
+                            <td><a href="/Ziyaretci/Update/@dg.ziyaretciid" class="mdi mdi-format-list-bulleted" style="color:red; font-size: 30px"></a></td>
+                            <td>@dg.ziyaretciid</td>
+                            <td>@dg.z_giristarih</td>
+                            <td>@dg.z_adsoyad</td>
+                            <td>@dg.z_tcno</td>
+                            <td>@dg.ziyaretsebebi</td>
+                            <td>@dg.z_edilenadsoyad</td>
+                            <td>@dg.DepartmanlarTablosu.Ad</td>
+                            <td>
+                                @if (dg.z_plaka == null)
+                                {
+                                    <p>-</p>
+                                }
+                                else
+                                {
+                                    <a href="/Ziyaretci/Yeni/@dg.ziyaretciid" id="upt">@dg.z_plaka</a>
+                                }
+                            </td>
+                            <td>
+                                @if (dg.kartno == null)
+                                {
+                                    <p>-</p>
+                                }
+                                else
+                                {
+                                    @dg.kartno
+                                }
+                            </td>
+                            <td>@dg.z_cikistarih</td>
+                            <td>@dg.BölgelerTablosu.Bölge</td>
+                            <td>
+                                @if ((dg.ikincikullanici == null) || (dg.ikincikullanici == ad))
+                                {
+                                    <p>1.@dg.KullaniciTablosu.Ad @dg.KullaniciTablosu.Soyad</p>
+                                }
+                                else
+                                {
+                                    <p>1.@dg.KullaniciTablosu.Ad @dg.KullaniciTablosu.Soyad </p>
+                                    <p>2.@dg.ikincikullanici </p>
+                                }
+                            </td>
+                            <td>
+                                <center><a href="/Ziyaretci/cikis/@dg.ziyaretciid" class="mdi mdi-logout" style="color:darkred; font-size: 27px"></a></center>
+                            </td>
+                            @*@if (kullanici.YetkiTipi == 1 || kullanici.YetkiTipi == 3)*@
+                            @if (item.Yetki_Id == 1 || item.Yetki_Id == 3)
+                            {
+                                <td>
+                                    <a href="/Ziyaretci/Sil/@dg.ziyaretciid" class="mdi mdi-delete" style="color:red; font-size: 30px"></a>
+                                </td>
+                            }
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+        <br />
+        <div class="row">
+            <div class="col-10"></div>
+            <div class="col-2">
+                <a href="/Ziyaretci/EskiKayitlar" class="btn btn-danger">ESKİ KAYITLARI LİSTELE</a>
+            </div>
+        </div>
+        break;
+    }
+}
+@*else
+    {
+    <div style="text-align:center"> <img src="~/Web/icon/hata.png" /></div>
+    <div style="text-align:center ;margin-top:50px;font-size:24pt">
+        <b>BU SAYFADA YETKİLİ DEĞİLSİNİZ.</b>
+    </div>
+    }*@
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link href="~/Content/DataTables/css/dataTables.bootstrap4.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+<link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
+
+<script>
+    $('#tbl').dataTable({
+        language: {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+        }
+    });
+</script>
+

@@ -1,0 +1,88 @@
+﻿@using BTProje.Models.EntityFramework
+@model BTProje.Models.EntityFramework.Sirket_Arac
+@{
+    ViewBag.Title = "Rezervasyon";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@{
+    KullaniciTablosu kullanici = (KullaniciTablosu)Session["kullanici"];
+    BölgelerTablosu bolge = (BölgelerTablosu)Session["bolge"];
+    List<RolYetkiAtama> yetki = (List<RolYetkiAtama>)Session["yetki"];
+}
+<link href="~/template/assets/vendors/mdi/css/materialdesignicons.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script src="~/select2-4.1.0-rc.0/dist/js/select2.min.js"></script>
+<link href="~/select2-4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+@foreach (var item in yetki)
+{
+    if (item.Rol_Id == 1)
+    {
+        <p style="text-align: center; margin-top: 12px;margin-bottom:30px; font-size: 20pt"><b>ŞİRKET ARAÇ REZERVASYON OLUŞTURMA SAYFASI</b></p>
+        using (Html.BeginForm("Rezervasyon", "Arac", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                <hr style="border-block:1px solid black">
+                <div class="row">
+                    <div class="col-6">
+                        <label><b>GİDİŞ TARİHİ</b></label>
+                        @Html.TextBoxFor(m => m.gorevgidistarih, "{0:yyyy-MM-dd HH:mm}", new { @class = "form-control", @type = "datetime-local", @required = "" })
+                    </div>
+                    <div class="col-6">
+                        <label><b>DÖNÜŞ TARİHİ</b></label>
+                        @Html.TextBoxFor(m => m.gorevdonustarih, "{0:yyyy-MM-dd HH:mm}", new { @class = "form-control", @type = "datetime-local" })
+                    </div>
+                </div>
+                <hr style="border-block:1px solid black">
+                <div class="row">
+                    <div class="col-6">
+                        <label><b>ARAÇ PLAKASI</b></label>
+                        @Html.TextBoxFor(m => m.ikincikullanici, "", new { @class = "form-control", @disabled = "true" })    @*burada plakayı tutmak için herzaman kullanmadığım bir değişken tipinde *@
+                        @Html.HiddenFor(m => m.aracid)                                                                                         @* tanımlayıp güncelleme sırasında bu dğere atayıp kullanıyorum.*@
+                    </div>
+                    <div class="col-6">
+                        <label><b>ŞOFÖR ADI SOYADI</b></label>
+                        @Html.TextBoxFor(m => m.soforadsoyad, new { @class = "form-control", @placeholder = "Şoför Ad Soyad", @maxlength = "50", @required = "" })
+                    </div>
+                </div>
+                <hr style="border-block:1px solid black">
+                <div class="row">
+                    <div class="col-6">
+                        <label><b>YOLCULAR</b></label>
+                        @Html.ListBox("Yolcular", (List<SelectListItem>)ViewBag.kll, new { @class = "form-control select2", Name = "Yolcular", @multiple = "multiple" })
+                    </div>
+                    <div class="col-6">
+                        <label><b>GİDECEĞİ YER</b></label>
+                        @Html.TextBoxFor(m => m.gorev, new { @class = "form-control", @placeholder = "Gideceği Yer", @maxlength = "50", @required = "" })
+                    </div>
+                </div>
+                <hr style="border-block:1px solid black">
+            </div>
+
+            @Html.HiddenFor(m => m.sirketaracid)
+            <button type="submit" id="bt1" class="btn btn-success">Kaydet</button>
+        }
+        break;
+    }
+}
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+@if (TempData["msg"] != null)
+{
+    <script>
+        swal("UYARI !", "@TempData["msg"]", "warning");
+    </script>
+}
+<script>
+    //$('.select2').select2();
+    $('#Yolcular').select2({
+        placeholder: "Yolcu Seçiniz"
+    });
+</script>
+
+
+
+
+
+

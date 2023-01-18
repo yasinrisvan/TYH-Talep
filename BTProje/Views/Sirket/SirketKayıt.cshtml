@@ -1,0 +1,271 @@
+﻿@using BTProje.Models.EntityFramework
+@model BTProje.Models.EntityFramework.Sirket_Arac
+@{
+    ViewBag.Title = "SirketKayıt";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@{
+    TYHTALEPEntities db = new TYHTALEPEntities();
+    KullaniciTablosu kullanici = (KullaniciTablosu)Session["kullanici"];
+    BölgelerTablosu bolge = (BölgelerTablosu)Session["bolge"];
+    List<RolYetkiAtama> yetki = (List<RolYetkiAtama>)Session["yetki"];
+}
+<link href="~/template/assets/vendors/mdi/css/materialdesignicons.min.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script src="~/select2-4.1.0-rc.0/dist/js/select2.min.js"></script>
+<link href="~/select2-4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script>
+    $(function () {
+        $('#aracid').change(function () {
+            var id = $('#aracid').val();
+            $.ajax({
+                url: '/Sirket/YetkiliAd',
+                data: { p: id },
+                type: "POST",
+                dataType: "Json",
+                success: function (data) {
+                    console.log(data);
+                    //$('#Ara_Tablosu_KullaniciTablosu_KullaniciAdi').empty();
+                    $('#ikincikullanici').empty();
+                    $('#soforadsoyad').empty();
+                    for (var i = 0; i < data.length; i++) {
+                        //$('#Ara_Tablosu_KullaniciTablosu_Ad').val(data[i].Text);
+                        $('#ikincikullanici').val(data[i].Text);
+                        $('#soforadsoyad').val(data[i].Text);
+                    }
+                }
+            });
+            $.ajax({
+                url: '/Sirket/GidisKm',
+                data: { p: id },
+                type: "POST",
+                dataType: "Json",
+                success: function (data) {
+                    console.log(data);
+                    $('#gidiskm').empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $('#gidiskm').val(data[i].Text);
+                    }
+                }
+            });
+        });
+    });
+</script>
+<script>
+    $(function () {
+        $('#plk').on("keyup", function () {
+            var id = $('#plk').val();
+            $.ajax({
+                url: '/Sirket/Arama',
+                data: { p: id },
+                type: "POST",
+                dataType: "Json",
+                success: function (data) {
+                    console.log(data);
+                    $('#aracid').empty();
+                    for (var i = 0; i < data.length; i++) {
+                        $('#aracid').append("<option value='" + data[i].Value + "'>" + data[i].Text + "</Option>");
+                    }
+                }
+            });
+        });
+    });
+</script>
+@*@if (kullanici != null && (kullanici.RolTipi == 3 || kullanici.RolTipi == 5 || kullanici.RolTipi == 6 || kullanici.RolTipi == 7))
+    {*@
+
+@foreach (var item in yetki)
+{
+    if (item.Rol_Id == 3)
+    {
+        {
+            @*<script>
+                    $(function () {
+                        $('#ekle').click(function () {
+                            var id = $('#Kullanicilar').val();
+                            $.ajax({
+                                url: '/Sirket/YolcuEkle',
+                                data: { p: id },
+                                type: "POST",
+                                dataType: "Json",
+                                success: function (data) {
+                                    console.log(data);
+                                    for (var i = 0; i < data.length; i++) {
+                                        $('#Kullanicilar2').append("<option value='" + data[i].Value + "'>" + data[i].Text + "</Option>");
+                                        $('#Yolcular').append("<option value='" + data[i].Value + "'selected=" + '"' + "selected" + '"' + ">" + data[i].Text + "</Option>");
+                                    }
+                                }
+                            });
+                        });
+                    });
+                </script>
+
+                <script>
+                    $(function () {
+                        $('#cikar').click(function () {
+                            var id = $('#Kullanicilar2').val();
+                            var selectobject = document.getElementById("Yolcular");
+                            for (var i = 0; i < selectobject.length; i++) {
+                                if (selectobject.options[i].value == id)
+                                    selectobject.remove(i);
+                            }
+                            $('#Kullanicilar2 option:selected').remove();
+                        });
+                    });
+                </script>
+
+                <script>
+                    $(function () {
+                        $('#yolcu').change(function () {
+                            var id = $('#yolcu').val();
+                            $.ajax({
+                                url: '/Sirket/YolcuArama',
+                                data: { p: id },
+                                type: "POST",
+                                dataType: "Json",
+                                success: function (data) {
+                                    console.log(data);
+                                    $('#Kullanicilar').empty();
+                                    for (var i = 0; i < data.length; i++) {
+                                        $('#Kullanicilar').append("<option value='" + data[i].Value + "'>" + data[i].Text + "</Option>");
+                                    }
+                                }
+                            });
+                        });
+                    });
+                </script>*@
+        }
+        <p style="text-align: center; margin-top: 12px;margin-bottom:30px; font-size: 20pt"><b>ŞİRKET ARAÇ KAYIT EKLEME SAYFASI</b></p>
+        using (Html.BeginForm("SirketKayıt", "Sirket", FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-6">
+
+                        @if (Model.sirketaracid == 0)
+                        {
+                            @Html.TextBox("plk", "", new { @class = "form-control", @style = "border-color:gray ;width:50% ; height: 32px; margin-bottom:2px ", @placeholder = "Plakalarda Arayın.." })
+                            @Html.DropDownListFor(m => m.aracid, (List<SelectListItem>)ViewBag.srk, new { @class = "form-control", @required = "", @size = "6" })
+                        }
+                        else
+                        {
+                            <label style="margin-bottom:12px"><b>ARAÇ PLAKASI</b></label>
+                            @Html.DropDownListFor(m => m.aracid, (List<SelectListItem>)ViewBag.srk, "--Plaka Seçin--", new { @class = "form-control", @required = "", @size = "6", @disabled = "disabled" })
+                            @Html.HiddenFor(m => m.aracid)
+                        }
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <label><b>YETKİLİ ADI SOYADI</b></label>
+                            @*@Html.TextBox("AraçTablosu.KullaniciTablosu.Ad", TempData["yetkili"], new { @class = "form-control", @placeholder = "Yetkili Adı Soyadı", @disabled = "true" })*@
+                            @Html.TextBoxFor(m => m.ikincikullanici, new { @class = "form-control", @placeholder = "Yetkili Adı Soyadı", @disabled = "true" })
+                            @*bu alan yetkili adını görüntülemek için kullanılıyor herhangi bir ekleme veya değiştirme yapmıyor*@
+                        </div>
+                        <hr style="border-block:1px solid black">
+                        <div class="row">
+                            <label style="margin-top:7px"><b>ŞOFÖR ADI SOYADI</b></label>
+                            @Html.TextBoxFor(m => m.soforadsoyad, new { @class = "form-control", @placeholder = "Şoför Adı Soyadı", @maxlength = "50", @required = "" })
+                        </div>
+                        @*<hr style="border-block:1px solid black">
+                            <div class="row">
+                                <label><b>GİDİŞ KM</b></label>
+                                @Html.TextBoxFor(m => m.gidiskm, new { @class = "form-control", @type = "number", @placeholder = "Araç Gidiş Km" })
+                            </div>*@
+                    </div>
+                </div>
+                <hr style="border-block:1px solid black">
+                <div class="row">
+                    @*<div class="col-6">
+                            <label><b>YOLCULAR</b></label>
+                            @Html.ListBox("Yolcular", (List<SelectListItem>)ViewBag.kll, new { @class = "form-control", Name = "Yolcular", @multiple = "multiple" })
+                        </div>*@
+                    <div class="col-3">
+                        <label><b>YOLCU ADI SOYADI</b></label>
+                        @Html.TextAreaFor(m => m.yolcuad, new { @class = "form-control", @style = "height:82%", @placeholder = "Yolcu Adını ve Soyadını Yazınız.." })
+                    </div>
+                    <div class="col-3">
+                        <label><b>YOLCU DEPARTMANI</b></label>
+                        @Html.TextAreaFor(m => m.yolcubirim, new { @class = "form-control", @style = "height:82%", @placeholder = "Yolcu Departmanını Yazınız.." })
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <label><b>GİDİŞ KM</b></label>
+                            @Html.TextBoxFor(m => m.gidiskm, new { @class = "form-control", @type = "number", @placeholder = "Araç Gidiş Km" })
+                        </div>
+                        <hr style="border-block:1px solid black">
+                        <div class="row">
+                            <label><b>GİDECEĞİ YER</b></label>
+                            @Html.TextBoxFor(m => m.gorev, new { @class = "form-control", @placeholder = "Gideceği Yer", @maxlength = "50", @required = "" })
+                        </div>
+                    </div>
+                </div>
+                <hr style="border-block:1px solid black">
+                <div class="row">
+                    <div class="col-6">
+                        <label><b>DÖNÜŞ YAPAN ŞOFÖR ADI SOYADI</b></label>
+                        @Html.TextBoxFor(m => m.donussoforad, new { @class = "form-control", @placeholder = "Şoför Ad Soyad", @maxlength = "50" })
+                    </div>
+                    <div class="col-6">
+                        <div class="row">
+                            <label><b>DÖNÜŞ KM</b></label>
+                            @Html.TextBoxFor(m => m.donuskm, new { @class = "form-control", @type = "number", @placeholder = "Araç Dönüş Km" })
+                        </div>
+                    </div>
+                </div>
+                <hr style="border-block:1px solid black">
+                @*@if ((Model.sirketaracid != 0) && (kullanici.YetkiTipi == 1 || kullanici.YetkiTipi == 3))
+                    {*@
+                @if ((Model.sirketaracid != 0) && (item.Yetki_Id == 1 || item.Yetki_Id == 3))
+                {
+                    <div class="row">
+                        <div class="col-6">
+                            <label><b>GİDİŞ TARİHİ</b></label>
+                            @Html.TextBoxFor(m => m.gorevgidistarih, "{0:yyyy-MM-dd HH:mm}", new { @class = "form-control", @type = "datetime-local" })
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
+                                <label><b>DÖNÜŞ TARİHİ</b></label>
+                                @Html.TextBoxFor(m => m.gorevdonustarih, "{0:yyyy-MM-dd HH:mm}", new { @class = "form-control", @type = "datetime-local" })
+                            </div>
+                        </div>
+                    </div>
+                    <hr style="border-block:1px solid black">
+                }
+
+            </div>
+            @Html.HiddenFor(m => m.sirketaracid)
+            if (Model.sirketaracid == 0)
+            {
+                <button type="submit" id="bt1" class="btn btn-success">Kaydet</button>
+            }
+            else
+            {
+                <button type="submit" id="bt1" class="btn btn-success">Güncelle</button>
+            }
+        }
+        break;
+    }
+}
+@*else
+    {
+        <div style="text-align:center"> <img src="~/Web/icon/hata.png" /></div>
+        <div style="text-align:center ;margin-top:50px;font-size:24pt">
+            <b>BU SAYFADA YETKİLİ DEĞİLSİNİZ.</b>
+        </div>
+    }*@
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+@if (TempData["msg"] != null)
+{
+    <script>
+        swal("UYARI !", "@TempData["msg"]", "warning");
+    </script>
+}
+<script>
+    /*$('.select2').select2();*/
+    $('#Yolcular').select2({
+        placeholder: "Yolcu Seçiniz"
+    });
+</script>

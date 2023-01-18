@@ -1,0 +1,125 @@
+﻿@model BTProje.Models.EntityFramework.KullaniciTablosu
+
+@using BTProje.Models.EntityFramework;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    KullaniciTablosu kullanici = (KullaniciTablosu)Session["kullanici"];
+    List<RolYetkiAtama> yetki = (List<RolYetkiAtama>)Session["yetki"];
+}
+
+
+<html>
+<title>Hesabım</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body>
+    <div style="margin-left:430px; width:50%; text-align:center">
+        <div class="w3-container">
+            <br />
+
+            <h2>HESABIM</h2>
+            <p></p>
+            <h3 style="text-align:center">Hoşgeldin @kullanici.Ad @kullanici.Soyad</h3>
+            <br />
+        </div>
+
+        <div class="w3-bar w3-dark-grey" style="background-color: #6c757d; color: #6c757d;">
+            <button class="w3-bar-item w3-button" onclick="openCity('account')">Kullanıcı Bilgileri</button>
+            <button class="w3-bar-item w3-button" onclick="openCity('password')">Şifre Değiştir</button>
+            @*<button class="w3-bar-item w3-button" onclick="openCity('authorized')">Yetkiliyi Tanımla</button>*@
+        </div><br />
+        @*<p>Kişisel bilgiler</p>*@
+        <div id="account" class="w3-container city">
+            <table id="tbl1" class="table table-bordered" style="text-align:left">
+
+                <thead>
+                    <tr>
+                        <th>Ad </th>
+                        <td>@kullanici.Ad</td>
+                    </tr>
+                    <tr>
+                        <th>Soyad</th>
+                        <td>@kullanici.Soyad</td>
+                    </tr>
+                    <tr>
+                        <th>Telefon Numarası</th>
+                        <td>@kullanici.TelefonNo</td>
+                    </tr>
+                    <tr>
+                        <th>TC Kimlik Numarası</th>
+                        <td>@kullanici.TC</td>
+                    </tr>
+                    <tr>
+                        <th>Sicil Numarası</th>
+                        <td>@kullanici.SicilNo</td>
+                    </tr>
+                    <tr>
+                        <th>Bölge</th>
+                        <td>@kullanici.BölgelerTablosu.Bölge</td>
+                    </tr>
+                    <tr>
+                        <th>Departman</th>
+                        <td>@kullanici.DepartmanlarTablosu.Ad</td>
+                    </tr>
+                    <tr>
+                        <th>Maliyet Merkezi Numarası</th>
+                        <td>@kullanici.MaliyetMNo</td>
+                    </tr>
+
+                    <tr>
+                        <th>Erişim izni Verilen Proje</th>
+                        <td>
+                            <ul>
+                                @foreach (var item in yetki)
+                                {
+                                    <li>
+                                        @item.Roller.RolAdı   -    @item.Yetki.YetkiTipi
+                                    </li>
+                                }
+                            </ul>
+                        </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <b style="text-align:left"><h4> Kişisel Bilgiler </h4> </b>
+                </tbody>
+
+            </table>
+        </div>
+
+        <div id="password" class="w3-container city" style="display:none">
+            <h4>Şifre Değiştir</h4>
+
+            @*@using*@
+            <form method="post" class="form-group">
+                <div id="newPassword" class="newPassword" style="margin-top:15px;">
+                    <input type="password" name="sifre" placeholder="Eski Şifre" class="form-control" /><br />
+                    <input type="password" name="password" placeholder="Yeni Şifre" class="form-control" /><br />
+                    <input type="password" name="confirmPassword" placeholder="Yeni Şifre Tekrar " class="form-control" /><br /><br />
+                </div>
+                <div style="margin-top:10px">
+                    <button class="btn btn-outline-dark" id="added">Şifremi Değiştir</button>
+                </div>
+            </form>
+
+            <div id="authorized" class="w3-container city" style="display:none">
+                <h2>Tokyo</h2>
+                <p>Tokyo is the capital of Japan.</p>
+            </div>
+        </div>
+        <script>
+            function openCity(cityName) {
+                var i;
+                var x = document.getElementsByClassName("city");
+                for (i = 0; i < x.length; i++) {
+                    x[i].style.display = "none";
+                }
+                document.getElementById(cityName).style.display = "block";
+            }
+        </script>
+
+
+</body>
+</html>

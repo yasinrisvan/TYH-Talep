@@ -11,7 +11,6 @@ using BTProje.Models.EntityFramework;
 
 namespace BTProje.Controllers
 {
-    //yasin deneme
     public class ZiyaretciController : Controller
     {
         // GET: Ziyaretci

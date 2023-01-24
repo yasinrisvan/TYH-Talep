@@ -10,13 +10,16 @@ using BTProje.Models.EntityFramework;
 using System.Diagnostics;
 using System.Data.SqlClient;
 using System.Data;
-
+using System.Data.Entity.Validation;
 
 namespace BTProje.Controllers
 {
     public class OutMissionFormController : Controller
     {
         TYHTALEPEntities db = new TYHTALEPEntities();
+
+        SqlConnection dbf = new SqlConnection("Server=192.168.100.12;Database=TYH802;Trusted_Connection=True;");
+
         // GET: OutMissionForm
         public ActionResult Index()
         {
@@ -48,52 +51,90 @@ namespace BTProje.Controllers
 
             return View();
         }
+        //[HttpPost]
+        //public ActionResult Index(DgsForm dgsForm)
+        //{
+        //    if (ModelState.IsValid)
+        //    { // code of project
+        //        DgsForm newForm = new DgsForm();
+        //        newForm.UserId = dgsForm.UserId;
+        //        newForm.StartDate = dgsForm.StartDate;
+        //        newForm.Description = dgsForm.Description.ToUpper();
+        //        if (dgsForm.CodeOfProject == null || dgsForm.CodeOfProject == "")
+        //        {
+        //            newForm.CodeOfProject = "";
+        //        }
+        //        else
+        //        {
+        //            newForm.CodeOfProject = dgsForm.CodeOfProject.ToUpper();
+
+        //        }
+        //        if (dgsForm.UnitOfDepartment == null)
+        //        {
+        //            newForm.UnitOfDepartment = 11;
+        //        }
+        //        else
+        //        {
+        //            newForm.UnitOfDepartment = dgsForm.UnitOfDepartment;
+        //        }
+        //        if (dgsForm.MissionId == null)
+        //        {
+        //            newForm.MissionId = 11;
+        //        }
+        //        else
+        //        {
+        //            newForm.MissionId = dgsForm.MissionId;
+        //        }
+        //        db.DgsForm.Add(newForm);
+        //        db.SaveChanges();
+        //        TempData["MessageSuccess"] = "GOREVLI PERSONEL EKLENDI ";
+        //    }
+
+        //    else
+        //    {
+        //        @TempData["MessageError"] = "KAYDEDİLEMEDİ !";
+
+        //    }
+        //    return RedirectToAction("Index");
+        //}
+
         [HttpPost]
-        public ActionResult Index(DgsForm dgsForm)
+        public ActionResult Index(FormCollection form, string Unit)
         {
-            if (ModelState.IsValid)
-            { // code of project
-                DgsForm newForm = new DgsForm();
-                newForm.UserId = dgsForm.UserId;
-                newForm.StartDate = dgsForm.StartDate;
-                newForm.Description = dgsForm.Description.ToUpper();
-                if (dgsForm.CodeOfProject == null || dgsForm.CodeOfProject == "")
-                {
-                    newForm.CodeOfProject = "";
-                }
-                else
-                {
-                    newForm.CodeOfProject = dgsForm.CodeOfProject.ToUpper();
+            if (form["CodeOfProject"] == null)
+                form["CodeOfProject"] = "";
 
-                }
-                if (dgsForm.UnitOfDepartment == null)
-                {
-                    newForm.UnitOfDepartment = 11;
-                }
-                else
-                {
-                    newForm.UnitOfDepartment = dgsForm.UnitOfDepartment;
-                }
-                if (dgsForm.MissionId == null)
-                {
-                    newForm.MissionId = 11;
-                }
-                else
-                {
-                    newForm.MissionId = dgsForm.MissionId;
-                }
-                db.DgsForm.Add(newForm);
-                db.SaveChanges();
-                TempData["MessageSuccess"] = "GOREVLI PERSONEL EKLENDI ";
-            }
+            //if (form["Unit"] == null)
+            //    form["Unit"] = "";
 
-            else
+            if (form["MissionId"] == null)
+                form["MissionId"] = 11.ToString();
+
+            if (form["Description"] == null)
+                form["Description"] = "";
+
+            DgsForm dgsForm = new DgsForm
             {
-                @TempData["MessageError"] = "KAYDEDİLEMEDİ !";
+                UserId = Convert.ToInt32(form["UserId"]),
+                //Unit = form["Unit"].ToString(),
+                Unit = Unit,
+                CodeOfProject = form["CodeOfProject"].ToUpper(),
+                StartDate = Convert.ToDateTime(form["StartDate"]),
+                MissionId = Convert.ToInt16(form["MissionId"]),
+                Description = form["Description"].ToUpper(),
+                UnitOfDepartment = 11,
 
-            }
+
+            };
+
+            db.DgsForm.Add(dgsForm);
+            db.SaveChanges();
+
+
+            TempData["MessageSuccess"] = "GOREVLI PERSONEL EKLENDI ";
             return RedirectToAction("Index");
         }
+
         public ActionResult GetForm()
         {
             var forms = db.DgsForm.OrderByDescending(x => x.Id).ToList();
@@ -159,6 +200,7 @@ namespace BTProje.Controllers
                 old.StartDate = dgsForm.StartDate;
                 old.Description = dgsForm.Description.ToUpper();
                 old.EndDate = dgsForm.EndDate;
+                old.Unit = dgsForm.Unit; 
                 if (dgsForm.CodeOfProject == null)
                 {
                     old.CodeOfProject = "";
@@ -219,18 +261,30 @@ namespace BTProje.Controllers
                              BÖLGE = i.KullaniciTablosu.BölgelerTablosu.Bölge,
                              ADI_SOYADI = i.KullaniciTablosu.Ad + " " + i.KullaniciTablosu.Soyad,
                              TC_KİMLİK_NO = i.KullaniciTablosu.TC,
-                             BİRİM = i.Unit1.NameOfUnit,
+                             BİRİM = i.Unit,
+                             //BİRİM = i.Unit1.NameOfUnit,
                              PROJE_KODU = i.CodeOfProject,
                              BAŞLANGIÇ_TARİHİ = i.StartDate,
+                             //BAŞLANGIÇ_SAATİ = i.StartDate.Value.ToShortTimeString(),
+                             //asd="",
+                             //ast="",
                              BİTİŞ_TARİHİ = i.EndDate,
                              GÖREVLİ_OLMA_NEDENİ = i.Mission.MissionName,
                              AÇIKLAMA = i.Description,
                          }).ToList();
             //if (kid.YetkiTipi == 1)
             //{
+            //foreach (var item in table)
+            //{
+                
+            //    //item.asd.Insert(0,item.BAŞLANGIÇ_TARİHİ.Value.ToShortDateString());
+            //    item.asd.Insert(7, "testtt");
+            //    //item.asd.Replace(item.asd, item.BAŞLANGIÇ_TARİHİ.Value.ToShortTimeString());
+            //    item.ast.Insert(8, item.BAŞLANGIÇ_TARİHİ.Value.ToShortTimeString());
+            //}
             if (ilktrh != null && sontrh != null)
             {
-                table = table.Where(m => m.BAŞLANGIÇ_TARİHİ >= ilktrh)
+                table = table.Where(m =>m.BAŞLANGIÇ_TARİHİ >= ilktrh)
                 .Where(m => m.BAŞLANGIÇ_TARİHİ <= sontrh).ToList();
             }
             else if (ilktrh == null || sontrh == null)
@@ -242,7 +296,7 @@ namespace BTProje.Controllers
             //{
             if (ilktrh != null && sontrh != null)
             {
-                table = table.Where(m => m.BAŞLANGIÇ_TARİHİ >= ilktrh)
+                table = table.Where(m =>m.BAŞLANGIÇ_TARİHİ >= ilktrh)
                              //.Where(m => m.BÖLGE == bid.Bölge)
                              .Where(m => m.BAŞLANGIÇ_TARİHİ <= sontrh).ToList();
             }
@@ -297,5 +351,71 @@ namespace BTProje.Controllers
             db.SaveChanges();
             return RedirectToAction("GetForm");
         }
+
+
+        public JsonResult Cascad(int p)      //cascading dropdownlist
+        {
+
+            string unit = "";
+            var user = db.KullaniciTablosu.Find(p);
+            int sNo = Convert.ToInt32(user.SicilNo);
+            string sicilNo;
+            if (sNo < 10000)
+            {
+                sicilNo = "0" + user.SicilNo;
+            }
+            else
+            {
+                sicilNo = user.SicilNo;
+            }
+
+            dbf.Open();
+            string sql = "SELECT [RDDEPARTMENT] as unit FROM [dbo].[CANIAS_ARGE] WHERE [PERSID]='" + sicilNo + "'";
+            SqlCommand cmd = new SqlCommand(sql, dbf);
+            DataTable dt = new DataTable();
+            SqlDataAdapter da = new SqlDataAdapter(cmd);
+            da.Fill(dt);
+            SqlDataReader dr;
+            dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                unit = dr["unit"].ToString();
+            }
+            dbf.Close();
+
+            return Json(unit, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Example()
+        {
+            KullaniciTablosu kullanici = (KullaniciTablosu)Session["kullanici"];
+            List<SelectListItem> user = (from i in db.KullaniciTablosu.Where(m => m.MaliyetMNo == 3511501.ToString() && m.BölgeID == kullanici.BölgeID).ToList()
+                                         select new SelectListItem
+                                         {
+                                             Text = i.Ad + " " + i.Soyad,
+                                             Value = i.Kullanici_id.ToString()
+                                         }).OrderBy(x => x.Text).ToList();
+            ViewBag.User = user;
+
+            List<SelectListItem> unit = (from i in db.Unit.ToList()
+                                         select new SelectListItem
+                                         {
+                                             Text = i.NameOfUnit,
+                                             Value = i.Id.ToString()
+                                         }).OrderBy(x => x.Text).ToList();
+            ViewBag.Unit = unit;
+
+            List<SelectListItem> mission = (from i in db.Mission.ToList()
+                                            select new SelectListItem
+                                            {
+                                                Text = i.MissionName,
+                                                Value = i.MissionId.ToString()
+                                            }).OrderBy(x => x.Text).ToList();
+            ViewBag.Mission = mission;
+
+
+            return View();
+        } ///gereksiz
+
     }
 }

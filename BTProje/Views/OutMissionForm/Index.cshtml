@@ -9,6 +9,25 @@
     KullaniciTablosu kullanici = (KullaniciTablosu)Session["kullanici"];
     List<RolYetkiAtama> yetki = (List<RolYetkiAtama>)Session["yetki"];
 }
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script>
+    $(function () {
+        $('#UserId').change(function () {
+            var id = $('#UserId').val();
+            $.ajax({
+                url: '/OutMissionForm/Cascad',
+                data: { p: id },
+                type: "POST",
+                dataType: "Json",
+                success: function (data) {
+                    console.log(data);
+                    $('#Unit').empty();
+                    $('#Unit').val(data);
+                }
+            });
+        });
+    });
+</script>
 
 
 @using (Html.BeginForm("Index", "OutMissionForm", FormMethod.Post))
@@ -22,11 +41,17 @@
             {
                 if (item.Rol_Id == 9)
                 {
-                    @Html.DropDownListFor(m => m.UnitOfDepartment, (List<SelectListItem>)ViewBag.Unit, "AR-GE MERKEZİNDE ÇALIŞTIĞI BİRİMİ SEÇİNİZ", new { @class = "form-control" })<br />
+                    //  @Html.DropDownListFor(m => m.UnitOfDepartment, (List<SelectListItem>)ViewBag.Unit, "AR-GE MERKEZİNDE ÇALIŞTIĞI BİRİMİ SEÇİNİZ", new { @class = "form-control" })<br />
+
+                    @Html.TextBox("Unit", "", new { @class = "form-control", placeholder = "AR-GE MERKEZİNDE ÇALIŞTIĞI BİRİMİ" })<br />
                     @Html.TextBox("CodeOfProject", "", new { @class = "form-control", placeholder = "İLİŞKİLİ PROJE KODU / ADI" })<br />
                     break;
                 }
-            }
+                //else
+                //{
+
+                //}
+            }   @Html.Hidden("Unit")
             <label>DIŞARIDA GEÇİRİLEN SÜRE BAŞLANGIÇ TARİHİ</label>
             <input type="datetime-local" class="form-control" name="StartDate" value="@DateTime.Now" /><br />
 

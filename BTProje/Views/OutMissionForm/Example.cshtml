@@ -21,44 +21,40 @@
                 dataType: "Json",
                 success: function (data) {
                     console.log(data);
-                    //$('#Unit').empty();
-                    ///*$('#ytkl').empty();*/
                     $('#Unit').empty();
-                    //for (var i = 0; i < data.length; i++) {
-                    //    //$('#Unit1').val(data[i].Text);
-                    //    $('#Unit').val(data[i].Text)
-                    //    //$('#Unit').append("<option value='" + data[i].Value + "'>" + data[i].Text + "</Option>");
-                    //}
-                    $('#Unit').val(data);
+                     $('#Unit').val(data);
                 }
             });
         });
     });
 </script>
 
-@using (Html.BeginForm("Index", "OutMissionForm", FormMethod.Post))
+@using (Html.BeginForm("Example", "OutMissionForm", FormMethod.Post))
 {
     <fieldset>
         <div id="gonderen" class="gonderen" style="margin-top:15px;">
             <h4 style="text-align:center; margin-top:50px;"> AR-GE MERKEZİ GÖREVLİ PERSONEL FORMU </h4>
 
             @Html.DropDownListFor(m => m.UserId, (List<SelectListItem>)ViewBag.User, "GÖREVLİ PERSONELİ SEÇİNİZ", new { @class = "form-control", required = "Boş Bırakılamaz" })<br />
-
             @if (kullanici.RolTipi == 9 || (kullanici.RolTipi == 7))
             {
                 @Html.DropDownListFor(m => m.UnitOfDepartment, (List<SelectListItem>)ViewBag.Unit, "AR-GE MERKEZİNDE ÇALIŞTIĞI BİRİMİ SEÇİNİZ", new { @class = "form-control" })<br />
-
-                @Html.TextBox("CodeOfProject", "", new { @class = "form-control", placeholder = "İLİŞKİLİ PROJE KODU / ADI" })<br />
                 @Html.TextBox("Unit", "", new { @class = "form-control", placeholder = "Unit2" })<br />
+                @Html.TextBox("CodeOfProject", "", new { @class = "form-control", placeholder = "İLİŞKİLİ PROJE KODU / ADI" })<br />
                 @*@Html.TextBoxFor(m => m.Unit1, new { @class = "form control" })*@
 
             }
+                else
+                {
+            @Html.Hidden("Unit")
+
+                }
 
             <label>DIŞARIDA GEÇİRİLEN SÜRE BAŞLANGIÇ TARİHİ</label>
             <input type="datetime-local" class="form-control" name="StartDate" value="@DateTime.Now" /><br />
 
             @*<label>DIŞARIDA GEÇİRİLEN SÜRE BİTİŞ TARİHİ</label>
-                <input type="datetime" class="form-control"  name="Tarih" value="@DateTime.Now" /><br />*@
+        <input type="datetime" class="form-control"  name="Tarih" value="@DateTime.Now" /><br />*@
 
             @if (kullanici.RolTipi == 9 || (kullanici.RolTipi == 7))
             {

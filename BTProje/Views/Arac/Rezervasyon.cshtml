@@ -62,7 +62,7 @@
             </div>
 
             @Html.HiddenFor(m => m.sirketaracid)
-            <button type="submit" id="bt1" class="btn btn-success">Kaydet</button>
+            <button onclick="this.disabled = true; this.form.submit();" type="submit" id="bt1" class="btn btn-success">Kaydet</button>
         }
         break;
     }

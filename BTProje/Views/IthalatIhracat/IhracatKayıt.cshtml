@@ -106,11 +106,11 @@
             @Html.HiddenFor(m => m.ihracataracid)
             if (Model.ihracataracid == 0)
             {
-                <button type="submit" id="bt1" class="btn btn-success">Kaydet</button>
+                <button onclick="this.disabled = true; this.form.submit();" type="submit" id="bt1" class="btn btn-success">Kaydet</button>
             }
             else
             {
-                <button type="submit" id="bt1" class="btn btn-success">Güncelle</button>
+                <button onclick="this.disabled = true; this.form.submit();" type="submit" id="bt1" class="btn btn-success">Güncelle</button>
             }
         }
         break;

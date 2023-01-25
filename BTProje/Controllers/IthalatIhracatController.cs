@@ -112,59 +112,55 @@ namespace BTProje.Controllers
             KullaniciTablosu kid = (KullaniciTablosu)Session["kullanici"];
             BölgelerTablosu bid = (BölgelerTablosu)Session["bolge"];
             List<RolYetkiAtama> yetki = (List<RolYetkiAtama>)Session["yetki"];
-            if (ModelState.IsValid)
+            if (ihrct.ihracataracid == 0)
             {
-                if (ihrct.ihracataracid == 0)
+                ihrct.giristarih = Convert.ToDateTime(TempData["tarih"]);
+                if (TempData["ctarih"] != null)
                 {
-                    ihrct.giristarih = Convert.ToDateTime(TempData["tarih"]);
-                    if (TempData["ctarih"] != null)
-                    {
-                        ihrct.cikistarih = Convert.ToDateTime(TempData["ctarih"]);
-                    }
-                    ihrct.kullaniciid = kid.Kullanici_id;
-                    ihrct.bolgeid = bid.Bölge_id;
-                    ihrct.nakliyetur = (string)TempData["tur"];
-                    db.Ithalat_Ihracat_Arac.Add(ihrct);
+                    ihrct.cikistarih = Convert.ToDateTime(TempData["ctarih"]);
                 }
-                else
-                {
-                    var deger = db.Ithalat_Ihracat_Arac.Find(ihrct.ihracataracid);
-                    if (deger == null)
-                    {
-                        return HttpNotFound();
-                    }
-                    deger.sevkyeri = ihrct.sevkyeri;
-                    deger.irsaliyeno = ihrct.irsaliyeno;
-                    deger.muhurno = ihrct.muhurno;
-                    deger.irsaliyetarih = ihrct.irsaliyetarih;
-                    deger.koliadet = ihrct.koliadet;
-                    deger.ikincikullanici = kid.Ad + " " + kid.Soyad;
-                    foreach (var item in yetki)
-                    {
-                        //if (kid.YetkiTipi == 1 || kid.YetkiTipi == 3)
-                        if (item.Rol_Id == 3 && (item.Yetki_Id == 1 || item.Yetki_Id == 3))
-                        {
-                            deger.tasiyicifirmaad = ihrct.tasiyicifirmaad;
-                            deger.tasiyiciplaka = ihrct.tasiyiciplaka;
-                            deger.soforadsoyad = ihrct.soforadsoyad;
-                            deger.sofortc = ihrct.sofortc;
-                            deger.sofortel = ihrct.sofortel;
-                            deger.giristarih = ihrct.giristarih;
-                            deger.cikistarih = ihrct.cikistarih;
-                            //deger.sevkyeri = ihrct.sevkyeri;
-                            //deger.irsaliyeno = ihrct.irsaliyeno;
-                            //deger.muhurno = ihrct.muhurno;
-                            //deger.irsaliyetarih = ihrct.irsaliyetarih;
-                            //deger.koliadet = ihrct.koliadet;
-                            //deger.ikincikullanici = kid.Ad + " " + kid.Soyad;                            
-                            break;
-                        }
-                    }
-                }
-                db.SaveChanges();
-                return RedirectToAction("Index", "IthalatIhracat");
+                ihrct.kullaniciid = kid.Kullanici_id;
+                ihrct.bolgeid = bid.Bölge_id;
+                ihrct.nakliyetur = (string)TempData["tur"];
+                db.Ithalat_Ihracat_Arac.Add(ihrct);
             }
-            return View("IhracatKayıt");
+            else
+            {
+                var deger = db.Ithalat_Ihracat_Arac.Find(ihrct.ihracataracid);
+                if (deger == null)
+                {
+                    return HttpNotFound();
+                }
+                deger.sevkyeri = ihrct.sevkyeri;
+                deger.irsaliyeno = ihrct.irsaliyeno;
+                deger.muhurno = ihrct.muhurno;
+                deger.irsaliyetarih = ihrct.irsaliyetarih;
+                deger.koliadet = ihrct.koliadet;
+                deger.ikincikullanici = kid.Ad + " " + kid.Soyad;
+                foreach (var item in yetki)
+                {
+                    //if (kid.YetkiTipi == 1 || kid.YetkiTipi == 3)
+                    if (item.Rol_Id == 3 && (item.Yetki_Id == 1 || item.Yetki_Id == 3))
+                    {
+                        deger.tasiyicifirmaad = ihrct.tasiyicifirmaad;
+                        deger.tasiyiciplaka = ihrct.tasiyiciplaka;
+                        deger.soforadsoyad = ihrct.soforadsoyad;
+                        deger.sofortc = ihrct.sofortc;
+                        deger.sofortel = ihrct.sofortel;
+                        deger.giristarih = ihrct.giristarih;
+                        deger.cikistarih = ihrct.cikistarih;
+                        //deger.sevkyeri = ihrct.sevkyeri;
+                        //deger.irsaliyeno = ihrct.irsaliyeno;
+                        //deger.muhurno = ihrct.muhurno;
+                        //deger.irsaliyetarih = ihrct.irsaliyetarih;
+                        //deger.koliadet = ihrct.koliadet;
+                        //deger.ikincikullanici = kid.Ad + " " + kid.Soyad;                            
+                        break;
+                    }
+                }
+            }
+            db.SaveChanges();
+            return RedirectToAction("Index", "IthalatIhracat");
         }
         public ActionResult Sil(int id)
         {
@@ -239,9 +235,9 @@ namespace BTProje.Controllers
             }
             //model.ihracataracid = 0;
             bul.tasiyicifirmaad = model.tasiyicifirmaad;
-            bul.soforadsoyad=model.soforadsoyad;
-            bul.sofortel=model.sofortel;
-            bul.sofortc=model.sofortc;
+            bul.soforadsoyad = model.soforadsoyad;
+            bul.sofortel = model.sofortel;
+            bul.sofortc = model.sofortc;
             TempData["tarih"] = DateTime.Now;
             TempData["ctarih"] = null;
             if (model == null)

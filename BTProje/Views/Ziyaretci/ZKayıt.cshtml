@@ -87,12 +87,13 @@
             @Html.HiddenFor(m => m.ziyaretciid)
             if (Model.ziyaretciid == 0)
             {
-                <button onclick="this.disabled = true; this.form.submit();" type="submit" id="bt1" class="btn btn-success">Kaydet</button>
+                <button type="submit" id="bt1" class="btn btn-success">Kaydet</button>
+                //<button onclick="this.disabled = true; this.form.submit();" type="submit" id="bt1" class="btn btn-success">Kaydet</button>
                 //butona çift tıklamada 2 kayıt atmasını engellemek için tıklandığında disabled true olup post için submit yazıyorum.
             }
             else
             {
-                <button onclick="this.disabled = true; this.form.submit();" type="submit" id="bt1" class="btn btn-success">Güncelle</button>
+                <button type="submit" id="bt1" class="btn btn-success">Güncelle</button>
             }
         }
         break;

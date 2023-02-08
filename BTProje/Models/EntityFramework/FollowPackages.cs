@@ -20,6 +20,6 @@ namespace BTProje.Models.EntityFramework
         public string ShippingCompany { get; set; }
         public string BuyerCompany { get; set; }
         public string PickUperPersonNameSurname { get; set; }
-        public string Situation { get; set; }
+        public Nullable<bool> Situation { get; set; }
     }
 }

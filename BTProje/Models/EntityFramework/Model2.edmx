@@ -55,7 +55,7 @@ warning 6002: The table/view 'TYHTALEP.dbo.ArgeUnit' does not have a primary key
           <Property Name="EndDate" Type="datetime" />
           <Property Name="MissionId" Type="smallint" />
           <Property Name="Description" Type="varchar" MaxLength="30" />
-          <Property Name="Unit" Type="nvarchar" MaxLength="60" />
+          <Property Name="Unit" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="FollowPackages">
           <Key>
@@ -64,10 +64,10 @@ warning 6002: The table/view 'TYHTALEP.dbo.ArgeUnit' does not have a primary key
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Date" Type="datetime" />
           <Property Name="CompanyInformation" Type="nvarchar" MaxLength="20" />
-          <Property Name="ShippingCompany" Type="nvarchar" MaxLength="20" />
-          <Property Name="BuyerCompany" Type="nvarchar" MaxLength="20" />
-          <Property Name="PickUperPersonNameSurname" Type="nchar" MaxLength="10" />
-          <Property Name="Situation" Type="nvarchar" MaxLength="20" />
+          <Property Name="ShippingCompany" Type="nvarchar" MaxLength="60" />
+          <Property Name="BuyerCompany" Type="nvarchar" MaxLength="60" />
+          <Property Name="PickUperPersonNameSurname" Type="nvarchar" MaxLength="60" />
+          <Property Name="Situation" Type="bit" />
         </EntityType>
         <EntityType Name="GonderimTuru">
           <Key>
@@ -832,7 +832,6 @@ warning 6002: The table/view 'TYHTALEP.dbo.ArgeUnit' does not have a primary key
           <EntitySet Name="BölgelerTablosu" EntityType="TYHTALEPModel.BölgelerTablosu" />
           <EntitySet Name="DepartmanlarTablosu" EntityType="TYHTALEPModel.DepartmanlarTablosu" />
           <EntitySet Name="DgsForm" EntityType="TYHTALEPModel.DgsForm" />
-          <EntitySet Name="FollowPackages" EntityType="TYHTALEPModel.FollowPackages" />
           <EntitySet Name="GonderimTuru" EntityType="TYHTALEPModel.GonderimTuru" />
           <EntitySet Name="Kargo" EntityType="TYHTALEPModel.Kargo" />
           <EntitySet Name="KargoHareketleri" EntityType="TYHTALEPModel.KargoHareketleri" />
@@ -979,6 +978,7 @@ warning 6002: The table/view 'TYHTALEP.dbo.ArgeUnit' does not have a primary key
             <End Role="KullaniciTablosu" EntitySet="KullaniciTablosu" />
             <End Role="Ithalat_Ihracat_Arac" EntitySet="Ithalat_Ihracat_Arac" />
           </AssociationSet>
+          <EntitySet Name="FollowPackages" EntityType="TYHTALEPModel.FollowPackages" />
         </EntityContainer>
         <EntityType Name="AraçTablosu">
           <Key>
@@ -1039,22 +1039,10 @@ warning 6002: The table/view 'TYHTALEP.dbo.ArgeUnit' does not have a primary key
           <Property Name="EndDate" Type="DateTime" Precision="3" />
           <Property Name="MissionId" Type="Int16" />
           <Property Name="Description" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
-          <Property Name="Unit" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Unit" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="KullaniciTablosu" Relationship="TYHTALEPModel.FK_DgsForm_KullaniciTablosu" FromRole="DgsForm" ToRole="KullaniciTablosu" />
           <NavigationProperty Name="Mission" Relationship="TYHTALEPModel.FK_DgsForm_Mission" FromRole="DgsForm" ToRole="Mission" />
           <NavigationProperty Name="Unit1" Relationship="TYHTALEPModel.FK_DgsForm_Unit" FromRole="DgsForm" ToRole="Unit" />
-        </EntityType>
-        <EntityType Name="FollowPackages">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Date" Type="DateTime" Precision="3" />
-          <Property Name="CompanyInformation" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="ShippingCompany" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="BuyerCompany" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="PickUperPersonNameSurname" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="Situation" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="GonderimTuru">
           <Key>
@@ -1702,6 +1690,18 @@ warning 6002: The table/view 'TYHTALEP.dbo.ArgeUnit' does not have a primary key
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="FollowPackages">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <Property Name="CompanyInformation" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ShippingCompany" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="BuyerCompany" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="PickUperPersonNameSurname" Type="String" MaxLength="60" FixedLength="false" Unicode="true" />
+          <Property Name="Situation" Type="Boolean" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1751,19 +1751,6 @@ warning 6002: The table/view 'TYHTALEP.dbo.ArgeUnit' does not have a primary key
                 <ScalarProperty Name="CodeOfProject" ColumnName="CodeOfProject" />
                 <ScalarProperty Name="UnitOfDepartment" ColumnName="UnitOfDepartment" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="FollowPackages">
-            <EntityTypeMapping TypeName="TYHTALEPModel.FollowPackages">
-              <MappingFragment StoreEntitySet="FollowPackages">
-                <ScalarProperty Name="Situation" ColumnName="Situation" />
-                <ScalarProperty Name="PickUperPersonNameSurname" ColumnName="PickUperPersonNameSurname" />
-                <ScalarProperty Name="BuyerCompany" ColumnName="BuyerCompany" />
-                <ScalarProperty Name="ShippingCompany" ColumnName="ShippingCompany" />
-                <ScalarProperty Name="CompanyInformation" ColumnName="CompanyInformation" />
-                <ScalarProperty Name="Date" ColumnName="Date" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2002,6 +1989,19 @@ warning 6002: The table/view 'TYHTALEP.dbo.ArgeUnit' does not have a primary key
                 <ScalarProperty Name="tasiyicifirmaad" ColumnName="tasiyicifirmaad" />
                 <ScalarProperty Name="nakliyetur" ColumnName="nakliyetur" />
                 <ScalarProperty Name="ihracataracid" ColumnName="ihracataracid" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="FollowPackages">
+            <EntityTypeMapping TypeName="TYHTALEPModel.FollowPackages">
+              <MappingFragment StoreEntitySet="FollowPackages">
+                <ScalarProperty Name="Situation" ColumnName="Situation" />
+                <ScalarProperty Name="PickUperPersonNameSurname" ColumnName="PickUperPersonNameSurname" />
+                <ScalarProperty Name="BuyerCompany" ColumnName="BuyerCompany" />
+                <ScalarProperty Name="ShippingCompany" ColumnName="ShippingCompany" />
+                <ScalarProperty Name="CompanyInformation" ColumnName="CompanyInformation" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

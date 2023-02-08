@@ -29,7 +29,6 @@ namespace BTProje.Models.EntityFramework
         public virtual DbSet<BölgelerTablosu> BölgelerTablosu { get; set; }
         public virtual DbSet<DepartmanlarTablosu> DepartmanlarTablosu { get; set; }
         public virtual DbSet<DgsForm> DgsForm { get; set; }
-        public virtual DbSet<FollowPackages> FollowPackages { get; set; }
         public virtual DbSet<GonderimTuru> GonderimTuru { get; set; }
         public virtual DbSet<Kargo> Kargo { get; set; }
         public virtual DbSet<KargoHareketleri> KargoHareketleri { get; set; }
@@ -48,5 +47,6 @@ namespace BTProje.Models.EntityFramework
         public virtual DbSet<Ziyaretci> Ziyaretci { get; set; }
         public virtual DbSet<ArgeUnit> ArgeUnit { get; set; }
         public virtual DbSet<Ithalat_Ihracat_Arac> Ithalat_Ihracat_Arac { get; set; }
+        public virtual DbSet<FollowPackages> FollowPackages { get; set; }
     }
 }

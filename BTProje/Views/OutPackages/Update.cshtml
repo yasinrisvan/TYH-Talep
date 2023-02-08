@@ -1,0 +1,62 @@
+﻿@using BTProje.Models.EntityFramework
+
+@model BTProje.Models.EntityFramework.FollowPackages
+
+@{
+    ViewBag.Title = "Update";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    KullaniciTablosu kullanici = (KullaniciTablosu)Session["kullanici"];
+    List<RolYetkiAtama> yetki = (List<RolYetkiAtama>)Session["yetki"];
+}
+
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+
+@foreach (var item in yetki)
+{
+    if (item.Rol_Id == 2)
+    {
+
+        <form method="post" class="form-group">
+            <fieldset>
+
+                <div id="outPack" class="outPack">
+                    <br /><br />
+                    <center> <h3 style="margin-left: 35px; margin-bottom: 20px">Kişisel Kargo Kayıt Formu</h3> </center>
+                    @Html.ValidationMessageFor(model => model.CompanyInformation, "", new { @class = "text-danger" })
+                    @Html.TextBox("CompanyInformation", Model.CompanyInformation, new { @class = "form-control", placeholder = "Kargo Firma Bilgileri", required = "Boş Bırakılamaz" })<br />
+
+                    @Html.ValidationMessageFor(model => model.ShippingCompany, "", new { @class = "text-danger" })
+                    @Html.TextBox("ShippingCompany", Model.ShippingCompany, new { @class = "form-control", placeholder = "Gönderen Firma Bilgileri/ Şahıs Bilgileri", required = "Boş Bırakılamaz" })<br />
+
+
+                    @Html.ValidationMessageFor(model => model.BuyerCompany, "", new { @class = "text-danger" })
+                    @Html.TextBox("BuyerCompany", Model.BuyerCompany, new { @class = "form-control", placeholder = "Alıcı Firma Bilgileri/ Şahıs Bilgileri", required = "Boş Bırakılamaz" })<br />
+
+                    @Html.ValidationMessageFor(model => model.PickUperPersonNameSurname, "", new { @class = "text-danger" })
+                    @Html.TextBox("PickUperPersonNameSurname", Model.PickUperPersonNameSurname, new { @class = "form-control", placeholder = "Teslim Alan Personel Ad Soyad", required = "Boş Bırakılamaz" })<br />
+                    @Html.Hidden("Id")
+                </div>
+                <div style="margin-top:10px">
+                    <button class="btn btn-info" id="added">GÜNCELLE</button>
+                </div>
+            </fieldset>
+        </form>
+
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+        if (TempData["Message"] != null)
+        {
+            <script>
+                swal("UYARI !", "@TempData["Message"]", "warning");
+            </script>
+        }
+        if (TempData["MessageSuccess"] != null)
+        {
+            <script>
+                swal("BAŞARILI !", "@TempData["MessageSuccess"]", "success");
+            </script>
+        }
+
+        break;
+    }
+}

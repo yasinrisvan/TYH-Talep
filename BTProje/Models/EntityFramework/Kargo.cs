@@ -50,3 +50,4 @@ namespace BTProje.Models.EntityFramework
         public List<Kargo> Kargos { get; set; }
     }
 }
+

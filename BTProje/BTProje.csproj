@@ -138,6 +138,7 @@
     <Compile Include="Controllers\LoginPanelController.cs" />
     <Compile Include="Controllers\MultiPickUpPackagesController.cs" />
     <Compile Include="Controllers\OutMissionFormController.cs" />
+    <Compile Include="Controllers\OutPackagesController.cs" />
     <Compile Include="Controllers\ReportingController.cs" />
     <Compile Include="Controllers\SirketController.cs" />
     <Compile Include="Controllers\ZiyaretciController.cs" />
@@ -3504,6 +3505,9 @@
     <Content Include="Views\OutMissionForm\Update.cshtml" />
     <Content Include="Views\Reporting\Index.cshtml" />
     <Content Include="Views\Shared\_AdminLayout2.cshtml" />
+    <Content Include="Views\OutPackages\Index.cshtml" />
+    <Content Include="Views\OutPackages\Create.cshtml" />
+    <Content Include="Views\OutPackages\Update.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

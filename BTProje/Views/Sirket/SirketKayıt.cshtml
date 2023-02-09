@@ -239,11 +239,13 @@
             @Html.HiddenFor(m => m.sirketaracid)
             if (Model.sirketaracid == 0)
             {
-                <button type="submit" id="bt1" class="btn btn-success">Kaydet</button>
+                @*<button type="submit" id="bt1" class="btn btn-success">Kaydet</button>*@
+                <button onclick="if (this.form.checkValidity()) { this.form.submit(); this.disabled = true; }else{this.form.checkValidity();}" type="submit" id="bt1" class="btn btn-success">Kaydet</button>
             }
             else
             {
-                <button type="submit" id="bt1" class="btn btn-success">Güncelle</button>
+                @*<button type="submit" id="bt1" class="btn btn-success">Güncelle</button>*@
+                <button onclick="if (this.form.checkValidity()) { this.form.submit(); this.disabled = true; }else{this.form.checkValidity();}" type="submit" id="bt1" class="btn btn-success">Güncelle</button>
             }
         }
         break;

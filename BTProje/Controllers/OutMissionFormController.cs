@@ -181,6 +181,18 @@ namespace BTProje.Controllers
                                             }).OrderBy(x => x.Text).ToList();
             ViewBag.Mission = mission;
             var dgs = db.DgsForm.Find(id);
+            if (dgs == null)
+            {
+                TempData["MessageError"] = "KAYIT BULUNAMADI !";
+                return View(dgs);
+            }
+            else
+            {
+                if (dgs.Unit == null)
+                {
+                    dgs.Unit = "";
+                }
+            }
             return View(dgs);
         }
         [HttpPost]
@@ -200,7 +212,7 @@ namespace BTProje.Controllers
                 old.StartDate = dgsForm.StartDate;
                 old.Description = dgsForm.Description.ToUpper();
                 old.EndDate = dgsForm.EndDate;
-                old.Unit = dgsForm.Unit; 
+                old.Unit = dgsForm.Unit;
                 if (dgsForm.CodeOfProject == null)
                 {
                     old.CodeOfProject = "";
@@ -276,7 +288,7 @@ namespace BTProje.Controllers
             //{
             //foreach (var item in table)
             //{
-                
+
             //    //item.asd.Insert(0,item.BAŞLANGIÇ_TARİHİ.Value.ToShortDateString());
             //    item.asd.Insert(7, "testtt");
             //    //item.asd.Replace(item.asd, item.BAŞLANGIÇ_TARİHİ.Value.ToShortTimeString());
@@ -284,7 +296,7 @@ namespace BTProje.Controllers
             //}
             if (ilktrh != null && sontrh != null)
             {
-                table = table.Where(m =>m.BAŞLANGIÇ_TARİHİ >= ilktrh)
+                table = table.Where(m => m.BAŞLANGIÇ_TARİHİ >= ilktrh)
                 .Where(m => m.BAŞLANGIÇ_TARİHİ <= sontrh).ToList();
             }
             else if (ilktrh == null || sontrh == null)
@@ -296,7 +308,7 @@ namespace BTProje.Controllers
             //{
             if (ilktrh != null && sontrh != null)
             {
-                table = table.Where(m =>m.BAŞLANGIÇ_TARİHİ >= ilktrh)
+                table = table.Where(m => m.BAŞLANGIÇ_TARİHİ >= ilktrh)
                              //.Where(m => m.BÖLGE == bid.Bölge)
                              .Where(m => m.BAŞLANGIÇ_TARİHİ <= sontrh).ToList();
             }

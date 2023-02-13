@@ -39,14 +39,17 @@
             <h4 style="text-align:center; margin-top:50px;"> AR-GE MERKEZİ GÖREVLİ PERSONEL FORMU </h4>
             @*<h5 style="margin-left: 35px; margin-bottom: 20px">Gönderen</h5>*@
 
+            <h6><label>GÖREVLİ PERSONEL</label></h6>
             @Html.DropDownListFor(m => m.UserId, (List<SelectListItem>)ViewBag.User, "GÖREVLİ PERSONELİ SEÇİNİZ", new { @class = "form-control", required = "Boş Bırakılamaz" })<br />
             @foreach (var item in yetki)
             {
                 if (item.Rol_Id == 9)
                 {
                     //      @Html.DropDownListFor(m => m.UnitOfDepartment, (List<SelectListItem>)ViewBag.Unit, "AR-GE MERKEZİNDE ÇALIŞTIĞI BİRİMİ SEÇİNİZ", new { @class = "form-control", required = "Boş Bırakılamaz" })<br />
+                    <h6><label>AR-GE MERKEZİNDE ÇALIŞTIĞI BİRİM</label></h6>
                     @Html.TextBox("Unit", Model.Unit, new { @class = "form-control", placeholder = "AR-GE MERKEZİNDE ÇALIŞTIĞI BİRİMİ" })<br />
 
+                    <h6><label>İLİŞKİLİ PROJE KODU / ADI</label></h6>
                     @Html.TextBox("CodeOfProject", Model.CodeOfProject, new { @class = "form-control", placeholder = "İLİŞKİLİ PROJE KODU / ADI" })<br />
                     break;
                 }
@@ -57,7 +60,7 @@
                 }
             }
 
-                @Html.Hidden("Unit")
+            @Html.Hidden("Unit")
             <h6> <label>DIŞARIDA GEÇİRİLEN SÜRE BAŞLANGIÇ TARİHİ</label></h6>
             @if (startDate == null || startDate == "")
             {
@@ -81,6 +84,7 @@
             {
                 if (item.Rol_Id == 9)
                 {
+                    <h6><label>GÖREVLİ OLMA NEDENİ</label></h6>
                     @Html.DropDownListFor(m => m.MissionId, (List<SelectListItem>)ViewBag.Mission, "GÖREVLİ OLMA NEDENİ", new { @class = "form-control", required = "Boş Bırakılamaz" })<br />
                     break;
                 }
@@ -89,6 +93,7 @@
                     @Html.HiddenFor(m => m.MissionId)
                 }
             }
+            <h6><label>GÖREV YERİ</label></h6>
             @Html.TextBox("Description", (string)ViewBag.Description, new { @class = "form-control", required = "Boş Bırakılamaz", placeholder = "GÖREV YERİ" })<br />
 
 

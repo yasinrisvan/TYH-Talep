@@ -9,6 +9,8 @@
 
     KullaniciTablosu kullanici = (KullaniciTablosu)Session["kullanici"];
     List<RolYetkiAtama> yetki = (List<RolYetkiAtama>)Session["yetki"];
+
+    var success = false;
 }
 <script src="~/Scripts/jquery-3.6.0.min.js"></script>
 <script>
@@ -25,197 +27,266 @@
         window.location.href=url;
     }
 </script>
-<h4 style="text-align:center; margin-top:15px"> AR-GE MERKEZİ GÖREVLİ PERSONEL FORMU </h4>
+@foreach (var item in yetki)
+{
+    //if (item.Rol_Id == 9 || (item.Rol_Id == 3 && kullanici.BölgeID == 1) || (item.Rol_Id == 3 && kullanici.BölgeID == 15))
+    if (item.Rol_Id == 9 || item.Rol_Id == 3 && kullanici.BölgeID == 15)
+
+    {
+        success = true;
+    }
+}
+@if (success)
+{
+
+    <h4 style="text-align:center; margin-top:15px"> AR-GE MERKEZİ GÖREVLİ PERSONEL FORMU </h4>
 
 
-<div class="row">
-    <div class="col-4">
+    <div class="row">
+        <div class="col-4">
 
-        <a href="~/OutMissionForm/Index" class="btn btn-outline-success form-control"> YENİ FORM OLUŞTUR </a>
+            <a href="~/OutMissionForm/Index" class="btn btn-outline-success form-control"> YENİ FORM OLUŞTUR </a>
 
-    </div>
-    <div class="col-8">
-        @using (Html.BeginForm("GridExportToExcel", "OutMissionForm", FormMethod.Post))
-        {
-            <div class="row">
-                <div class="col-2"></div>
-                <div class="col-2"></div>
-                <div class="col-2"></div>
-                <div class="col-2">
-                    @Html.TextBox("ilktrh", null, new { @class = "form-control", @type = "date" })
-                </div>
-                <div class="col-2">
-                    @Html.TextBox("sontrh", null, new { @class = "form-control", @type = "date" })
-                </div>
-                <div class="col-2">
-                    @*<a href="#" id="export" class="btn btn-primary">Excele Aktar</a>*@
-                    <button type="submit" id="export" class="btn btn-primary">Excel'e Kaydet</button>
-                </div>
-
-            </div>
-        }
-    </div>
-
-</div>
-
-<p></p>
-<div class="row">
-    <div class="col-3">
-
-        <a href="~/OutMissionForm/Incumbent" class="btn btn-outline-dark form-control"> GÖREVDE OLANLAR </a>
-
-    </div>
-    <div class="col-3">
-
-        <a href="~/OutMissionForm/GetForm" class="btn btn-outline-dark form-control"> TÜM FORMLAR </a>
-
-    </div>
-
-</div>
-<p></p>
-
-<p></p>
-
-<div style="overflow:auto;">
-    <table id="tbl1" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
-        <thead>
-            <tr>
-
-                <th>Form Numarası</th>
-                <th>Görevli Personel Ad Soyad</th>
-                @foreach (var item in yetki)
-                {
-                    if (item.Rol_Id == 9)
-                    {
-                        <th>Ar-Ge Merkezinde Çalıştığı Birim</th>
-                        <th>İlişkili Proje Kodu</th>
-                        break;
-                    }
-                }
-                <th>Dışarıda Geçirilen Süre Başlangıç Tarihi</th>
-                <th>Dışarıda Geçirilen Süre Bitiş Tarihi</th>
-                @foreach (var item in yetki)
-                {
-                    if (item.Rol_Id == 9)
-                    {
-                        <th>Görevli Olma Nedeni</th>
-                        break;
-                    }
-                }
-                <th>Görev Yeri</th>
-                @*@if (kullanici.RolTipi == 9 || kullanici.RolTipi == 7)
-                    {*@
-                <th>İşlem </th>
-
-            </tr>
-
-        </thead>
-        <tbody>
-            @foreach (var form in Model)
+        </div>
+        <div class="col-8">
+            @using (Html.BeginForm("GridExportToExcel", "OutMissionForm", FormMethod.Post))
             {
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-2"></div>
+                    <div class="col-2"></div>
+                    <div class="col-2">
+                        @Html.TextBox("ilktrh", null, new { @class = "form-control", @type = "date" })
+                    </div>
+                    <div class="col-2">
+                        @Html.TextBox("sontrh", null, new { @class = "form-control", @type = "date" })
+                    </div>
+                    <div class="col-2">
+                        @*<a href="#" id="export" class="btn btn-primary">Excele Aktar</a>*@
+                        <button type="submit" id="export" class="btn btn-primary">Excel'e Kaydet</button>
+                    </div>
+
+                </div>
+            }
+        </div>
+
+    </div>
+
+    <p></p>
+    <div class="row">
+        <div class="col-3">
+
+            <a href="~/OutMissionForm/Incumbent" class="btn btn-outline-dark form-control"> GÖREVDE OLANLAR </a>
+
+        </div>
+        <div class="col-3">
+
+            <a href="~/OutMissionForm/GetForm" class="btn btn-outline-dark form-control"> TÜM FORMLAR </a>
+
+        </div>
+
+    </div>
+    <p></p>
+
+    <p></p>
+
+    <div style="overflow:auto;">
+        <table id="tbl1" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0">
+            <thead>
                 <tr>
 
-                    <td>@form.Id</td>
-                    <td>@form.KullaniciTablosu.Ad @form.KullaniciTablosu.Soyad</td>
+                    <th>Form Numarası</th>
+                    <th>Görevli Personel Ad Soyad</th>
                     @foreach (var item in yetki)
                     {
                         if (item.Rol_Id == 9)
                         {
-                            <td>
-                                @*@form.Unit1.NameOfUnit*@
-                                @form.Unit
-                            </td>
-
-                            <td>@form.CodeOfProject</td>
+                            <th>Ar-Ge Merkezinde Çalıştığı Birim</th>
+                            <th>İlişkili Proje Kodu</th>
                             break;
                         }
                     }
-                    <td>@form.StartDate</td>
-                    @{
-
-                        TempData["endDate"] = @form.EndDate.ToString();
-                    }
-                    @if (TempData["endDate"] == null || TempData["endDate"] == "")
-                    {
-                        <td>
-                            <a href="~/OutMissionForm/DateEnd/@form.Id" class="btn btn-outline-success form-control">Tarihi Ekle</a>
-                        </td>
-                    }
-                    else
-                    {
-                        <td>@form.EndDate</td>
-                    }
+                    <th>Dışarıda Geçirilen Süre Başlangıç Tarihi</th>
+                    <th>Dışarıda Geçirilen Süre Bitiş Tarihi</th>
                     @foreach (var item in yetki)
                     {
                         if (item.Rol_Id == 9)
                         {
-                            <td>@form.Mission.MissionName</td>
+                            <th>Görevli Olma Nedeni</th>
                             break;
                         }
                     }
-                    <td>
-                        @form.Description
-                    </td>
-                    <td>
+                    <th>Görev Yeri</th>
+                    @*@if (kullanici.RolTipi == 9 || kullanici.RolTipi == 7)
+                        {*@
+                    <th>İşlem </th>
 
-                        <a href="~/OutMissionForm/Update/@form.Id" class="btn btn-outline-secondary">GÜNCELLE</a>
+                </tr>
+
+            </thead>
+            <tbody>
+                @foreach (var form in Model)
+                {
+                    <tr>
+
+                        <td>@form.Id</td>
+                        <td>@form.KullaniciTablosu.Ad @form.KullaniciTablosu.Soyad</td>
                         @foreach (var item in yetki)
                         {
                             if (item.Rol_Id == 9)
                             {
-                                <a href="~/OutMissionForm/Review/@form.Id" class="btn btn-outline-primary ">İNCELE</a>
+                                <td>
+                                    @*@form.Unit1.NameOfUnit*@
+                                    @form.Unit
+                                </td>
 
-                                @Html.ActionLink("SİL", "Delete", new { id = form.Id }, new { @class = "btn btn-outline-danger", onclick = "return confirm('Gerçekten Silmek İstiyor Musunuz?')" })
+                                <td>@form.CodeOfProject</td>
                                 break;
                             }
                         }
-                    </td>
+                        <td>@form.StartDate</td>
+                        @{
 
-                </tr>
+                            TempData["endDate"] = @form.EndDate.ToString();
+                        }
+                        @if (TempData["endDate"] == null || TempData["endDate"] == "")
+                        {
+                            <td>
+                                <a href="~/OutMissionForm/DateEnd/@form.Id" class="btn btn-outline-success form-control">Tarihi Ekle</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>@form.EndDate</td>
+                        }
+                        @foreach (var item in yetki)
+                        {
+                            if (item.Rol_Id == 9)
+                            {
+                                <td>@form.Mission.MissionName</td>
+                                break;
+                            }
+                        }
+                        <td>
+                            @form.Description
+                        </td>
+                        <td>
+
+                            <a href="~/OutMissionForm/Update/@form.Id" class="btn btn-outline-secondary">GÜNCELLE</a>
+                            @foreach (var item in yetki)
+                            {
+                                if (item.Rol_Id == 9)
+                                {
+                                    <a href="~/OutMissionForm/Review/@form.Id" class="btn btn-outline-primary ">İNCELE</a>
+
+                                    @Html.ActionLink("SİL", "Delete", new { id = form.Id }, new { @class = "btn btn-outline-danger", onclick = "return confirm('Gerçekten Silmek İstiyor Musunuz?')" })
+                                    break;
+                                }
+                            }
+                        </td>
+
+                    </tr>
+                }
+
+
+            </tbody>
+        </table>
+    </div>
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+    <link href="~/Content/DataTables/css/dataTables.bootstrap4.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
+    <script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
+    <script>
+        $('#tbl1').dataTable({
+            language: {
+                "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+            },
+            order: [[0, 'desc']],
+        });
+    </script>
+
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    if (TempData["MessageError"] != null)
+    {
+        <script>
+        swal("UYARI !", "@TempData["MessageError"]", "warning");
+        </script>
+    }
+    if (TempData["MessageSuccess"] != null)
+    {
+        <script>
+        swal("BAŞARILI !", "@TempData["MessageSuccess"]", "success");
+        </script>
+    }
+    <script>
+        $(function () {
+            $("#btExceleAktar").on("click", function () {
+                $('<iframe src="/Home/ExcelOlustur"></iframe>').appendTo('#sonuc').hide();
+            });
+        });
+
+    </script>
+}
+else
+{
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>404 Page Not Found</title>
+        <style>
+            /* Styles for the error message */
+            .cloak__wrapper {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
             }
 
+            .cloak__container {
+                width: 50%;
+                text-align: center;
+            }
 
-        </tbody>
-    </table>
-</div>
+            .cloak {
+                font-size: 6rem;
+                font-weight: bold;
+                margin: 0;
+            }
 
+            .info {
+                margin-top: 2rem;
+            }
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+            h2 {
+                font-size: 2.5rem;
+                margin: 0;
+            }
 
-<link href="~/Content/DataTables/css/dataTables.bootstrap4.css" rel="stylesheet" />
-<link href="https://cdn.datatables.net/1.10.15/css/dataTables.bootstrap.min.css" rel="stylesheet" />
-<link href="https://cdn.datatables.net/responsive/2.1.1/css/responsive.bootstrap.min.css" rel="stylesheet" />
-<script src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap4.min.js "></script>
-<script>
-    $('#tbl1').dataTable({
-        language: {
-            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
-        },
-        order: [[0, 'desc']],
-    });
-</script>
-
-
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
-@if (TempData["MessageError"] != null)
-{
-    <script>
-        swal("UYARI !", "@TempData["MessageError"]", "warning");
-    </script>
+            p {
+                font-size: 1.5rem;
+                margin: 1rem 0;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="cloak__wrapper">
+            <div class="cloak__container">
+                <h1 class="cloak">404</h1>
+                <div class="info">
+                    <h2>Aradığın Sayfayı Bulamadık</h2>
+                    <p><a href="/HomePage/Index" target="_self" rel="noreferrer noopener">Anasayfa</a>' a dönmek için tıklayınız...</p>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
 }
-@if (TempData["MessageSuccess"] != null)
-{
-    <script>
-        swal("BAŞARILI !", "@TempData["MessageSuccess"]", "success");
-    </script>
-}
-<script>
-    $(function () {
-        $("#btExceleAktar").on("click", function () {
-            $('<iframe src="/Home/ExcelOlustur"></iframe>').appendTo('#sonuc').hide();
-        });
-    });
 
-</script>
+

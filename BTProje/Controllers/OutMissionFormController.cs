@@ -17,23 +17,40 @@ namespace BTProje.Controllers
     public class OutMissionFormController : Controller
     {
         TYHTALEPEntities db = new TYHTALEPEntities();
-
-       // SqlConnection dbf = new SqlConnection("Server=192.168.100.12;Database=TYH802;Trusted_Connection=True;");
+        // SqlConnection dbf = new SqlConnection("Server=192.168.100.12;Database=TYH802;Trusted_Connection=True;");
         SqlConnection dbf = new SqlConnection("Server=192.168.100.12; Database=TYH802; User Id=fadimegunay_view; Password=G{,m)P&.g]*G*7S@");
 
 
-        // GET: OutMissionForm
-        public ActionResult Index()
+        public void User()
         {
             KullaniciTablosu kullanici = (KullaniciTablosu)Session["kullanici"];
-            List<SelectListItem> user = (from i in db.KullaniciTablosu.Where(m => m.MaliyetMNo == 3511501.ToString() && m.BölgeID == kullanici.BölgeID).ToList()
-                                         select new SelectListItem
-                                         {
-                                             Text = i.Ad + " " + i.Soyad,
-                                             Value = i.Kullanici_id.ToString()
-                                         }).OrderBy(x => x.Text).ToList();
+            List<SelectListItem> user = new List<SelectListItem>();
+            if (kullanici.BölgeID == 1)
+            {
+                user = (from i in db.KullaniciTablosu.Where(m => m.MaliyetMNo == 3411101.ToString() && m.BölgeID == kullanici.BölgeID).ToList()
+                        select new SelectListItem
+                        {
+                            Text = i.Ad + " " + i.Soyad,
+                            Value = i.Kullanici_id.ToString()
+                        }).OrderBy(x => x.Text).ToList();
+            }
+            //if(kullanici.BölgeID == 15)
+            else
+            {
+                user = (from i in db.KullaniciTablosu.Where(m => m.MaliyetMNo == 3511501.ToString() && m.BölgeID == kullanici.BölgeID).ToList()
+                        select new SelectListItem
+                        {
+                            Text = i.Ad + " " + i.Soyad,
+                            Value = i.Kullanici_id.ToString()
+                        }).OrderBy(x => x.Text).ToList();
+            }
             ViewBag.User = user;
 
+            return;
+        }
+
+        public void Unit()
+        {
             List<SelectListItem> unit = (from i in db.Unit.ToList()
                                          select new SelectListItem
                                          {
@@ -41,7 +58,11 @@ namespace BTProje.Controllers
                                              Value = i.Id.ToString()
                                          }).OrderBy(x => x.Text).ToList();
             ViewBag.Unit = unit;
+            return;
+        }
 
+        public void Mission()
+        {
             List<SelectListItem> mission = (from i in db.Mission.ToList()
                                             select new SelectListItem
                                             {
@@ -49,8 +70,17 @@ namespace BTProje.Controllers
                                                 Value = i.MissionId.ToString()
                                             }).OrderBy(x => x.Text).ToList();
             ViewBag.Mission = mission;
+            return;
+        }
 
 
+
+        // GET: OutMissionForm
+        public ActionResult Index()
+        {
+            User();
+            Unit();
+            Mission();
             return View();
         }
         //[HttpPost]
@@ -103,6 +133,7 @@ namespace BTProje.Controllers
         [HttpPost]
         public ActionResult Index(FormCollection form, string Unit)
         {
+            DateTime nowDate = DateTime.Now;
             if (form["CodeOfProject"] == null)
                 form["CodeOfProject"] = "";
 
@@ -114,6 +145,9 @@ namespace BTProje.Controllers
 
             if (form["Description"] == null)
                 form["Description"] = "";
+
+            if (form["StartDate"] == null || form["StartDate"] == "")
+                form["StartDate"] = nowDate.ToString();
 
             DgsForm dgsForm = new DgsForm
             {
@@ -139,8 +173,30 @@ namespace BTProje.Controllers
 
         public ActionResult GetForm()
         {
-            var forms = db.DgsForm.OrderByDescending(x => x.Id).ToList();
+            KullaniciTablosu kullanici = (KullaniciTablosu)Session["kullanici"];
 
+            List<RolYetkiAtama> yetki = (List<RolYetkiAtama>)Session["yetki"];
+            //List<SelectListItem> forms = new List<SelectListItem>().ToList();
+            List<DgsForm> forms = new List<DgsForm>();
+            
+            if (kullanici.BölgeID == 1)
+            {
+             forms = db.DgsForm.OrderByDescending(x => x.Id).Where(m=> m.KullaniciTablosu.BölgeID == 1).ToList();
+            }
+            else if (kullanici.BölgeID == 15)
+            {
+             forms = db.DgsForm.OrderByDescending(x => x.Id).Where(m => m.KullaniciTablosu.BölgeID == 15).ToList();
+
+            }
+            foreach (var item in yetki)
+            {
+                if ((item.Rol_Id == 9 && item.Yetki_Id == 1) || (item.Rol_Id == 3 && item.Yetki_Id == 1))
+                {
+                    forms = db.DgsForm.OrderByDescending(x => x.Id).ToList();
+
+                break;
+                }
+            }
 
             return View(forms);
         }
@@ -158,30 +214,9 @@ namespace BTProje.Controllers
             //{
 
             //}
-            KullaniciTablosu kullanici = (KullaniciTablosu)Session["kullanici"];
-            List<SelectListItem> user = (from i in db.KullaniciTablosu.Where(m => m.MaliyetMNo == 3511501.ToString() && m.BölgeID == kullanici.BölgeID).ToList()
-                                         select new SelectListItem
-                                         {
-                                             Text = i.Ad + " " + i.Soyad,
-                                             Value = i.Kullanici_id.ToString()
-                                         }).OrderBy(x => x.Text).ToList();
-            ViewBag.User = user;
-
-            List<SelectListItem> unit = (from i in db.Unit.ToList()
-                                         select new SelectListItem
-                                         {
-                                             Text = i.NameOfUnit,
-                                             Value = i.Id.ToString()
-                                         }).OrderBy(x => x.Text).ToList();
-            ViewBag.Unit = unit;
-
-            List<SelectListItem> mission = (from i in db.Mission.ToList()
-                                            select new SelectListItem
-                                            {
-                                                Text = i.MissionName,
-                                                Value = i.MissionId.ToString()
-                                            }).OrderBy(x => x.Text).ToList();
-            ViewBag.Mission = mission;
+            User();
+            Unit();
+            Mission();
             var dgs = db.DgsForm.Find(id);
             if (dgs == null)
             {
@@ -242,7 +277,7 @@ namespace BTProje.Controllers
                     old.MissionId = dgsForm.MissionId;
                 }
 
-                //DateTime yasin = DateTime.Now.AddDays(-14);
+                //DateTime d = DateTime.Now.AddDays(-14);
 
                 db.SaveChanges();
 
@@ -266,6 +301,7 @@ namespace BTProje.Controllers
         {
             KullaniciTablosu kid = (KullaniciTablosu)Session["kullanici"];
             BölgelerTablosu bid = (BölgelerTablosu)Session["bolge"];
+            List<RolYetkiAtama> yetki = (List<RolYetkiAtama>)Session["yetki"];
             string tarih = DateTime.Now.ToString("dd-MM-yyyy");
             string dosyaAdi = "DGSB KAYITLARI";
             var table = (from i in db.DgsForm
@@ -285,17 +321,8 @@ namespace BTProje.Controllers
                              BİTİŞ_TARİHİ = i.EndDate,
                              GÖREVLİ_OLMA_NEDENİ = i.Mission.MissionName,
                              AÇIKLAMA = i.Description,
-                         }).ToList();
-            //if (kid.YetkiTipi == 1)
-            //{
-            //foreach (var item in table)
-            //{
+                         }).Where(m => m.BÖLGE == bid.Bölge).ToList();
 
-            //    //item.asd.Insert(0,item.BAŞLANGIÇ_TARİHİ.Value.ToShortDateString());
-            //    item.asd.Insert(7, "testtt");
-            //    //item.asd.Replace(item.asd, item.BAŞLANGIÇ_TARİHİ.Value.ToShortTimeString());
-            //    item.ast.Insert(8, item.BAŞLANGIÇ_TARİHİ.Value.ToShortTimeString());
-            //}
             if (ilktrh != null && sontrh != null)
             {
                 table = table.Where(m => m.BAŞLANGIÇ_TARİHİ >= ilktrh)
@@ -305,9 +332,6 @@ namespace BTProje.Controllers
             {
                 table.ToList();
             }
-            //}
-            //else
-            //{
             if (ilktrh != null && sontrh != null)
             {
                 table = table.Where(m => m.BAŞLANGIÇ_TARİHİ >= ilktrh)
@@ -318,8 +342,52 @@ namespace BTProje.Controllers
             {
                 table = table.Where(m => m.BÖLGE == bid.Bölge).ToList();
             }
-            //}
-            var grid = new GridView();
+
+            foreach (var item in yetki)
+            {
+                if ((item.Rol_Id == 9 && item.Yetki_Id == 1) || (item.Rol_Id == 3 && item.Yetki_Id == 1))
+                {
+                    table = (from i in db.DgsForm
+                             select new
+                             {
+                                 SIRA_NO = i.Id,   //alias tanımlama
+                                 BÖLGE = i.KullaniciTablosu.BölgelerTablosu.Bölge,
+                                 ADI_SOYADI = i.KullaniciTablosu.Ad + " " + i.KullaniciTablosu.Soyad,
+                                 TC_KİMLİK_NO = i.KullaniciTablosu.TC,
+                                 BİRİM = i.Unit,
+                                 //BİRİM = i.Unit1.NameOfUnit,
+                                 PROJE_KODU = i.CodeOfProject,
+                                 BAŞLANGIÇ_TARİHİ = i.StartDate,
+                                 //BAŞLANGIÇ_SAATİ = i.StartDate.Value.ToShortTimeString(),
+                                 //asd="",
+                                 //ast="",
+                                 BİTİŞ_TARİHİ = i.EndDate,
+                                 GÖREVLİ_OLMA_NEDENİ = i.Mission.MissionName,
+                                 AÇIKLAMA = i.Description,
+                             }).ToList();
+
+                    if (ilktrh != null && sontrh != null)
+                    {
+                        table = table.Where(m => m.BAŞLANGIÇ_TARİHİ >= ilktrh)
+                        .Where(m => m.BAŞLANGIÇ_TARİHİ <= sontrh).ToList();
+                    }
+                    else if (ilktrh == null || sontrh == null)
+                    {
+                        table.ToList();
+                    }
+                    if (ilktrh != null && sontrh != null)
+                    {
+                        table = table.Where(m => m.BAŞLANGIÇ_TARİHİ >= ilktrh)
+                                     //.Where(m => m.BÖLGE == bid.Bölge)
+                                     .Where(m => m.BAŞLANGIÇ_TARİHİ <= sontrh).ToList();
+                    }
+                    break;
+                }
+
+            }
+
+
+                var grid = new GridView();
             grid.DataSource = table;
             grid.DataBind();
             Response.ClearContent();
@@ -344,6 +412,8 @@ namespace BTProje.Controllers
 
             Response.Write(sw.ToString());
             Response.End();
+        
+
         }
         public ActionResult Review(int id)
         {
@@ -400,6 +470,11 @@ namespace BTProje.Controllers
             return Json(unit, JsonRequestBehavior.AllowGet);
         }
 
+        public JsonResult Mission2(int p)
+        {
+
+            return Json(p, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult Example()
         {
             KullaniciTablosu kullanici = (KullaniciTablosu)Session["kullanici"];
@@ -429,7 +504,7 @@ namespace BTProje.Controllers
 
 
             return View();
-        } ///gereksiz
+        } ///Just example
 
     }
 }

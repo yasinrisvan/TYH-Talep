@@ -119,7 +119,9 @@
                                         <a class="nav-link" href="/Ziyaretci/ZiyaretciIndex">Ziyaretçi Kaydı</a>
                                         <a class="nav-link" href="/Sirket/SirketIndex">Şirket Araçları Kaydı</a>
                                         <a class="nav-link" href="/IthalatIhracat/Index">İthalat/İhracat Araçları Kaydı</a>
+                                        @*@if (kullanici.BölgeID == 15 || kullanici.BölgeID == 1)*@
                                         @if (kullanici.BölgeID == 15)
+
                                         {
                                             <a class="nav-link" href="/OutMissionForm/GetForm">Dışarıda Geçirilen Süre Bildirim Formu</a>
                                             <a class="nav-link" href="/OutMissionForm/Index">DGSB Formu Oluşturma</a>

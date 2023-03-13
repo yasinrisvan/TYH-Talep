@@ -249,7 +249,10 @@ namespace BTProje.Controllers
                 old.StartDate = dgsForm.StartDate;
                 old.Description = dgsForm.Description.ToUpper();
                 old.EndDate = dgsForm.EndDate;
-                old.Unit = dgsForm.Unit;
+                if( dgsForm.Unit != null && dgsForm.Unit != old.Unit)// ve aynı değilse
+                {
+                    old.Unit = dgsForm.Unit;
+                }
                 if (dgsForm.CodeOfProject == null)
                 {
                     old.CodeOfProject = "";

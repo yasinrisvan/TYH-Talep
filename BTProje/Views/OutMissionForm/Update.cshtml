@@ -9,6 +9,7 @@
     string startDate = Model.StartDate.ToString();
     KullaniciTablosu kullanici = (KullaniciTablosu)Session["kullanici"];
     List<RolYetkiAtama> yetki = (List<RolYetkiAtama>)Session["yetki"];
+    Html.HiddenFor(m => m.Unit);
     var success = false;
 }
 
@@ -48,6 +49,23 @@
         });
     });
 </script>
+<script>
+    $(document).ready(function () {
+        var id = $('#UserId').val();
+        console.log(id)
+        $.ajax({
+            url: '/OutMissionForm/Cascad',
+            data: { p: id },
+            type: "POST",
+            dataType: "Json",
+            success: function (data) {
+                console.log(data);
+                $('#Unit').empty();
+                $('#Unit').val(data);
+            }
+        });
+    });
+</script>
 @foreach (var item in yetki)
 {
     //if (item.Rol_Id == 9 || (item.Rol_Id == 3 && kullanici.BölgeID == 1) || (item.Rol_Id == 3 && kullanici.BölgeID == 15))
@@ -59,7 +77,7 @@
 }
 @if (success)
 {
-   using (Html.BeginForm("Update", "OutMissionForm", FormMethod.Post))
+    using (Html.BeginForm("Update", "OutMissionForm", FormMethod.Post))
     {
         <fieldset>
             <div id="gonderen" class="gonderen" style="margin-top:15px;">
@@ -75,6 +93,7 @@
                         //      @Html.DropDownListFor(m => m.UnitOfDepartment, (List<SelectListItem>)ViewBag.Unit, "AR-GE MERKEZİNDE ÇALIŞTIĞI BİRİMİ SEÇİNİZ", new { @class = "form-control", required = "Boş Bırakılamaz" })<br />
                         <h6><label>AR-GE MERKEZİNDE ÇALIŞTIĞI BİRİM</label></h6>
                         @Html.TextBox("Unit", Model.Unit, new { @class = "form-control", placeholder = "AR-GE MERKEZİNDE ÇALIŞTIĞI BİRİMİ" })<br />
+                        @Html.Hidden("Unit")
 
                         <h6><label>İLİŞKİLİ PROJE KODU / ADI</label></h6>
                         @Html.TextBox("CodeOfProject", Model.CodeOfProject, new { @class = "form-control", placeholder = "İLİŞKİLİ PROJE KODU / ADI" })<br />
@@ -87,7 +106,10 @@
                 }
 
                 @Html.Hidden("CodeOfProject")
-                @Html.Hidden("Unit")
+                @*@Html.Hidden("Unit")*@
+                @Html.HiddenFor(m => m.Unit)
+                @*@Html.HiddenFor(Model.Unit);*@
+
                 <h6> <label>DIŞARIDA GEÇİRİLEN SÜRE BAŞLANGIÇ TARİHİ</label></h6>
                 @if (startDate == null || startDate == "")
                 {
@@ -150,13 +172,13 @@
 
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-   if (TempData["MessageError"] != null)
+    if (TempData["MessageError"] != null)
     {
         <script>
         swal("UYARI !", "@TempData["MessageError"]", "warning");
         </script>
     }
-   if (TempData["MessageSuccess"] != null)
+    if (TempData["MessageSuccess"] != null)
     {
         <script>
         swal("BAŞARILI !", "@TempData["MessageSuccess"]", "success");

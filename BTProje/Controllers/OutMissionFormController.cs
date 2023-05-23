@@ -18,7 +18,7 @@ namespace BTProje.Controllers
     {
         TYHTALEPEntities db = new TYHTALEPEntities();
         // SqlConnection dbf = new SqlConnection("Server=192.168.100.12;Database=TYH802;Trusted_Connection=True;");
-        SqlConnection dbf = new SqlConnection("Server=192.168.100.12; Database=TYH802; User Id=fadimegunay_view; Password=G{,m)P&.g]*G*7S@");
+        SqlConnection dbf = new SqlConnection("Server=192.168.100.12; Database=TYH802; User Id=fadimegunay_view; Password=G{,m)P&.g]*G*7S!!"); //Password=G{,m)P&.g]*G*7S@ [G@N4YF4D1M3]
 
 
         public void User()
